@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">android</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="app_name">MyCarForMe</string>
+    <string name="home">홈</string>
+    <string name="search">검색</string>
+    <string name="recommend">추천</string>
+    <string name="my">마이</string>
 </resources>
