@@ -8,24 +8,20 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.myme.mycarforme.ui.home.HomeFragment"
-        android:label="@string/home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_search"
         android:name="com.myme.mycarforme.ui.recommend.RecommendFragment"
-        android:label="@string/recommend"
         tools:layout="@layout/fragment_recommend" />
 
     <fragment
         android:id="@+id/navigation_recommend"
         android:name="com.myme.mycarforme.ui.search.SearchFragment"
-        android:label="@string/recommend"
         tools:layout="@layout/fragment_search" />
 
     <fragment
         android:id="@+id/navigation_my"
-        android:name="com.myme.mycarforme.ui.search.SearchFragment"
-        android:label="@string/my"
-        tools:layout="@layout/fragment_search" />
+        android:name="com.myme.mycarforme.ui.my.Myfragment"
+        tools:layout="@layout/fragment_my" />
 </navigation>

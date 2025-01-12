@@ -1,8 +1,13 @@
 package com.myme.mycarforme
 
 import android.os.Bundle
+import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsCompat.CONSUMED
+import androidx.core.view.updatePadding
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -29,7 +34,14 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home, R.id.navigation_search, R.id.navigation_recommend, R.id.navigation_my
             )
         )
-        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        ViewCompat.setOnApplyWindowInsetsListener(
+            window.decorView
+        ) { v, insets ->
+            val windowInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            findViewById<View>(R.id.container).updatePadding(bottom = windowInsets.bottom, top = windowInsets.top)
+
+            return@setOnApplyWindowInsetsListener CONSUMED
+        }
     }
 }
