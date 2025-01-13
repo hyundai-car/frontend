@@ -33,6 +33,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  padding: 0 20px;
 `;
 
 const Header = styled.header`
@@ -46,6 +47,7 @@ const Header = styled.header`
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
+  // 임시선
   border-bottom: 1px solid #eee;
   z-index: 100;
 `;

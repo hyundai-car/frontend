@@ -17,6 +17,7 @@ const GlobalStyle = createGlobalStyle`
 		--gray-blue: rgba(203, 213, 225, 1);
 		--light-gray: rgba(247, 247, 247, 1);
 		--dark-gray: rgba(169, 169, 169, 1);
+		--white: #ffffff;
 
 		/* Text-size styles */
 		--lg-small: 20px;
