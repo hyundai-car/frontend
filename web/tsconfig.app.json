@@ -39,5 +39,5 @@
       "@shared/*": ["src/shared/*"]
     }
   },
-  "include": ["src", "src/custom.d.ts"]
+  "include": ["src", "src/app/global.d.ts", "src/app/styles/theme.d.ts"]
 }

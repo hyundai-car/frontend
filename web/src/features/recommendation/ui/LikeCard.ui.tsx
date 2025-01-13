@@ -1,4 +1,4 @@
-import { SelectCard } from "@/features/recommendation/model/card.types";
+import { SelectCard } from "@/features/recommendation/model/types";
 import { formatNumber } from "@/pages/recommendation/model/format.utils";
 import { Checkbox } from "@/shared/ui/checkbox/Checkbox.ui";
 import styled from "styled-components";
@@ -38,6 +38,7 @@ const Container = styled.div`
   height: 91px;
   box-shadow: var(--list-item);
   padding: 7px 10px;
+  border-radius: 8px;
 `;
 
 const Wrap = styled.div`
