@@ -10,7 +10,7 @@ export const MOCK_LikeList = [
     sellingPrice: 54000,
   },
   {
-    carId: 0,
+    carId: 1,
     modelName: "2022 그랜저(IG 하이브리드 샘이 솟아라오베이 르블랑",
     year: 2107,
     mileage: 20000,

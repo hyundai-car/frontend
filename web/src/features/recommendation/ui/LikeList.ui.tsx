@@ -1,4 +1,5 @@
 import { SelectCard } from "@/features/recommendation/model/card.types";
+import { useCheckboxGroup } from "@/features/recommendation/model/useCheckboxGroup";
 import { LikeCard } from "@/features/recommendation/ui/LikeCard.ui";
 import { MOCK_LikeList } from "@/pages/recommendation/model/mock";
 import { Checkbox } from "@/shared/ui/checkbox/Checkbox.ui";
@@ -9,11 +10,27 @@ export function LikeList() {
   //TODO 임시데이터
   const [cardList, setCardList] = useState<SelectCard[]>(MOCK_LikeList);
 
+  const {
+    checkedItems,
+    isChecked,
+    toggleItem,
+    toggleAll,
+    isAllChecked,
+    getCheckedItems,
+  } = useCheckboxGroup<SelectCard>([], "carId");
+
+  
   return (
     <Container>
       <HeaderSection>
         <Wrap>
-          <Checkbox checked={true} onChange={() => {}} disabled={false} />
+          <Checkbox
+            checked={isAllChecked(cardList)}
+            onChange={() => {
+              toggleAll(cardList);
+            }}
+            disabled={cardList.length === 0}
+          />
           <Description>전체 선택</Description>
         </Wrap>
 
@@ -22,7 +39,12 @@ export function LikeList() {
 
       <ListSection>
         {cardList.map((item) => (
-          <LikeCard item={item} />
+          <LikeCard
+            key={item.carId}
+            item={item}
+            checked={isChecked(item.carId)}
+            onChange={() => toggleItem(item.carId)}
+          />
         ))}
       </ListSection>
     </Container>

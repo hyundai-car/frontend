@@ -64,7 +64,7 @@ const HiddenCheckbox = styled.input`
 
 const StyledCheckIcon = styled(CheckIcon)<{ $checked: boolean }>`
   path {
-    fill: ${(props) => (props.$checked ? "var(--blue)" : "red")};
+    fill: ${(props) => (props.$checked ? "var(--blue)" : "var(--gray-blue)")};
   }
 `;
 

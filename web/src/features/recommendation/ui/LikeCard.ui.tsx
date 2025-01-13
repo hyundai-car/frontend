@@ -5,13 +5,15 @@ import styled from "styled-components";
 
 type Props = {
   item: SelectCard;
+  checked: boolean;
+  onChange: () => void;
 };
 
-export function LikeCard({ item }: Props) {
+export function LikeCard({ item, checked, onChange }: Props) {
   return (
     <Container>
       <Wrap>
-        <Checkbox checked={true} onChange={() => {}} disabled={false} />
+        <Checkbox checked={checked} onChange={onChange} />
 
         <Section>
           <LeftSection>
