@@ -38,7 +38,7 @@ constructor(
         elevation = TypedValue
             .applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
-                4f, // Adjust shadow depth
+                6f, // Adjust shadow depth
                 resources.displayMetrics
             )
 
