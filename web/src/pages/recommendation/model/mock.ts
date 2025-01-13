@@ -1,0 +1,21 @@
+export const MOCK_LikeList = [
+  {
+    carId: 0,
+    modelName:
+      "2022 그랜저(IG 하이브리드 샘이 솟아라오베이 르블랑르블랑르블랑르블랑르블랑르블랑르블랑르블랑르블랑르블랑르블랑르블랑르블랑르블랑",
+    year: 2107,
+    mileage: 20000,
+    mainImage:
+      "https://www.kia.com/content/dam/kwp/kr/ko/main-kv-contents/202411/kv_the_new_sportage_pc.jpg",
+    sellingPrice: 54000,
+  },
+  {
+    carId: 0,
+    modelName: "2022 그랜저(IG 하이브리드 샘이 솟아라오베이 르블랑",
+    year: 2107,
+    mileage: 20000,
+    mainImage:
+      "https://www.kia.com/content/dam/kwp/kr/ko/main-kv-contents/202411/kv_the_new_sportage_pc.jpg",
+    sellingPrice: 54000,
+  },
+];

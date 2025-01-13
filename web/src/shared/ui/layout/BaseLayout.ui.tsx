@@ -3,7 +3,13 @@
  */
 
 import React from "react";
+import { Outlet } from "react-router-dom";
 
 export function BaseLayout() {
-  return <div>BaseLayout.ui</div>;
+  return (
+    <div>
+      BaseLayout.ui
+      <Outlet />
+    </div>
+  );
 }

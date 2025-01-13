@@ -1,5 +1,5 @@
 import { RecommendationRoute } from "@/pages/recommendation";
-import { withSuspense } from "@/shared/lib/hoc";
+import { withSuspense } from "@/shared/lib/hocs";
 import { createElement, lazy } from "react";
 import {
   createBrowserRouter,
@@ -27,9 +27,6 @@ const root = createBrowserRouter([
       {
         // TODO: 삭제 예정 (임시)
         path: "/",
-        element: createElement(BaseLayout),
-      },
-      {
         element: createElement(BaseLayout),
         children: [RecommendationRoute],
       },

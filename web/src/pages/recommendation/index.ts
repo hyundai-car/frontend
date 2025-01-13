@@ -1,4 +1,4 @@
-import { withSuspense } from "@/shared/lib/hoc";
+import { withSuspense } from "@/shared/lib/hocs";
 import { pathKeys } from "@/shared/lib/react-router";
 import { createElement, lazy } from "react";
 import { RouteObject } from "react-router-dom";
