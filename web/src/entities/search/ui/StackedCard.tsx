@@ -1,33 +1,44 @@
 import { Icon } from '@/shared/ui/Icon/Icon';
 import styled from 'styled-components';
-// data
-const imageSrc = "https://certified-static.hyundai.com/contents/goods/shootConts/tobepic/02/exterior/HIG241028009973/PRD602_233.JPG/dims/crop/2304x1536+600+770/resize/560x373/optimize"
-const title = "2022 그랜저(IG) 하이브리드 르블랑"
-const likes = 275
-const date = "21년 07월"
-const dist = "16,510KM"
-const price = "3,390"
+import { mockCarListData } from '../api/mockCarListData';
+import { convertToManWon } from '../libs/priceUtils';
+import { TSearch } from '../model/search.types';
+import { ReactNode } from 'react';
 
-export function StackedCard() {
-
+type Props = {
+  data?: TSearch;
+  actionSlot?: ReactNode;
+};
+export function StackedCard({ data = mockCarListData.contents[0], actionSlot }: Props) {
+  if (!data) {
+    throw new Error('Data is undefined');
+  }
+  const { modelName, year, mileage, sellingPrice, mainImage, isLike, likeCount } = data;
+  const price = convertToManWon(sellingPrice).toLocaleString();
     return (
     <Card>
       <ImageContainer>
           <HeartButton>
-            <Icon type="heart" onClick={() => console.log('clicked')} />
+            {actionSlot || (
+            <Icon 
+              type="heart" 
+              color={isLike ? 'red' : 'gray'} 
+              onClick={() => console.log('heart clicked')} 
+            />
+          )}
         </HeartButton>
         <CardImage 
-            src={ imageSrc}
+            src={ mainImage}
           alt="Card image" 
         />
       </ImageContainer>
       
       <ContentContainer>
         <TitleRow>
-            <Title>{ title}</Title>
+            <Title>{ modelName}</Title>
           <LikeCount>
-              <span>{likes}</span>
-              <Icon type="heart-circle" size={20} color="blue" onClick={() => console.log('clicked')} />
+              <span>{likeCount}</span>
+              <Icon type="heart-circle" size={20} color="blue" readonly/>
           </LikeCount>
         </TitleRow>
 
@@ -37,11 +48,11 @@ export function StackedCard() {
           <InfoGroup>
             <InfoItem>
               <Icon type="calendar" size={12} color="deepDarkGray" readonly />
-                <span>{ date}</span>
+                <span>{ year}</span>
             </InfoItem>
             <InfoItem>
               <Icon type="routing" size={12} color="deepDarkGray" readonly />
-                <span>{ dist}</span>
+                <span>{ mileage.toLocaleString()}KM</span>
             </InfoItem>
             </InfoGroup>
             <PriceWrap>
@@ -53,12 +64,12 @@ export function StackedCard() {
     </Card>
   );
 }
+
 const Card = styled.div`
-  background-color: rgba(255, 200, 0, 0.3);
   max-width: 400px;
   border-radius: 8px;
   border: 1px solid #e5e7eb;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--box-shadow);
 `;
 
 const ImageContainer = styled.div`
@@ -89,7 +100,6 @@ const TitleRow = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-   background-color: red;
 `;
 
 const Title = styled.h3`
@@ -123,7 +133,6 @@ const Footer = styled.div`
 const InfoGroup = styled.div`
   display: flex;
   gap: 12px;
-  background-color: black;
 `;
 
 const InfoItem = styled.div`
