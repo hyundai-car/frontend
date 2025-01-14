@@ -17,7 +17,6 @@ export function Result() {
         <p>선택 차량 중 {userName}님께 딱 맞는 차를 추천해드릴게요!</p>
       </Title>
       <ResultCard topSlot={<ResultGraph />} bottomSlot={<ResultList />} />
-      {/* <ResultCard topSlot={<ResultList />} /> */}
     </Container>
   );
 }

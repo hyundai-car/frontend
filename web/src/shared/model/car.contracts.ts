@@ -14,6 +14,7 @@ export const CarSchema = z.object({
   mm_score: z.number(),
   fuelEfficiency: z.number(),
   mainImage: z.string(),
+  exteriorColor: z.string(),
 
   newCarPrice: z.number(),
   carNumber: z.number(),

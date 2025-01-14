@@ -86,7 +86,7 @@ export const MOCK_LikeList = [
 export const MOCK_BestCarData = {
   bestCar: {
     carId: 123,
-    modelName: "현대 그랜저 IG 하이브리드",
+    modelName: "현대 그랜저 IG 하이브리드~~~~~~~~~~~~~~~~~~~",
     mainImage: "https://example.com/car-image.jpg",
     mmScore: 4.5,
     accidentCount: 1,

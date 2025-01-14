@@ -1,4 +1,5 @@
 import { Car } from "@/shared/model/car.types";
+import { itemName } from "@/widgets/recommendation/model/constants";
 
 export type bestCar = Pick<
   Car,
@@ -15,4 +16,16 @@ export type bestCar = Pick<
   | "mainImage"
 > & { accidentCount: number };
 
-export type Comparison = Partial<bestCar>;
+export interface Comparison {
+  carNumber: string;
+  exteriorColor: string;
+  fuelType: string;
+  seating: number;
+  mmScoreAvg: number;
+  accidentCountAvg: number;
+  initialRegistrationDateAvg: string;
+  mileageAvg: number;
+  fuelEfficiencyAvg: number;
+}
+
+export type ItemName = (typeof itemName)[number];
