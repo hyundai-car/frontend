@@ -14,11 +14,12 @@ export const CarSchema = z.object({
   mm_score: z.number(),
   fuelEfficiency: z.number(),
   mainImage: z.string(),
+
   newCarPrice: z.number(),
-  car_number: z.number(),
-  payment_delivery_status: z.string(),
+  carNumber: z.number(),
+  paymentDeliveryStatus: z.string(),
   contrancted_at: z.date(),
   payed_at: z.date(),
-  deliveryStarted_at: z.date(),
-  deliveryEnded_at: z.date(),
+  deliveryStartedAt: z.date(),
+  deliveryEndedAt: z.date(),
 });
