@@ -1,7 +1,22 @@
 import { Car } from "@/shared/model/car.types";
 import { itemName } from "@/widgets/recommendation/model/constants";
 
-export type bestCar = Pick<
+export interface ComparisonAvg {
+  mmScoreAvg: number;
+  accidentCountAvg: number;
+  initialRegistrationDateAvg: string;
+  mileageAvg: number;
+  fuelEfficiencyAvg: number;
+}
+
+export interface Comparison {
+  mmScore: number;
+  accidentCount: number;
+  initialRegistrationDate: string;
+  mileage: number;
+  fuelEfficiency: number;
+}
+export type BestCar = Pick<
   Car,
   | "carId"
   | "modelName"
@@ -14,18 +29,14 @@ export type bestCar = Pick<
   | "location"
   | "fuelEfficiency"
   | "mainImage"
-> & { accidentCount: number };
+> &
+  Comparison;
 
-export interface Comparison {
+export interface ResultItems extends Comparison {
   carNumber: string;
   exteriorColor: string;
   fuelType: string;
   seating: number;
-  mmScoreAvg: number;
-  accidentCountAvg: number;
-  initialRegistrationDateAvg: string;
-  mileageAvg: number;
-  fuelEfficiencyAvg: number;
 }
 
 export type ItemName = (typeof itemName)[number];

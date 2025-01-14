@@ -1,5 +1,5 @@
-import { useBestCar } from "@/pages/recommendation/model/queries";
-import { ItemName } from "@/widgets/recommendation/model/types";
+import { ValueOf } from "@/shared/model/utils";
+import { ItemName, ResultItems } from "@/widgets/recommendation/model/types";
 import { FC, SVGProps } from "react";
 import styled, { DefaultTheme } from "styled-components";
 // itemName, icon, 해당정보
@@ -8,29 +8,35 @@ type Props = {
   itemName: ItemName;
   Icon: FC<SVGProps<SVGSVGElement>>; // SVG 컴포넌트를 받는 타입
   color: keyof DefaultTheme["colors"];
+  backColor: keyof DefaultTheme["colors"];
+  value: ValueOf<ResultItems>;
 };
 type StyledIconProps = {
   component: FC<SVGProps<SVGSVGElement>>;
   $color: keyof DefaultTheme["colors"];
+  $backColor: keyof DefaultTheme["colors"];
 };
 
-export function ResultItem({ itemName, Icon, color }: Props) {
+export function ResultItem({ itemName, Icon, color, backColor, value }: Props) {
+  console.log(color, backColor);
   return (
-    <Container>
+    <Container $backColor={backColor}>
       <IconWrap>
-        <StyledIcon component={Icon} $color={color} />
+        <StyledIcon component={Icon} $color={color} $backColor={backColor} />
         <h2>{itemName}</h2>
       </IconWrap>
-      <Description></Description>
+      <Description $color={color}>{value}</Description>
     </Container>
   );
 }
 
-const Container = styled.div`
-  background-color: var(--blue);
-  width: 90px;
+const Container = styled.div<{ $backColor: keyof DefaultTheme["colors"] }>`
+  /* background-color: var(--blue); */
+  background-color: ${({ $backColor }) => `var(--${String($backColor)})`};
+  width: 100%;
   height: 104px;
   border-radius: 8px;
+  padding: 11px;
 `;
 
 // SVG 컴포넌트의 모든 요소에 색상 적용
@@ -47,21 +53,19 @@ const StyledIcon = styled(({ component: Icon, ...props }: StyledIconProps) => (
   }
 `;
 
-// const StyledIcon = styled(({ Icon, ...props }: StyledIconProps) => (
-//   <Icon {...props} />
-// ))<{ $color: Props["color"] }>`
-//   path,
-//   rect,
-//   circle,
-//   line {
-//     // SVG에서 사용될 수 있는 모든 요소 지정
-
-//     stroke: ${({ theme, $color }) => String(theme.colors[$color])} !important;
-//     stroke-width: 1.5;
-//     stroke-linecap: round;
-//     stroke-linejoin: round;
-//   }
-// `;
-
-const IconWrap = styled.div``;
-const Description = styled.div``;
+const IconWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  h2 {
+    font-size: var(--regular--sm);
+    color: var(--dark-gray);
+  }
+`;
+const Description = styled.h1<{ $color: keyof DefaultTheme["colors"] }>`
+  color: ${({ $color }) => `var(--${String($color)})`};
+  font-size: var(--semi-bold--md);
+  font-weight: 600;
+  padding-top: 6.5px;
+  line-height: 17px;
+`;
