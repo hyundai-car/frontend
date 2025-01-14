@@ -33,4 +33,6 @@ const StyledButton = styled.button<{
   cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
   border: none;
   outline: none;
+  font-size: var(--semi-bold--md-small);
+  font-weight: 600;
 `;
