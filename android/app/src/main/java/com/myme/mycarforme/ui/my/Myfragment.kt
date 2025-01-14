@@ -1,6 +1,7 @@
 package com.myme.mycarforme.ui.my
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,7 +43,7 @@ class Myfragment : Fragment() {
     private val recommendcar = mutableListOf(
         dummyCar,dummyCar,dummyCar,dummyCar,dummyCar
     )
-    private val recentcar = mutableListOf(
+    private val likecar = mutableListOf(
         dummyCar,dummyCar,dummyCar,dummyCar,dummyCar
     )
 
@@ -58,39 +59,31 @@ class Myfragment : Fragment() {
         val root: View = binding.root
         binding.myOrderRecyclerview.adapter = InfoCardAdapter(items = ordercar)
         binding.myOrderRecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.myUserOrderCountText.text = String.format(ordercar.size.toString())
+        binding.myUserOrderSectionText.text = String.format(ordercar.size.toString())
         binding.myRecommendRecyclerview.adapter = InfoCardAdapter(items = recommendcar)
         binding.myRecommendRecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        binding.myRecentRecyclerview.adapter = InfoCardAdapter(items = recentcar)
-        binding.myRecentRecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        fun updateSteps(currentStep: Int) {
-            val stepImages = listOf(
-                binding.step1,binding.step2,binding.step3,binding.step4
-
-            )
-
-            val stepLines = listOf(
-                binding.line1, binding.line2, binding.line3
-            )
-
-            for (i in stepImages.indices) {
-                if (i < currentStep) {
-                    stepImages[i].setImageResource(R.drawable.ic_step_active)
-                    if (i < stepLines.size) {
-                        stepLines[i].setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.blue))
-                    }
-                } else {
-                    stepImages[i].setImageResource(R.drawable.ic_step_inactive)
-                    if (i < stepLines.size) {
-                        stepLines[i].setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
-                    }
-                }
-            }
+        binding.myUserHistoryCountText.text = String.format(recommendcar.size.toString())
+        binding.myUserHistorySectionCountText.text = String.format(recommendcar.size.toString())
+        binding.myLikeRecyclerview.adapter = InfoCardAdapter(items = likecar)
+        binding.myLikeRecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.myUserLikeCount.text = String.format(likecar.size.toString())
+        binding.myUserLikeSectionCount.text = String.format(likecar.size.toString())
+        val progressBarView = binding.myProgressbar
+        val stepLabels = listOf("계약금 입금", "잔금 결제", "탁송 시작", "탁송 완료")
+        progressBarView.setupSteps(stepCount = 4, labels = stepLabels)
+        // 초기 상태 설정
+        progressBarView.updateSteps(3)
+        binding.myProgressbutton.setup("배송 현황 보기"){
+            buttonTap()
         }
-        updateSteps(3)
 
         return root
     }
 
+    fun buttonTap() {
+        Log.d("chk","qwe")
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
