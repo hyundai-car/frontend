@@ -10,15 +10,15 @@ import { ReactComponent as GasStationIcon } from "public/icons/gasStation.svg";
 import { ReactComponent as groupIcon } from "public/icons/group.svg";
 import { ReactComponent as RoutingIcon } from "public/icons/routing.svg";
 import { ReactComponent as ProfileIcon } from "public/icons/profile.svg";
-import {
-  calculateItems,
-  compareWithAvg,
-} from "@/widgets/recommendation/model/actions";
-import { Comparison, ResultItems } from "@/widgets/recommendation/model/types";
+import { compareWithAvg } from "@/widgets/recommendation/model/actions";
+import { BestCar, ComparisonAvg } from "@/widgets/recommendation/model/types";
 
 export function ResultList() {
   const { data } = useBestCar();
-  const { bestCar, comparisons } = data;
+  const { bestCar, comparisons } = data as {
+    bestCar: BestCar;
+    comparisons: ComparisonAvg;
+  };
 
   // comparisions에서의 값과 bestCar에서의 값 비교해서 color 넣어주기
   const result = compareWithAvg(bestCar, comparisons);

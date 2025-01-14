@@ -29,6 +29,9 @@ export type BestCar = Pick<
   | "location"
   | "fuelEfficiency"
   | "mainImage"
+  | "exteriorColor"
+  | "carNumber"
+  | "seating"
 > &
   Comparison;
 

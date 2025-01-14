@@ -2,7 +2,6 @@ import { ValueOf } from "@/shared/model/utils";
 import { ItemName, ResultItems } from "@/widgets/recommendation/model/types";
 import { FC, SVGProps } from "react";
 import styled, { DefaultTheme } from "styled-components";
-// itemName, icon, 해당정보
 
 type Props = {
   itemName: ItemName;
@@ -31,7 +30,6 @@ export function ResultItem({ itemName, Icon, color, backColor, value }: Props) {
 }
 
 const Container = styled.div<{ $backColor: keyof DefaultTheme["colors"] }>`
-  /* background-color: var(--blue); */
   background-color: ${({ $backColor }) => `var(--${String($backColor)})`};
   width: 100%;
   height: 104px;
