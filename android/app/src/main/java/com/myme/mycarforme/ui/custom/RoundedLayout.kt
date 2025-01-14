@@ -1,4 +1,4 @@
-package com.peeptodo.peep_todo_android.ui.customview
+package com.myme.mycarforme.ui.custom
 
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
@@ -38,7 +38,7 @@ constructor(
         elevation = TypedValue
             .applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
-                4f, // Adjust shadow depth
+                6f, // Adjust shadow depth
                 resources.displayMetrics
             )
 
