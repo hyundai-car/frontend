@@ -1,1 +1,1 @@
-export { BasicButton as Button } from './BasicButton.ui'
+export { BasicButton } from './BasicButton.ui'

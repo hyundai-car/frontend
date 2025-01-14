@@ -6,7 +6,8 @@ export type IconType =
   | 'heart-circle'
   | 'heart'
   | 'routing'
-  | 'search';
+  | 'search'
+  | 'close';
 
 // Props 타입 정의
 export interface IconProps {
@@ -15,9 +16,14 @@ export interface IconProps {
   type: IconType;
   color?: keyof DefaultTheme["colors"];
   size?: number;
+  readonly?: boolean; // readonly 속성 추가
 }
 
-const IconWrapper = styled.div<{ $isClickable: boolean, $size: number }>`
+const IconWrapper = styled.div<{
+  $isClickable: boolean,
+  $size: number, 
+  $readonly: boolean;
+ }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -25,12 +31,16 @@ const IconWrapper = styled.div<{ $isClickable: boolean, $size: number }>`
   height: ${props => `${props.$size}px`};
   flex-shrink: 0;
   
-  ${props => props.$isClickable && css`
+  ${props => props.$isClickable && !props.$readonly && css`
     cursor: pointer;
     
     &:hover {
       opacity: 0.8;
     }
+  `}
+
+  ${props => props.$readonly && css`
+    cursor: default;
   `}
 `;
 
@@ -55,13 +65,15 @@ const IconImage = styled.div<{
     background-repeat: no-repeat;
   `}
 `;
-export function Icon({ className, onClick, type, color, size = 24 }: IconProps) {
+export function Icon({ className, onClick, type, color, size = 24, readonly = false  }: IconProps) {
   return (
     <IconWrapper 
       className={className}
       onClick={onClick}
       $isClickable={Boolean(onClick)}
       $size={size}
+      $readonly={readonly}
+      
     >
       <IconImage type={type} $color={color} />
     </IconWrapper>
@@ -75,4 +87,12 @@ export function Icon({ className, onClick, type, color, size = 24 }: IconProps) 
 //   type="search" 
 //   size={32}
 //   onClick={() => console.log('clicked')} 
+// />
+
+// <Icon 
+//   type="heart" 
+//   size={24} 
+//   color="primary"
+//   onClick={() => console.log('이 콘솔은 출력되지 않습니다')}
+//   readonly
 // />
