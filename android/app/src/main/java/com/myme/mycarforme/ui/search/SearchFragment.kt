@@ -47,7 +47,7 @@ class SearchFragment : Fragment() {
             webSettings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
             webSettings.domStorageEnabled = true // DOM 저장소 활성화
         }
-        webView?.loadUrl("http://192.168.201.101:3000/search")
+        webView?.loadUrl("http://mycarf0r.me/search")
     }
 
 
