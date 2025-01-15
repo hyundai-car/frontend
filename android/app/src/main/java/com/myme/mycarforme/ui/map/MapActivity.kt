@@ -1,22 +1,25 @@
 package com.myme.mycarforme.ui.map
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.TextView
+import android.view.GestureDetector
+import android.view.MotionEvent
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.myme.mycarforme.MainActivity
 import com.myme.mycarforme.R
+import com.myme.mycarforme.data.model.Car
 import com.myme.mycarforme.databinding.ActivityMapBinding
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.geometry.LatLngBounds
@@ -35,6 +38,10 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONException
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.YearMonth
+import java.util.Locale
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: ActivityMapBinding
@@ -42,7 +49,21 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var latitude: Double = 0.0
     private var longitude: Double = 0.0
-    private lateinit var pathTime : Any
+    private lateinit var pathTime : String
+    private lateinit var bottomSheet: LinearLayout
+    private val movingCar : Car = Car(
+        carId = 1689541, // Parse the carId
+        modelName = "2024 GV80 Coupe 가솔린 3.5 터보 AWD 쿠페 디자인 셀렉션Ⅱ 카본",
+        year = YearMonth.parse("2021-07"),
+        mileage = 16510,
+        sellingPrice = 42128,
+        mainImage = "https://certified-static.hyundai.com/contents/goods/shootConts/tobepic/02/exterior/HIG241028009973/PRD602_200.JPG/dims/crop/3464x1520+188+840",
+        carNumber = "168구9541",
+        isLike = false,
+        likeCount = 0,
+        createdAt = LocalDate.parse("2021-07-15"),
+        updatedAt = LocalDate.parse("2021-07-15") // Assuming the same date for now
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +81,23 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         progressBarView.setupSteps(stepCount = 3, labels = stepLabels)
         // 초기 상태 설정
         progressBarView.updateSteps(2)
-
+        bottomSheet = binding.bottomSheet
+        Glide.with(binding.mapBottomCarImage.context)
+            .load(movingCar.mainImage)
+            .into(binding.mapBottomCarImage)
+        binding.mapBottomCarNameText.text = movingCar.carNumber
+        binding.mapBottomCarModelText.text = movingCar.modelName
+        binding.mapBottomCarInfoCard.setOnClickListener {
+            //TODO: 클릭시 차량 디테일로 넘어가기
+        }
+        binding.mapCloseButton.setOnClickListener {
+            // MainActivity로 돌아가기
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("navigate_to_fragment", "MyFragment") // 데이터를 전달
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP // 기존 MainActivity 재사용
+            startActivity(intent)
+            finish() // 현재 MapActivity 종료
+        }
     }
 
     override fun onMapReady(naverMap: NaverMap) {
@@ -93,8 +130,12 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                         val traoptimal = route.getJSONArray("traoptimal")
                         val pathArray = traoptimal.getJSONObject(0).getJSONArray("path")
                         //ToDo: pathTime은 도착 시간
-                        pathTime = traoptimal.getJSONObject(0).getJSONObject("summary").get("departureTime")
-                        binding.mapBottomDateText.text = "${pathTime}"
+                        pathTime = traoptimal.getJSONObject(0).getJSONObject("summary").getString("departureTime")
+                        val formattedTime = formatTimeWithAMPM(pathTime)
+                        Log.d("chk","${formattedTime}")
+                        withContext(Dispatchers.Main) {
+                            binding.mapBottomDateText.text = formattedTime
+                        }
                         val coordinates = mutableListOf<LatLng>()
                         for (i in 0 until pathArray.length()) {
                             val point = pathArray.getJSONArray(i)
@@ -140,8 +181,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                             val bounds = builder.build()
                             val cameraUpdate = CameraUpdate.fitBounds(bounds, 200)
                             navermap.moveCamera(cameraUpdate)
-                        }
 
+                        }
                     } else {
                         // trafast가 없는 경우 처리
                         withContext(Dispatchers.Main) {
@@ -213,6 +254,23 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }.addOnFailureListener { e ->
             Toast.makeText(this, "위치 요청 실패: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun formatTimeWithAMPM(dateString: String): String {
+        return try {
+            // 주어진 dateString을 파싱
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+            val date = dateFormat.parse(dateString)
+
+            // 만약 date가 null이 아니면, 시간을 "hh:mm a" 형식으로 포맷
+            date?.let {
+                val timeFormat = SimpleDateFormat("a hh시mm분 ", Locale.getDefault()) // 오전/오후 포함
+                return timeFormat.format(date)
+            } ?: "시간 정보 없음" // date가 null이면 기본값 반환
+        } catch (e: Exception) {
+            // 예외 발생 시 기본값 반환
+            "잘못된 시간 포맷"
         }
     }
 

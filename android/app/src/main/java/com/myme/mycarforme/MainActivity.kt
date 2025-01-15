@@ -43,5 +43,8 @@ class MainActivity : AppCompatActivity() {
 
             return@setOnApplyWindowInsetsListener CONSUMED
         }
+
+        val navigateToFragment = intent.getStringExtra("navigate_to_fragment")
+
     }
 }
