@@ -17,10 +17,9 @@ export function SearchPage() {
     </DebugWrapper>
   );
 }
+// 디버그 지운 tsx
 // return (
-//   <DebugWrapper layerName="page/search">
 //     <SearchFilter />
 //     <DiagnosticButton />
 //     <SearchCarList />
-//   </DebugWrapper>
 // );

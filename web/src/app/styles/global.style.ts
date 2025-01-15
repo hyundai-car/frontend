@@ -8,11 +8,9 @@ const GlobalStyle = createGlobalStyle`
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+		outline: none;
+		-webkit-tap-highlight-color: transparent;
     }
-	*:focus {
-    outline: none;
-	}
-	
 	:root {
 		font-family: 'Inter';
     	-webkit-font-smoothing: antialiased;
