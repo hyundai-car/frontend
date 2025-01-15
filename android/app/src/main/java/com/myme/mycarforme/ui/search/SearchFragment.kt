@@ -1,6 +1,8 @@
 package com.myme.mycarforme.ui.search
 
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +20,7 @@ class SearchFragment : Fragment() {
 
     // This property is only valid between onCreateView and
     // onDestroyView.
-    private val binding get() = _binding!!
+    val binding get() = _binding!!
     private lateinit var webView: WebView
 
     override fun onCreateView(
@@ -28,22 +30,24 @@ class SearchFragment : Fragment() {
     ): View {
         val searchViewModel =
             ViewModelProvider(this).get(SearchViewModel::class.java)
-
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
         val root: View = binding.root
         webView = binding.searchWebview
-
-
         setupWebView()
-        webView.loadUrl("http://192.168.201.101:3000/search")
-
+        webView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
         return root
     }
-    private fun setupWebView() {
-        webView.webViewClient = WebViewClient() // 내부 WebView에서 열리도록 설정
-        val webSettings: WebSettings = webView.settings
-        webSettings.javaScriptEnabled = true // JavaScript 사용 가능하게 설정
-        webSettings.domStorageEnabled = true // DOM 저장소 활성화
+
+
+    fun setupWebView() {
+        webView?.webViewClient = WebViewClient() // 내부 WebView에서 열리도록 설정
+        val webSettings: WebSettings? = webView?.settings
+        if (webSettings != null) {
+            webSettings.javaScriptEnabled = true
+            webSettings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
+            webSettings.domStorageEnabled = true // DOM 저장소 활성화
+        }
+        webView?.loadUrl("http://192.168.201.101:3000/search")
     }
 
 
