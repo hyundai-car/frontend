@@ -1,4 +1,4 @@
-import { Result } from "@/widgets/recommendation/ui/Result.ui";
+import { Recommendation } from "@/widgets/recommendation/ui/Recommendation.ui";
 import styled from "styled-components";
 
 export function RecommendationPage() {
@@ -7,7 +7,7 @@ export function RecommendationPage() {
   return (
     <Container>
       {/* 결과 */}
-      <Result />
+      <Recommendation />
 
       {/* 비교 */}
     </Container>

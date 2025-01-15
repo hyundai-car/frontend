@@ -1,5 +1,6 @@
 import { ValueOf } from "@/shared/model/utils";
-import { ItemName, ResultItems } from "@/widgets/recommendation/model/types";
+import { ItemName } from "@/widgets/recommendation/model/types";
+import { Basic } from "@/shared/model/car.types";
 import { FC, SVGProps } from "react";
 import styled, { DefaultTheme } from "styled-components";
 
@@ -8,7 +9,7 @@ type Props = {
   Icon: FC<SVGProps<SVGSVGElement>>; // SVG 컴포넌트를 받는 타입
   color: keyof DefaultTheme["colors"];
   backColor: keyof DefaultTheme["colors"];
-  value: ValueOf<ResultItems>;
+  value: ValueOf<Basic>;
 };
 type StyledIconProps = {
   component: FC<SVGProps<SVGSVGElement>>;
@@ -16,7 +17,7 @@ type StyledIconProps = {
   $backColor: keyof DefaultTheme["colors"];
 };
 
-export function ResultItem({ itemName, Icon, color, backColor, value }: Props) {
+export function GridItem({ itemName, Icon, color, backColor, value }: Props) {
   console.log(color, backColor);
   return (
     <Container $backColor={backColor}>

@@ -2,7 +2,7 @@ import { useRecommendationStore } from "@/features/recommendation/model/store";
 import { SelectCard } from "@/features/recommendation/model/types";
 import { useCheckboxGroup } from "@/features/recommendation/model/useCheckboxGroup";
 import { LikeCard } from "@/features/recommendation/ui/LikeCard.ui";
-import { MOCK_LikeList } from "@/pages/recommendation/model/mock";
+import { MOCK_LikeList } from "@/entities/recommendation/model/mock";
 import { Checkbox } from "@/shared/ui/checkbox";
 import { useEffect } from "react";
 import styled from "styled-components";
