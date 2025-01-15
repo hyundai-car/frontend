@@ -2,7 +2,7 @@ import { useBestCarQuery } from "@/entities/recommendation/model/queries";
 import { ComparisonCard } from "@/entities/recommendation/ui/ComparisonCard";
 import { SelectBox } from "@/shared/ui/selectbox";
 import { MOCK_ComparisonList } from "@/widgets/recommendation/model/mock";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 
 export function Comparision() {
@@ -15,6 +15,12 @@ export function Comparision() {
   const selectedItemCarInfo = useMemo(() => {
     return MOCK_ComparisonList.find((car) => selectedCarId === car.cardId);
   }, [selectedCarId]);
+
+  useEffect(() => {
+    if (data?.otherCarIds?.length) {
+      setSelectedCarId(data.otherCarIds[0]);
+    }
+  }, [data]);
 
   //TODO
   const options = [
