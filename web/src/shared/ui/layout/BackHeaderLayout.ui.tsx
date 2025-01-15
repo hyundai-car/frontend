@@ -8,7 +8,6 @@ import { Outlet } from "react-router-dom";
 export function BackHeaderLayout() {
   return (
     <div>
-      BackHeaderLayout.ui
       <Outlet />
     </div>
   );
