@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import type { PropsWithChildren } from "react";
-import { useDebugStore } from "@/shared/model/debug.store";
+import { useDebugStore } from "../model/store";
 
 type DebugWrapperProps = PropsWithChildren<{
   layerName: string;
@@ -20,8 +20,8 @@ export const DebugWrapper = ({ children, layerName }: DebugWrapperProps) => {
 
 const StyledDebugWrapper = styled.div<{ $layerName: string }>`
   position: relative;
-  border: 1px dashed ${({ $layerName }) => getLayerColor($layerName)}dd;
-  background-color: ${({ $layerName }) => getLayerColor($layerName)}07;
+  margin: 12px 5px; // 간격
+  box-shadow: 0 0 0 3px ${({ $layerName }) => getLayerColor($layerName)}aa;
 
   &::before {
     content: "${({ $layerName }) => $layerName}";
@@ -34,17 +34,16 @@ const StyledDebugWrapper = styled.div<{ $layerName: string }>`
     color: white;
     z-index: 1000;
     pointer-events: none;
-    opacity: 0.7;
   }
 `;
 
 const getLayerColor = (layerName: string): string => {
   const [layer] = layerName.split("/");
   const colorMap = {
-    widget: "#fa0ee9",
+    widgets: "#fa0ee9",
     feature: "#14a200",
     entity: "#2573e5",
-    page: "#ff0000",
+    page: "#0ebb81",
   } as const;
 
   return colorMap[layer as keyof typeof colorMap] || "#999999";

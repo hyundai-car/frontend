@@ -1,7 +1,7 @@
-import { useDebugStore } from "@/shared/model/debug.store";
 import { useEffect } from "react";
 import styled from "styled-components";
 import { DebugWrapper } from "./DebugWrapper";
+import { useDebugStore } from "../model/store";
 
 export const DebugToggle = () => {
   const { isEnabled, toggleDebug } = useDebugStore();
