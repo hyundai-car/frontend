@@ -9,6 +9,9 @@ const GlobalStyle = createGlobalStyle`
         padding: 0;
         box-sizing: border-box;
     }
+	*:focus {
+    outline: none;
+	}
 	
 	:root {
 		font-family: 'Inter';
@@ -41,6 +44,21 @@ const GlobalStyle = createGlobalStyle`
 		--list-item:  0px 4px 35px rgba(0, 0, 0, 0.15);
 		--box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 	}
-`;
+	/* Hide scrollbar for Chrome, Safari and Opera */
+	html::-webkit-scrollbar,
+	body::-webkit-scrollbar,
+	*::-webkit-scrollbar {
+		display: none;
+		width: 0;
+	}
+
+	/* Hide scrollbar for IE, Edge and Firefox */
+	html,
+	body,
+	* {
+		-ms-overflow-style: none;  /* IE and Edge */
+		scrollbar-width: none;  /* Firefox */
+	}
+	`;
 
 export default GlobalStyle;

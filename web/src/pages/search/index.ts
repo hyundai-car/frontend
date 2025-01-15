@@ -11,7 +11,7 @@ import { SimpleSearchResult } from "../simpleSearch/ui/SimpleSearchResult.ui";
 
 const SearchPage = withSuspense(
   lazy(() =>
-    import("./ui/search.ui").then((module) => ({
+    import("./ui/Page").then((module) => ({
       default: module.SearchPage,
     }))
   )
