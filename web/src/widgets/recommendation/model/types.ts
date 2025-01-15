@@ -16,7 +16,7 @@ export interface Comparison {
   mileage: number;
   fuelEfficiency: number;
 }
-export type BestCar = Pick<
+export type BestCarComparison = Pick<
   Car,
   | "carId"
   | "modelName"
