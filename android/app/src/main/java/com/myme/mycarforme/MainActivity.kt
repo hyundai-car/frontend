@@ -57,6 +57,10 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+        binding.mainToolbar.toolbarActionButton.setOnClickListener {
+            switchFragment(searchFragment)
+            binding.navView.selectedItemId = R.id.navigation_search
+        }
         ViewCompat.setOnApplyWindowInsetsListener(
             window.decorView
         ) { v, insets ->
@@ -65,8 +69,6 @@ class MainActivity : AppCompatActivity() {
 
             return@setOnApplyWindowInsetsListener CONSUMED
         }
-
-        val navigateToFragment = intent.getStringExtra("navigate_to_fragment")
 
     }
     private fun switchFragment(fragment: Fragment) {

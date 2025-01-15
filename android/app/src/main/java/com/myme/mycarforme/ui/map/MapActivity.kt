@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.GestureDetector
@@ -11,6 +12,7 @@ import android.view.MotionEvent
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -51,20 +53,9 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private var longitude: Double = 0.0
     private lateinit var pathTime : String
     private lateinit var bottomSheet: LinearLayout
-    private val movingCar : Car = Car(
-        carId = 1689541, // Parse the carId
-        modelName = "2024 GV80 Coupe 가솔린 3.5 터보 AWD 쿠페 디자인 셀렉션Ⅱ 카본",
-        year = YearMonth.parse("2021-07"),
-        mileage = 16510,
-        sellingPrice = 42128,
-        mainImage = "https://certified-static.hyundai.com/contents/goods/shootConts/tobepic/02/exterior/HIG241028009973/PRD602_200.JPG/dims/crop/3464x1520+188+840",
-        carNumber = "168구9541",
-        isLike = false,
-        likeCount = 0,
-        createdAt = LocalDate.parse("2021-07-15"),
-        updatedAt = LocalDate.parse("2021-07-15") // Assuming the same date for now
-    )
+    private lateinit var movingCar : Car
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMapBinding.inflate(layoutInflater)
@@ -81,12 +72,19 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         progressBarView.setupSteps(stepCount = 3, labels = stepLabels)
         // 초기 상태 설정
         progressBarView.updateSteps(2)
+        val intent : Intent = getIntent()
+        val movingCar = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+            intent.getParcelableExtra("car_data", Car::class.java)
+        } else {
+            intent.getParcelableExtra("car_data") as? Car
+        }
+
         bottomSheet = binding.bottomSheet
         Glide.with(binding.mapBottomCarImage.context)
-            .load(movingCar.mainImage)
+            .load(movingCar?.mainImage)
             .into(binding.mapBottomCarImage)
-        binding.mapBottomCarNameText.text = movingCar.carNumber
-        binding.mapBottomCarModelText.text = movingCar.modelName
+        binding.mapBottomCarNameText.text = movingCar?.carNumber
+        binding.mapBottomCarModelText.text = movingCar?.modelName
         binding.mapBottomCarInfoCard.setOnClickListener {
             //TODO: 클릭시 차량 디테일로 넘어가기
         }
