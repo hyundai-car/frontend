@@ -1,7 +1,10 @@
 package com.myme.mycarforme.data.model
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import java.time.LocalDate
 import java.time.YearMonth
 
+@Parcelize
 data class Car(
     val carId: Int,
     val modelName: String,
@@ -14,4 +17,4 @@ data class Car(
     val likeCount: Int,
     val createdAt: LocalDate, // yyyy-MM-dd 형태로 저장
     val updatedAt: LocalDate // yyyy-MM-dd 형태로 저장
-)
+) : Parcelable

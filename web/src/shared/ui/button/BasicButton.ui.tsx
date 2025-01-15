@@ -35,4 +35,5 @@ const StyledButton = styled.button<{
   outline: none;
   font-size: var(--semi-bold--md);
   font-weight: 600;
+  box-shadow: var(--box-shadow);
 `;

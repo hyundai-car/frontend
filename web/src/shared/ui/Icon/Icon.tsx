@@ -8,7 +8,8 @@ export type IconType =
   | 'routing'
   | 'search'
   | 'close'
-  | 'filter';
+  | 'filter'
+  | 'back';
 
 // Props 타입 정의
 export interface IconProps {

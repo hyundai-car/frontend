@@ -1,14 +1,17 @@
 import { withSuspense } from "@/shared/lib/hocs";
 import { pathKeys } from "@/shared/lib/react-router";
 import { createElement, lazy } from "react";
-import { RouteObject } from "react-router-dom";
+import { Navigate, RouteObject } from "react-router-dom";
+import { SimpleSearchPage } from "../simpleSearch/ui/SimpleSearch.ui";
+import { SimpleSearchStep } from "../simpleSearch/ui/SimpleSearchStep.ui";
+import { SimpleSearchResult } from "../simpleSearch/ui/SimpleSearchResult.ui";
 /**
  * @description
  */
 
 const SearchPage = withSuspense(
   lazy(() =>
-    import("./ui/search.ui").then((module) => ({
+    import("./ui/Page").then((module) => ({
       default: module.SearchPage,
     }))
   )
@@ -16,5 +19,33 @@ const SearchPage = withSuspense(
 
 export const SearchRoute: RouteObject = {
   path: pathKeys.search(),
-  element: createElement(SearchPage),
+  children: [
+    {
+      index: true, // search 경로일 때 (부모 경로와 일치할 때)
+      element: createElement(SearchPage),
+    },
+    {
+      path: "simple-search",
+      children: [
+        {
+          index: true,
+          element: createElement(Navigate, { to: "step/1", replace: true }), // search/simple-search면 step/1로 이동
+        },
+        {
+          path: "step",
+          element: createElement(SimpleSearchPage),
+          children: [
+            {
+              path: ":step",
+              element: createElement(SimpleSearchStep),
+            },
+          ],
+        },
+        {
+          path: "result/:resultId",
+          element: createElement(SimpleSearchResult),
+        },
+      ],
+    },
+  ],
 };

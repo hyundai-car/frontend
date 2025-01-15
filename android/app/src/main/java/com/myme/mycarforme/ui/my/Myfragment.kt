@@ -1,5 +1,6 @@
 package com.myme.mycarforme.ui.my
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import com.myme.mycarforme.R
 import com.myme.mycarforme.data.model.Car
 import com.myme.mycarforme.databinding.FragmentMyBinding
 import com.myme.mycarforme.ui.home.InfoCardAdapter
+import com.myme.mycarforme.ui.map.MapActivity
 import java.time.LocalDate
 import java.time.YearMonth
 
@@ -82,7 +84,9 @@ class Myfragment : Fragment() {
     }
 
     fun buttonTap() {
-        Log.d("chk","qwe")
+        val intent = Intent(requireContext(), MapActivity::class.java)
+        intent.putExtra("car_data", dummyCar) // Parcelable 객체 전달
+        startActivity(intent)
     }
 
     override fun onDestroyView() {
