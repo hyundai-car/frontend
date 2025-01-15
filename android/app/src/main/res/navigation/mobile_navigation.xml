@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.myme.mycarforme.ui.home.HomeFragment"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="com.myme.mycarforme.ui.recommend.RecommendFragment"
+        tools:layout="@layout/fragment_recommend" />
+
+    <fragment
+        android:id="@+id/navigation_recommend"
+        android:name="com.myme.mycarforme.ui.search.SearchFragment"
+        tools:layout="@layout/fragment_search" />
+
+    <fragment
+        android:id="@+id/navigation_my"
+        android:name="com.myme.mycarforme.ui.my.Myfragment"
+        tools:layout="@layout/fragment_my" />
+</navigation>

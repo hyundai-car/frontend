@@ -4,7 +4,7 @@ import { DefaultTheme } from "styled-components";
 interface BasicButtonProps {
   onClick: () => void;
   color?: keyof DefaultTheme["colors"];
-  disabled: boolean;
+  disabled?: boolean;
   children: React.ReactNode;
 }
 
@@ -25,7 +25,7 @@ const StyledButton = styled.button<{
   $color: keyof DefaultTheme["colors"];
 }>`
   width: 100%;
-  height: 60px;
+  height: 50px;
   color: var(--white);
   border-radius: 8px;
   background-color: ${(props) => props.theme.colors[props.$color]};
@@ -33,4 +33,6 @@ const StyledButton = styled.button<{
   cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
   border: none;
   outline: none;
+  font-size: var(--semi-bold--md);
+  font-weight: 600;
 `;

@@ -4,7 +4,9 @@
  * @exmaple
  */
 
-import { CarsDetailParamsSchema } from "@/shared/lib/react-router/router.contracts";
+import { CarsDetailParamsSchema, SearchQueryParamsSchema } from "@/shared/lib/react-router/router.contracts";
 import { z } from "zod";
 
 export type CarsDetailParams = z.infer<typeof CarsDetailParamsSchema>;
+
+export type SearchQueryParams = z.infer<typeof SearchQueryParamsSchema>; 

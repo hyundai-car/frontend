@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MyCarForMe</string>
+    <string name="home">홈</string>
+    <string name="search">검색</string>
+    <string name="recommend">추천</string>
+    <string name="my">마이</string>
+</resources>

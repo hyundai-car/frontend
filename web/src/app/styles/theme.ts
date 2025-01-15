@@ -21,6 +21,7 @@ const colors = {
   darkGray: "rgba(169, 169, 169, 1)",
   white: "rgb(255, 255, 255)",
   black: "rgb(0, 0, 0)",
+  deepDarkGray: "rgba(113, 113, 122, 1)",
 };
 
 export const theme = {
