@@ -83,6 +83,7 @@ class Myfragment : Fragment() {
 
     fun buttonTap() {
         Log.d("chk","qwe")
+
     }
 
     override fun onDestroyView() {
