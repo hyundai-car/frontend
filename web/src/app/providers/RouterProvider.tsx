@@ -1,5 +1,4 @@
 import { CandidatesRoute, RecommendationRoute } from "@/pages/recommendation";
-import { RecommendationRoute } from "@/pages/recommendation";
 import { SearchRoute } from "@/pages/search";
 import { withSuspense } from "@/shared/lib/hocs";
 import { createElement, lazy } from "react";
@@ -45,7 +44,6 @@ const root = createBrowserRouter([
       },
       {
         element: createElement(BackHeaderLayout),
-        children: [RecommendationRoute],
         children: [RecommendationRoute, SearchRoute],
       },
 
