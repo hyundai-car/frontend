@@ -35,7 +35,8 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
-          context: web/Dockerfile
+          context: ./web
+          dockerfile: ./web/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/mycarforme-frontend:latest
 
