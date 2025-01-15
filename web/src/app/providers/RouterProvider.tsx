@@ -44,7 +44,11 @@ const root = createBrowserRouter([
       },
       {
         element: createElement(BackHeaderLayout),
-        children: [RecommendationRoute, SearchRoute],
+        children: [RecommendationRoute],
+      },
+      {
+        element: createElement(BaseLayout),
+        children: [SearchRoute],
       },
 
       // {
