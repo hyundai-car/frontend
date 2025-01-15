@@ -16,11 +16,16 @@ export const pathKeys = {
   login: () => pathKeys.root.concat("login/"),
   register: () => pathKeys.root.concat("register/"),
   home: () => pathKeys.root,
-  recommendation: () => pathKeys.root.concat("recommendation/"),
+  // recommendation: () => pathKeys.root.concat("recommendation/"),
+  recommendation: {
+    root: () => pathKeys.root.concat("recommendation/"),
+    candidates: () => pathKeys.recommendation.root().concat("candidates/"),
+    result: () => pathKeys.recommendation.root().concat("result/"),
+  },
 
   // cars/carsDetail?carNo=123123
   cars: {
-    root: () => pathKeys.root.concat("cars"),
+    root: () => pathKeys.root.concat("cars/"),
     carsDetail: ({ carNo }: CarsDetailParams) =>
       pathKeys.cars.root().concat("carsDetail?carNo=", carNo),
   },
