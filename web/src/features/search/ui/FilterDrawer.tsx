@@ -208,7 +208,7 @@ export const FilterDrawer = ({ isOpen, onClose, filters, onFilterChange }: Filte
   )
 }
 const DrawerContent = styled.div`
-  width: 360px;
+  width: 100vw;
   padding: 20px;
   height: 100%;
   position: relative;
