@@ -12,8 +12,8 @@ const GlobalStyle = createGlobalStyle`
 	
 	:root {
 		font-family: 'Inter';
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    	-webkit-font-smoothing: antialiased;
+    	-moz-osx-font-smoothing: grayscale;
 
 		/* Color styles */
 		--navy: rgba(15, 23, 42, 1);
