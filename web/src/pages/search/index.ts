@@ -3,7 +3,7 @@ import { pathKeys } from "@/shared/lib/react-router";
 import { createElement, lazy } from "react";
 import { Navigate, RouteObject } from "react-router-dom";
 import { SimpleSearchPage } from "./simpleSearch/ui/Page";
-import { SimpleSearchStep } from "./simpleSearch/ui/SimpleSearchStep.ui";
+import { SimpleSearchStep } from "../../widgets/search/simpleSearchStep/ui/SimpleSearchStep";
 import { SimpleSearchResult } from "./simpleSearch/ui/ResultPage";
 /**
  * @description

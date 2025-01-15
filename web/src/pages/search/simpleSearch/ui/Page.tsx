@@ -2,14 +2,17 @@ import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { pathKeys } from "@/shared/lib/react-router";
 import { SimpleSearchStep } from "@/shared/lib/react-router/router.types";
 import { Icon } from "@/shared/ui/Icon/Icon";
+import styled from "styled-components";
+import { BasicButton } from "@/shared/ui/button";
+import { useSimpleSearchStore } from "../model/store";
+import { useEffect } from "react";
 
 export function SimpleSearchPage() {
   const navigate = useNavigate();
   const { step } = useParams();
   const currentStep = Number(step || 1);
-  const setStep = useSimpleSearchStore((state) => state.setStep);
 
-  const { answers } = useSimpleSearchStore();
+  const { answers, setStep } = useSimpleSearchStore();
   const currentAnswer = answers.find((a) => a.questionId === currentStep);
   const hasSelection =
     currentAnswer && currentAnswer.selectedOptions.length > 0;
@@ -71,11 +74,6 @@ export function SimpleSearchPage() {
     </div>
   );
 }
-
-import styled from "styled-components";
-import { BasicButton } from "@/shared/ui/button";
-import { useSimpleSearchStore } from "../model/store";
-import { useEffect } from "react";
 
 const Header = styled.div`
   display: flex;
