@@ -1,4 +1,3 @@
-import React from "react";
 import { useSimpleSearchStore } from "../model/store";
 
 export function SimpleSearchResult() {
