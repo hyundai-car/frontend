@@ -19,6 +19,8 @@ const colors = {
   grayBlue: "rgba(203, 213, 225, 1)",
   lightGray: "rgba(247, 247, 247, 1)",
   darkGray: "rgba(169, 169, 169, 1)",
+  white: "rgb(255, 255, 255)",
+  black: "rgb(0, 0, 0)",
   deepDarkGray: "rgba(113, 113, 122, 1)",
 };
 

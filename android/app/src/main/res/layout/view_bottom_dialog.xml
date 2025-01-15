@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- 다른 UI 요소들 (예: 버튼, 텍스트 등) -->
+    <Button
+        android:id="@+id/buttonShowBottomSheet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Bottom Sheet"
+        android:layout_centerInParent="true" />
+
+    <!-- Bottom Sheet 정의 -->
+    <LinearLayout
+        android:id="@+id/bottomSheet"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        android:background="@android:color/white"
+        android:elevation="10dp"
+        android:padding="16dp"
+        android:layout_gravity="bottom"
+        android:visibility="visible">
+
+        <!-- Bottom Sheet의 내용 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="This is a Bottom Sheet"
+            android:textSize="18sp"/>
+
+        <Button
+            android:id="@+id/buttonClose"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Close" />
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -4,3 +4,5 @@ export type SelectCard = Pick<
   Car,
   "carId" | "modelName" | "sellingPrice" | "year" | "mileage" | "mainImage"
 >;
+
+

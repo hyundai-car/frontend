@@ -1,4 +1,4 @@
-import { RecommendationRoute } from "@/pages/recommendation";
+import { CandidatesRoute, RecommendationRoute } from "@/pages/recommendation";
 import { SearchRoute } from "@/pages/search";
 import { withSuspense } from "@/shared/lib/hocs";
 import { createElement, lazy } from "react";
@@ -17,6 +17,14 @@ const BaseLayout = withSuspense(
     }))
   )
 );
+const BackHeaderLayout = withSuspense(
+  lazy(() =>
+    import("@/shared/ui/layout").then((module) => ({
+      default: module.BackHeaderLayout,
+    }))
+  )
+);
+
 /**
  * @description 라우터에 맞는 layout 정의
  */
@@ -28,11 +36,17 @@ const root = createBrowserRouter([
         // TODO: 삭제 예정 (임시)
         path: "/",
         element: createElement(BaseLayout),
-        children: [
-          RecommendationRoute,
-          SearchRoute
-        ],
+        children: [CandidatesRoute],
       },
+      {
+        element: createElement(BaseLayout),
+        children: [CandidatesRoute],
+      },
+      {
+        element: createElement(BackHeaderLayout),
+        children: [RecommendationRoute, SearchRoute],
+      },
+
       // {
       //   loader: async () => redirect(pathKeys.page404()),
       //   path: "*",
