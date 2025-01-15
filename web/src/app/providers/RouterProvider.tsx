@@ -17,7 +17,6 @@ const BaseLayout = withSuspense(
     }))
   )
 );
-
 /**
  * @description 라우터에 맞는 layout 정의
  */
@@ -29,7 +28,10 @@ const root = createBrowserRouter([
         // TODO: 삭제 예정 (임시)
         path: "/",
         element: createElement(BaseLayout),
-        children: [RecommendationRoute, SearchRoute],
+        children: [
+          RecommendationRoute,
+          SearchRoute
+        ],
       },
       // {
       //   loader: async () => redirect(pathKeys.page404()),
