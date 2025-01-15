@@ -1,11 +1,11 @@
+import { Car } from "@/shared/model/car.types";
 import {
-  BestCarComparison,
   Comparison,
   ComparisonAvg,
 } from "@/widgets/recommendation/model/types";
 
 export const compareWithAvg = (
-  bestCar: BestCarComparison,
+  bestCar: Car,
   comparisions: ComparisonAvg
 ): Record<keyof Comparison, boolean> => {
   return {

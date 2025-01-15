@@ -1,4 +1,4 @@
-import { BestCarResponse } from "@/pages/recommendation/api/\btypes";
+import { BestCarResponse } from "@/pages/recommendation/api/types";
 import { useBestCar } from "@/pages/recommendation/model/queries";
 // import { BestCar, Comparison } from "@/widgets/recommendation/model/types";
 import { ReactNode } from "react";

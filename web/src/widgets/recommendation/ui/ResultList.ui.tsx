@@ -11,7 +11,7 @@ import { ReactComponent as groupIcon } from "public/icons/group.svg";
 import { ReactComponent as RoutingIcon } from "public/icons/routing.svg";
 import { ReactComponent as ProfileIcon } from "public/icons/profile.svg";
 import { compareWithAvg } from "@/widgets/recommendation/model/actions";
-import { BestCarResponse } from "@/pages/recommendation/api/\btypes";
+import { BestCarResponse } from "@/pages/recommendation/api/types";
 
 export function ResultList() {
   const { data } = useBestCar() as { data: BestCarResponse };
