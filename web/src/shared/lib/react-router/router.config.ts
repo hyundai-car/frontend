@@ -8,7 +8,7 @@
  * 결과: '/cars/carsDetail?carNo=123'
  */
 
-import { CarsDetailParams, SearchQueryParams } from "@/shared/lib/react-router/router.types";
+import { CarsDetailParams, SearchQueryParams, SimpleSearchParams, SimpleSearchResultParams } from "@/shared/lib/react-router/router.types";
 
 export const pathKeys = {
   root: "/",
@@ -42,5 +42,12 @@ export const pathKeys = {
       "/result",
       queryString ? `?${queryString}` : ''
     );
+  },
+  simpleSearch: {
+    root: () => pathKeys.search().concat("/simple-search"),
+    step: ({ step }: SimpleSearchParams) => 
+      pathKeys.simpleSearch.root().concat(`/step/${step || '1'}`),
+    result: ({ resultId }: SimpleSearchResultParams) =>
+      pathKeys.simpleSearch.root().concat(`/result/${resultId}`),
   },
 };
