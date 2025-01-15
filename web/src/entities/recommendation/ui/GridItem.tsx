@@ -18,7 +18,6 @@ type StyledIconProps = {
 };
 
 export function GridItem({ itemName, Icon, color, backColor, value }: Props) {
-  console.log(color, backColor);
   return (
     <Container $backColor={backColor}>
       <IconWrap>

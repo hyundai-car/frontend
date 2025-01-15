@@ -4,18 +4,18 @@ import { Basic } from "@/shared/model/car.types";
 interface ComparisonAvg {
   mmScoreAvg: number;
   accidentCountAvg: number;
-  initialRegistrationDateAvg: Date;
+  initialRegistrationDateAvg: string;
   mileageAvg: number;
   fuelEfficiencyAvg: number;
 }
 
-interface BestCar extends Basic {
+export interface BestCar extends Basic {
   carId: number;
   modelName: string;
   mainImage: string;
   sellingPrice: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface BestCarResponse {
