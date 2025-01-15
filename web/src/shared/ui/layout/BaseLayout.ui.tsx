@@ -1,4 +1,3 @@
-import React from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { pathKeys } from "@/shared/lib/react-router";
 import styled from "styled-components";
@@ -13,11 +12,7 @@ export function BaseLayout() {
   return (
     <Container>
       <Header>
-        <Logo 
-          src="/images/logo.svg" 
-          alt="로고" 
-          onClick={() => navigate('/')}
-        />
+        <Logo src="/images/logo.svg" alt="로고" onClick={() => navigate("/")} />
         <SearchButton onClick={handleSearchClick}>
           <img src="/icons/search.svg" alt="검색" />
         </SearchButton>

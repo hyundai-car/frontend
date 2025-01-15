@@ -1,4 +1,6 @@
+import { BestCarResponse } from "@/pages/recommendation/api/\btypes";
 import { useBestCar } from "@/pages/recommendation/model/queries";
+// import { BestCar, Comparison } from "@/widgets/recommendation/model/types";
 import { ReactNode } from "react";
 import styled from "styled-components";
 
@@ -10,8 +12,9 @@ type Props = {
 };
 
 export function ResultCard({ topSlot, bottomSlot }: Props) {
-  const { data } = useBestCar();
-  const { bestCar, comparisons } = data;
+  const { data } = useBestCar() as { data: BestCarResponse };
+  // if (!data) return null;
+  const { bestCar } = data;
 
   return (
     <Container>

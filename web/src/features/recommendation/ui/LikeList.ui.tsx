@@ -4,13 +4,13 @@ import { useCheckboxGroup } from "@/features/recommendation/model/useCheckboxGro
 import { LikeCard } from "@/features/recommendation/ui/LikeCard.ui";
 import { MOCK_LikeList } from "@/pages/recommendation/model/mock";
 import { Checkbox } from "@/shared/ui/checkbox";
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
 
 export function LikeList() {
   //TODO 임시데이터
-  const [cardList, setCardList] = useState<SelectCard[]>(MOCK_LikeList);
-
+  // const [cardList, setCardList] = useState<SelectCard[]>(MOCK_LikeList);
+  const cardList = MOCK_LikeList;
   const setHasCheckedItems = useRecommendationStore(
     (state) => state.setHasCheckedItems
   );
@@ -21,7 +21,7 @@ export function LikeList() {
     toggleItem,
     toggleAll,
     isAllChecked,
-    getCheckedItems,
+    // getCheckedItems,
   } = useCheckboxGroup<SelectCard>([], "carId");
 
   useEffect(() => {

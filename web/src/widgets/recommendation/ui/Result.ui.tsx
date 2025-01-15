@@ -1,5 +1,4 @@
 import { ResultCard } from "@/entities/recommendation/ui/ResultCard.ui";
-import { useBestCar } from "@/pages/recommendation/model/queries";
 import { ResultGraph } from "@/widgets/recommendation/ui/ResultGraph.ui";
 import { ResultList } from "@/widgets/recommendation/ui/ResultList.ui";
 import styled from "styled-components";
