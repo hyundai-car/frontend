@@ -18,10 +18,10 @@ export const SimpleSearchPage = withSuspense(
 //   )
 // );
 
-export const SimpleSearchResult = withSuspense(
+export const SimpleSearchResultPage = withSuspense(
   lazy(() =>
     import("./ui/ResultPage").then((module) => ({
-      default: module.SimpleSearchResult,
+      default: module.SimpleSearchResultPage,
     }))
   )
 );
