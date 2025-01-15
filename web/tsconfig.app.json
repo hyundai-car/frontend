@@ -22,6 +22,11 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
 
+    /* Any 타입 제한을 위한 추가 설정 */
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noUncheckedIndexedAccess": true,
+
     /* Path Aliases */
     "baseUrl": ".",
     "paths": {
@@ -34,5 +39,5 @@
       "@shared/*": ["src/shared/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "src/app/global.d.ts", "src/app/styles/theme.d.ts"]
 }

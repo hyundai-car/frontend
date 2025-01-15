@@ -17,6 +17,8 @@ const GlobalStyle = createGlobalStyle`
 		--gray-blue: rgba(203, 213, 225, 1);
 		--light-gray: rgba(247, 247, 247, 1);
 		--dark-gray: rgba(169, 169, 169, 1);
+		--white: #ffffff;
+		--black: #000000;
 
 		/* Text-size styles */
 		--lg-small: 20px;
@@ -33,7 +35,7 @@ const GlobalStyle = createGlobalStyle`
 
 		/* Effect styles */
 		--list-item:  0px 4px 35px rgba(0, 0, 0, 0.15);
-
+		--box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 	}
 `;
 
