@@ -83,7 +83,7 @@ export const useSimpleSearchStore = create<SimpleSearchState>((set) => ({
 
   setAnswer: (questionId, optionId) =>
     set((state) => {
-      const isMultiple = [2, 5].includes(questionId);
+      const isMultiple = [2, 5].includes(questionId); // 2,5번만 복수 선택 가능
       const existingAnswerIndex = state.answers.findIndex(
         (a) => a.questionId === questionId
       );

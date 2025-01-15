@@ -22,12 +22,14 @@ export function SimpleSearchStep() {
   };
   return (
     <Container>
-      {currentQuestion && (
-        <Title>{currentQuestion.question.replace("|", "\n")}</Title>
-      )}
-      <Subtitle>
-        {isMultipleSelectionStep(currentStep) ? "복수 선택" : ""}
-      </Subtitle>
+      <TitleWrap>
+        {currentQuestion && (
+          <Title>{currentQuestion.question.replace("|", "\n")}</Title>
+        )}
+        <Subtitle>
+          {isMultipleSelectionStep(currentStep) ? "복수 선택" : ""}
+        </Subtitle>
+      </TitleWrap>
       <ImageContainer>
         <SImage src={stepIcons[currentStep as keyof typeof stepIcons]} />
       </ImageContainer>
@@ -68,10 +70,13 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
 `;
+const TitleWrap = styled.div`
+  height: 80px;
+`;
 const Title = styled.div`
+  margin-top: 20px;
   font-size: var(--semi-bold--lg);
   font-weight: 600;
-  margin-top: 40px;
   white-space: pre-line;
 `;
 const Subtitle = styled.div`
