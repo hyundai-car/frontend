@@ -1,61 +1,93 @@
-import { BestCar } from "@/entities/recommendation/api/types";
 import styled from "styled-components";
 import { ReactComponent as CrownIcon } from "public/icons/crown.svg";
+import { BestCar } from "@/entities/recommendation/api/types";
+
 type Props = {
-  data: BestCar;
+  cardId: number;
+  modelName: string;
+  initialRegistrationDate: string;
+  mileage: number;
+  year: number;
+  price: number;
+  mainImage: string;
 };
-export function ComparisonCard({ data }: Props) {
+
+export function ComparisonCard({
+  data,
+  isBest,
+}: {
+  data: Props | BestCar;
+  isBest: boolean;
+}) {
   console.log(data);
+
   return (
-    <Container>
+    <Container $isBest={isBest}>
       <ImgWrap>
         <img src={data.mainImage} />
       </ImgWrap>
       <Row>
         <StyledIcon />
-        <Description>
+        <Description $isBest={isBest}>
           <h6>최초 등록일</h6>
-          <p>dd</p>
+          <p>{data.initialRegistrationDate}</p>
         </Description>
       </Row>
       <Row>
         <StyledIcon />
-        <Description>
-          <h6>최초 등록일</h6>
-          <p>dd</p>
-        </Description>
-      </Row>
-      <Row>
-        <StyledIcon />
-        <Description>
+        <Description $isBest={isBest}>
           <h6>주행 거리</h6>
-          <p>dd</p>
+          <p>{data.mileage}</p>
         </Description>
       </Row>
       <Row>
         <StyledIcon />
-        <Description>
+        <Description $isBest={isBest}>
           <h6>연비</h6>
-          <p>dd</p>
+          <p>{data.mileage}</p>
         </Description>
       </Row>
       <Row>
         <StyledIcon />
-        <Description>
-          <h6>사고 이력</h6>
-          <p>dd</p>
+        <Description $isBest={isBest}>
+          <h6>연비</h6>
+          <p>{data.mileage}</p>
+        </Description>
+      </Row>
+      <Row>
+        <StyledIcon />
+        <Description $isBest={isBest}>
+          <h6>연비</h6>
+          <p>{data.mileage}</p>
+        </Description>
+      </Row>
+      <Row>
+        <StyledIcon />
+        <Description $isBest={isBest}>
+          <h6>연비</h6>
+          <p>{data.mileage}</p>
+        </Description>
+      </Row>
+      <Row>
+        <StyledIcon />
+        <Description $isBest={isBest}>
+          <h6>연비</h6>
+          <p>{data.mileage}</p>
         </Description>
       </Row>
     </Container>
   );
 }
 
-const Container = styled.div`
+const Container = styled.div<{ $isBest: boolean }>`
   display: flex;
   flex-direction: column;
   border-radius: 8px;
   padding: 10px 0 20px 0;
-  background-color: var(--navy);
+  background-color: ${({ $isBest }) =>
+    $isBest ? "var(--navy)" : "var(--light-gray)"};
+  max-width: 160px;
+  border: 1px solid var(--gray-blue);
 `;
 const ImgWrap = styled.div`
   img {
@@ -66,7 +98,7 @@ const ImgWrap = styled.div`
   }
 `;
 const Row = styled.div`
-  padding: 15px 24px;
+  padding: 15px 18px;
   display: flex;
   align-items: end;
   gap: 5px;
@@ -77,14 +109,15 @@ const Row = styled.div`
   }
 `;
 const StyledIcon = styled(CrownIcon)``;
-const Description = styled.div`
+const Description = styled.div<{ $isBest: boolean }>`
   padding-top: 5px;
   display: flex;
   flex-direction: column;
   gap: 5px;
   p {
     color: var(--white);
-    font-size: var(--semi-bold--md);
+    color: ${({ $isBest }) => ($isBest ? "var(--white)" : "var(--navy)")};
+    font-size: var(--semi-bold--md-small);
     font-weight: 600;
   }
 `;
