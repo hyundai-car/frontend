@@ -1,6 +1,5 @@
 import { useBestCar } from "@/pages/recommendation/model/queries";
-import { bestCar, Comparison } from "@/widgets/recommendation/model/types";
-import { ComponentType, ReactNode } from "react";
+import { ReactNode } from "react";
 import styled from "styled-components";
 
 type Props = {
