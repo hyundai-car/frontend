@@ -1,14 +1,19 @@
 import { BasicButton } from "@/shared/ui/button";
+import { useNavigate } from "react-router-dom";
 
 export const DiagnosticButton = () => {
-  const handleDiagnostic = () => {
-    console.log("clicked");
-    // 진단 로직, 경로에 simple-search 경로 추가
-  };
+  const navigate = useNavigate();
 
   return (
-    <BasicButton color="navy" onClick={handleDiagnostic} disabled={false}>
-      차알못을 위한 간편 진단
-    </BasicButton>
+    <>
+      <BasicButton
+        color="navy"
+        onClick={() => navigate("simple-search")}
+        disabled={false}
+      >
+        차알못을 위한 간편 진단
+      </BasicButton>
+      <div style={{ height: 15 }} />
+    </>
   );
 };

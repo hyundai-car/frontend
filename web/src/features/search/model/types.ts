@@ -45,3 +45,7 @@ export interface FilterDrawerProps {
 export interface SearchBoxProps {
   onFilterClick: () => void;
 }
+
+export interface SearchState extends FilterState {
+  keyword: string;
+}

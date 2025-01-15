@@ -7,51 +7,25 @@ import { Icon } from "@/shared/ui/Icon/Icon";
 import { Drawer } from "@mui/material";
 import { RangeSection } from "./FilterDrawer/RangeSection";
 import { BasicButton } from "@/shared/ui/button";
+import { useSearchStore } from "../model/store";
 
-export const FilterDrawer = ({
-  isOpen,
-  onClose,
-  filters,
-  onFilterChange,
-}: FilterDrawerProps) => {
+export const FilterDrawer = ({ isOpen, onClose }: FilterDrawerProps) => {
+  const { filters, setFilters, printSearchConditions } = useSearchStore();
   const { control, handleSubmit, reset } = useForm<FilterState>({
     defaultValues: filters,
   });
 
-  // 폼 제출 처리
-  // 나중에 API 호출로 변경될 부분
+  // 폼 제출 처리, 나중에 API 호출로 변경될 부분
   const onSubmit = (data: FilterState) => {
-    // 각 필터의 현재 상태를 포맷팅하여 출력
-    console.log("=== 적용된 검색 필터 ===");
-    // 연료 타입 필터
-    if (data.fuel.length > 0) {
-      console.log("연료:", data.fuel.join(", "));
-    }
-    // 차종 필터
-    if (data.bodyType.length > 0) {
-      console.log("차종:", data.bodyType.join(", "));
-    }
-    // 가격 범위
-    console.log(
-      "가격:",
-      `${data.priceRange[0].toLocaleString()}만원 - ${data.priceRange[1].toLocaleString()}만원`
-    );
-    // 주행거리 범위
-    console.log(
-      "주행거리:",
-      `${data.mileageRange[0].toLocaleString()}km - ${data.mileageRange[1].toLocaleString()}km`
-    );
-    // 연식 범위
-    console.log("연식:", `${data.yearRange[0]}년 - ${data.yearRange[1]}년`);
-    console.log("========================");
-    onFilterChange(data);
+    setFilters(data);
+    printSearchConditions();
     onClose();
   };
 
   // 필터 초기화 처리
   const handleReset = () => {
     reset(INITIAL_FILTERS);
-    onFilterChange(INITIAL_FILTERS);
+    // onFilterChange(INITIAL_FILTERS);
   };
   return (
     <Drawer anchor="right" open={isOpen} onClose={onClose} keepMounted={false}>

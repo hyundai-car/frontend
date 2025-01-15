@@ -1,15 +1,27 @@
 import styled from "styled-components";
 import { Icon } from "@/shared/ui/Icon/Icon";
+import { useSearchStore } from "../model/store";
 
 type Props = {
   onFilterClick: () => void;
 };
+export const SearchBox = ({ onFilterClick }: Props) => {
+  const { keyword, setKeyword } = useSearchStore();
 
-export const SearchBox = ({ onFilterClick = () => {} }: Props) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      console.log("검색어:", e.currentTarget.value);
+      setKeyword(e.currentTarget.value);
+    }
+  };
   return (
     <Container>
       <Icon type="search" color="deepDarkGray" size={16} />
-      <SearchInput placeholder="차량을 검색하세요" />
+      <SearchInput
+        placeholder="차량을 검색하세요"
+        onKeyDown={handleKeyDown}
+        defaultValue={keyword}
+      />
       <Icon type="filter" size={16} onClick={onFilterClick} />
     </Container>
   );

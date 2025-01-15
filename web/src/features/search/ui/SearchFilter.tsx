@@ -9,6 +9,7 @@ export const SearchFilter = () => {
   return (
     <>
       <SearchBox onFilterClick={() => setFilterOpen(true)} />
+      <div style={{ height: 15 }} />
       <FilterDrawer
         isOpen={isFilterOpen}
         onClose={() => setFilterOpen(false)}
