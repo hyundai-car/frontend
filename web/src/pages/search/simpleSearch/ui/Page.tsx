@@ -6,13 +6,14 @@ import styled from "styled-components";
 import { BasicButton } from "@/shared/ui/button";
 import { useSimpleSearchStore } from "../model/store";
 import { useEffect } from "react";
+import { DIAGNOSTIC_QUESTIONS } from "@/entities/simpleSearch/questionBlock/model/constants";
 
 export function SimpleSearchPage() {
   const navigate = useNavigate();
   const { step } = useParams();
   const currentStep = Number(step || 1);
 
-  const { answers, setStep } = useSimpleSearchStore();
+  const { answers, setStep, resetAnswers } = useSimpleSearchStore();
   const currentAnswer = answers.find((a) => a.questionId === currentStep);
   const hasSelection =
     currentAnswer && currentAnswer.selectedOptions.length > 0;
@@ -21,11 +22,33 @@ export function SimpleSearchPage() {
     setStep(currentStep);
   }, [currentStep]);
 
+  const printDebugAnswers = () => {
+    console.log("========진단 결과========");
+    answers.forEach((answer) => {
+      const question = DIAGNOSTIC_QUESTIONS.find(
+        (q) => q.id === answer.questionId
+      );
+      const selectedLabels = question?.isMultipleChoice
+        ? answer.selectedOptions
+            .map(
+              (optionId) =>
+                question.options.find((opt) => opt.id === optionId)?.label
+            )
+            .join(", ")
+        : question?.options.find((opt) => opt.id === answer.questionId)?.label;
+
+      console.log(`질문: ${question?.question}`);
+      console.log(`선택: ${selectedLabels}`);
+    });
+  };
+
   const handleNext = () => {
     if (!hasSelection) return;
 
     if (currentStep === 5) {
-      navigate(pathKeys.simpleSearch.result({ resultId: "123" }));
+      printDebugAnswers(); // 디버깅용
+      resetAnswers(); // answers 초기화
+      navigate(pathKeys.simpleSearch.result({ resultId: "123" })); // 결과 페이지 연결
     } else {
       navigate(
         pathKeys.simpleSearch.step({
