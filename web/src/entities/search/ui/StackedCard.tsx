@@ -1,44 +1,54 @@
-import { Icon } from '@/shared/ui/Icon/Icon';
-import styled from 'styled-components';
-import { mockCarListData } from '../api/mockCarListData';
-import { convertToManWon } from '../libs/priceUtils';
-import { TSearch } from '../model/search.types';
-import { ReactNode } from 'react';
+import { Icon } from "@/shared/ui/Icon/Icon";
+import styled from "styled-components";
+import { mockCarListData } from "../api/mockCarListData";
+import { convertToManWon } from "../libs/priceUtils";
+import { TSearch } from "../model/search.types";
+import { ReactNode } from "react";
 
 type Props = {
   data?: TSearch;
   actionSlot?: ReactNode;
+  onClick: () => void;
 };
-export function StackedCard({ data = mockCarListData.contents[0], actionSlot }: Props) {
+export function StackedCard({
+  data = mockCarListData.contents[0],
+  actionSlot,
+  onClick,
+}: Props) {
   if (!data) {
-    throw new Error('Data is undefined');
+    throw new Error("Data is undefined");
   }
-  const { modelName, year, mileage, sellingPrice, mainImage, isLike, likeCount } = data;
+  const {
+    modelName,
+    year,
+    mileage,
+    sellingPrice,
+    mainImage,
+    isLike,
+    likeCount,
+  } = data;
   const price = convertToManWon(sellingPrice).toLocaleString();
-    return (
-    <Card>
+  return (
+    <Card onClick={onClick}>
       <ImageContainer>
-          <HeartButton>
-            {actionSlot || (
-            <Icon 
-              type="heart" 
-              color={isLike ? 'red' : 'gray'} 
-              onClick={() => console.log('heart clicked')} 
+        <HeartButton>
+          {actionSlot || (
+            <Icon
+              type="heart"
+              color={isLike ? "red" : "gray"}
+              onClick={() => console.log("heart clicked")}
             />
           )}
         </HeartButton>
-        <CardImage 
-            src={ mainImage}
-          alt="Card image" 
-        />
+        <CardImage src={mainImage} alt="Card image" />
       </ImageContainer>
-      
+
       <ContentContainer>
         <TitleRow>
-            <Title>{ modelName}</Title>
+          <Title>{modelName}</Title>
           <LikeCount>
-              <span>{likeCount}</span>
-              <Icon type="heart-circle" size={20} color="blue" readonly/>
+            <span>{likeCount}</span>
+            <Icon type="heart-circle" size={20} color="blue" readonly />
           </LikeCount>
         </TitleRow>
 
@@ -48,17 +58,16 @@ export function StackedCard({ data = mockCarListData.contents[0], actionSlot }: 
           <InfoGroup>
             <InfoItem>
               <Icon type="calendar" size={12} color="deepDarkGray" readonly />
-                <span>{ year}</span>
+              <span>{year}</span>
             </InfoItem>
             <InfoItem>
               <Icon type="routing" size={12} color="deepDarkGray" readonly />
-                <span>{ mileage.toLocaleString()}KM</span>
+              <span>{mileage.toLocaleString()}KM</span>
             </InfoItem>
-            </InfoGroup>
-            <PriceWrap>
-
-            <Price>{ price}</Price>만원
-            </PriceWrap>
+          </InfoGroup>
+          <PriceWrap>
+            <Price>{price}</Price>만원
+          </PriceWrap>
         </Footer>
       </ContentContainer>
     </Card>
@@ -66,6 +75,7 @@ export function StackedCard({ data = mockCarListData.contents[0], actionSlot }: 
 }
 
 const Card = styled.div`
+  cursor: pointer;
   max-width: 400px;
   border-radius: 8px;
   border: 1px solid #e5e7eb;
@@ -156,4 +166,3 @@ const Price = styled.span`
   color: var(--blue);
   font-size: var(--semi-bold--md-small);
 `;
-

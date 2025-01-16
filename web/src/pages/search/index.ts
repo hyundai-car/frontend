@@ -4,7 +4,7 @@ import { createElement, lazy } from "react";
 import { Navigate, RouteObject } from "react-router-dom";
 import { SimpleSearchPage } from "./simpleSearch/ui/Page";
 import { SimpleSearchStep } from "../../widgets/search/simpleSearchStep/ui/SimpleSearchStep";
-import { SimpleSearchResult } from "./simpleSearch/ui/ResultPage";
+import { SimpleSearchResultPage } from "./simpleSearch/ui/ResultPage";
 /**
  * @description
  */
@@ -43,7 +43,7 @@ export const SearchRoute: RouteObject = {
         },
         {
           path: "result/:resultId",
-          element: createElement(SimpleSearchResult),
+          element: createElement(SimpleSearchResultPage),
         },
       ],
     },

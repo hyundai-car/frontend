@@ -8,16 +8,6 @@ export const SimpleSearchPage = withSuspense(
   )
 );
 
-// export const SimpleSearchStep = withSuspense(
-//   lazy(() =>
-//     import("../../../widgets/search/simpleSearchStep/ui/SimpleSearchStep").then(
-//       (module) => ({
-//         default: module.SimpleSearchStep,
-//       })
-//     )
-//   )
-// );
-
 export const SimpleSearchResultPage = withSuspense(
   lazy(() =>
     import("./ui/ResultPage").then((module) => ({
