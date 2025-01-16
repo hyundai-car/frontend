@@ -1,3 +1,4 @@
+import { PaymentsRoute } from "@/pages/payment";
 import { CandidatesRoute, RecommendationRoute } from "@/pages/recommendation";
 import { SearchRoute } from "@/pages/search";
 import { withSuspense } from "@/shared/lib/hocs";
@@ -55,6 +56,10 @@ const root = createBrowserRouter([
       {
         element: createElement(BaseLayout),
         children: [SearchRoute],
+      },
+      {
+        element: createElement(BaseLayout),
+        children: [PaymentsRoute],
       },
       {
         path: "*",
