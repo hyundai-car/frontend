@@ -33,8 +33,11 @@ export const pathKeys = {
     root: () => pathKeys.root.concat("cars/"),
     carsDetail: ({ carNo }: CarsDetailParams) =>
       pathKeys.cars.root().concat("carsDetail?carNo=", String(carNo)),
+    carsDetailImages: ({ carNo }: CarsDetailParams) =>
+      pathKeys.cars.root().concat("carsDetail/images?carNo=", String(carNo)),
   },
 
+  //cars/carsDetail/images?carNo=123123
   search: () => pathKeys.root.concat("search"),
   searchResult: (params: SearchQueryParams) => {
     const searchParams = new URLSearchParams();

@@ -14,6 +14,13 @@ const CarDetailPage = withSuspense(
     }))
   )
 );
+const CarImgDetailPage = withSuspense(
+  lazy(() =>
+    import("./ui/CarImgDetailPage.ui").then((module) => ({
+      default: module.CarImgDetailPage,
+    }))
+  )
+);
 
 export const CarDetailRoute: RouteObject = {
   path: `${pathKeys.cars.root()}carsDetail`,
@@ -27,4 +34,19 @@ export const CarDetailRoute: RouteObject = {
     return null;
   },
   element: createElement(CarDetailPage),
+};
+
+// http://localhost:5173/cars/carsDetail/images?carNo=123
+export const CarImgDetailRoute: RouteObject = {
+  path: `${pathKeys.cars.root()}carsDetail/images`,
+  loader: ({ request }) => {
+    const url = new URL(request.url);
+    const carNo = url.searchParams.get("carNo");
+
+    if (!carNo) {
+      throw new Response("Missing carNo", { status: 404 });
+    }
+    return null;
+  },
+  element: createElement(CarImgDetailPage),
 };
