@@ -1,5 +1,5 @@
 import { Modal } from '../ui/modal';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import { DefaultTheme } from 'styled-components';
 
 interface ShowModalProps {
@@ -20,16 +20,23 @@ export const showModal = ({
     const modalRoot = document.createElement('div');
     document.body.appendChild(modalRoot);
 
+    const root = ReactDOM.createRoot(modalRoot); // React 18에서 createRoot 사용
+
+    const closeModal = () => {
+        root.unmount(); // React Tree 언마운트
+        document.body.removeChild(modalRoot); // DOM에서 제거
+    };
+
     const handleConfirm = () => {
-        onConfirm?.();
-        document.body.removeChild(modalRoot);
+        onConfirm?.(); // 확인 액션 실행
+        closeModal(); // 모달 닫기
     };
 
     const handleCancel = () => {
-        document.body.removeChild(modalRoot);
+        closeModal(); // 취소 시 모달 닫기
     };
 
-    ReactDOM.render(
+    root.render(
         <Modal
             title={title}
             subTitle={subTitle}
@@ -37,7 +44,18 @@ export const showModal = ({
             buttonColor={buttonColor}
             submitAction={handleConfirm}
             closeAction={handleCancel}
-        />,
-        modalRoot
+        />
     );
 };
+
+
+//사용법 (button, onConfirm은 오른쪽 확인 버튼임. 왼쪽은 무조건 흰색 취소 버튼)
+// const open = () => showModal({
+//     title: "모달 제목",
+//     subTitle: "모달 부제목",
+//     buttonLabel: "확인",
+//     buttonColor: "blue",
+//     onConfirm: () => {
+//       console.log("확인 버튼 클릭");
+//     },
+//})
