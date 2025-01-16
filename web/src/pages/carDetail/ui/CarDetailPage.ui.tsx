@@ -2,11 +2,12 @@ import { useCarDetailQuery } from "@/pages/carDetail/model/queries";
 import styled from "styled-components";
 import { ReactComponent as CalendarIcon } from "public/icons/calendar.svg";
 import { ReactComponent as MileageIcon } from "public/icons/routing.svg";
-
+import { BasicInfoCard } from "@/entities/carDetail";
 export function CarDetailPage() {
   const { data } = useCarDetailQuery(); //TODO 나중에 carId 넘겨주기
   if (!data) return null;
   const { carName, year, mileage, sellingPrice } = data.cars;
+  // const basicInfo = FormatBasicInfo(data);
 
   return (
     <Container>
@@ -27,6 +28,10 @@ export function CarDetailPage() {
           <strong>{sellingPrice}</strong> 만원
         </h1>
       </TitleSection>
+      {/* <BasicInfoCard basicData={basicInfo} /> */}
+      <CardSection>
+        <BasicInfoCard />
+      </CardSection>
     </Container>
   );
 }
@@ -72,4 +77,8 @@ const StyledIcon = styled.svg`
   polygon {
     stroke: var(--dark-gray);
   }
+`;
+
+const CardSection = styled.div`
+  padding-top: 30px;
 `;

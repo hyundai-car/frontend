@@ -1,7 +1,8 @@
-import { CarSchema } from "@/shared/model/car.contracts";
+import { BasicSchema, CarSchema } from "@/shared/model/car.contracts";
 import { z } from "zod";
 
 export type Car = z.infer<typeof CarSchema>;
+export type BasicInfo = z.infer<typeof BasicSchema>;
 
 // TODO Type 정리할 것
 /** 차량 상세정보 */
@@ -24,6 +25,8 @@ interface Detail {
   seating: number;
   createdAt: string; // YYYY-MM-DD 형식
   updatedAt: string; // YYYY-MM-DD 형식
+  mmScore: number;
+  initialRegistrationDate: string;
 }
 
 export interface OptionList {

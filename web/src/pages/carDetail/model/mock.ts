@@ -20,6 +20,8 @@ export const MOCK_CarDetail: CarData = {
     seating: 4,
     createdAt: "2024-01-15",
     updatedAt: "2024-01-16",
+    mmScore: 4,
+    initialRegistrationDate: "2024-01-12",
   },
   optionLists: {
     optionListId: 2001,
