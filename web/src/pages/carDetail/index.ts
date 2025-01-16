@@ -1,3 +1,7 @@
+/**
+ * @description /cars/carsDetail?carNo=123
+ */
+
 import { withSuspense } from "@/shared/lib/hocs";
 import { pathKeys } from "@/shared/lib/react-router";
 import { createElement, lazy } from "react";
