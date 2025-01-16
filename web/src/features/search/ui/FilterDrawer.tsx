@@ -8,6 +8,7 @@ import { Drawer } from "@mui/material";
 import { RangeSection } from "./FilterDrawer/RangeSection";
 import { BasicButton } from "@/shared/ui/button";
 import { useSearchStore } from "../model/store";
+import { forwardRef } from "react";
 
 export const FilterDrawer = ({ isOpen, onClose }: FilterDrawerProps) => {
   const { filters, setFilters, printSearchConditions } = useSearchStore();
@@ -28,7 +29,20 @@ export const FilterDrawer = ({ isOpen, onClose }: FilterDrawerProps) => {
     // onFilterChange(INITIAL_FILTERS);
   };
   return (
-    <Drawer anchor="right" open={isOpen} onClose={onClose} keepMounted={false}>
+    <Drawer
+      anchor="right"
+      open={isOpen}
+      onClose={onClose}
+      PaperProps={{
+        component: forwardRef((props, ref) => (
+          <div
+            {...props}
+            ref={ref as React.RefObject<HTMLDivElement>}
+            data-inert={!isOpen ? "" : undefined}
+          />
+        )),
+      }}
+    >
       <S.DrawerContent>
         <form onSubmit={handleSubmit(onSubmit)}>
           <S.Header>
