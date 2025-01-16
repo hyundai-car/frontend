@@ -3,16 +3,23 @@ import { pathKeys } from "@/shared/lib/react-router";
 import { createElement, lazy } from "react";
 import { Navigate, RouteObject } from "react-router-dom";
 
+const PaymentLayout = withSuspense(
+  lazy(() =>
+    import("@/widgets/payment/layout/ui/PaymentLayout").then((module) => ({
+      default: module.PaymentLayout,
+    }))
+  )
+);
 export const PaymentContractInfoPage = withSuspense(
   lazy(() =>
-    import("./ui/ContractInfo").then((module) => ({
+    import("./contractInfo/ui/Page").then((module) => ({
       default: module.ContractInfoPage,
     }))
   )
 );
 export const PaymentDetailsPage = withSuspense(
   lazy(() =>
-    import("./ui/Details").then((module) => ({
+    import("./details/ui/Page").then((module) => ({
       default: module.PaymentDetailsPage,
     }))
   )
@@ -20,7 +27,7 @@ export const PaymentDetailsPage = withSuspense(
 
 export const PaymentCompletePage = withSuspense(
   lazy(() =>
-    import("./ui/Complete").then((module) => ({
+    import("./complete/ui/Page").then((module) => ({
       default: module.PaymentCompletePage,
     }))
   )
@@ -28,6 +35,7 @@ export const PaymentCompletePage = withSuspense(
 
 export const PaymentsRoute: RouteObject = {
   path: pathKeys.payments.root(),
+  element: createElement(PaymentLayout),
   children: [
     {
       index: true,

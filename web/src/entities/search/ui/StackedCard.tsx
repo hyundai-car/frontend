@@ -57,7 +57,7 @@ export function StackedCard({
         <Footer>
           <InfoGroup>
             <InfoItem>
-              <Icon type="calendar" size={12} color="deepDarkGray" readonly />
+              <Icon type="date" size={12} color="deepDarkGray" readonly />
               <span>{year}</span>
             </InfoItem>
             <InfoItem>

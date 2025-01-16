@@ -12,7 +12,8 @@ export const mockCarListData: CarDataResponse = {
       year: "2022-05",
       mileage: 25000,
       sellingPrice: 35000000,
-      mainImage: "https://certified-static.hyundai.com/contents/goods/shootConts/tobepic/02/exterior/HIG241028009973/PRD602_233.JPG/dims/crop/2304x1536+600+770/resize/560x373/optimize",
+      mainImage:
+        "https://certified-static.hyundai.com/contents/goods/shootConts/tobepic/02/exterior/HIG241028009973/PRD602_233.JPG/dims/crop/2304x1536+600+770/resize/560x373/optimize",
       carNumber: "12가 3456",
       isLike: false,
       likeCount: 15,
@@ -25,7 +26,8 @@ export const mockCarListData: CarDataResponse = {
       year: "2023-03",
       mileage: 15000,
       sellingPrice: 55000000,
-      mainImage: "https://certified-static.hyundai.com/contents/goods/shootConts/tobepic/02/exterior/HIG241028009973/PRD602_233.JPG/dims/crop/2304x1536+600+770/resize/560x373/optimize",
+      mainImage:
+        "https://certified-static.hyundai.com/contents/goods/shootConts/tobepic/02/exterior/HIG241028009973/PRD602_233.JPG/dims/crop/2304x1536+600+770/resize/560x373/optimize",
       carNumber: "34나 5678",
       isLike: true,
       likeCount: 28,
@@ -38,7 +40,8 @@ export const mockCarListData: CarDataResponse = {
       year: "2023-08",
       mileage: 8000,
       sellingPrice: 65000000,
-      mainImage: "https://certified-static.hyundai.com/contents/goods/shootConts/tobepic/02/exterior/HIG241028009973/PRD602_233.JPG/dims/crop/2304x1536+600+770/resize/560x373/optimize",
+      mainImage:
+        "https://certified-static.hyundai.com/contents/goods/shootConts/tobepic/02/exterior/HIG241028009973/PRD602_233.JPG/dims/crop/2304x1536+600+770/resize/560x373/optimize",
       carNumber: "56다 7890",
       isLike: true,
       likeCount: 42,
@@ -51,7 +54,8 @@ export const mockCarListData: CarDataResponse = {
       year: "2022-11",
       mileage: 30000,
       sellingPrice: 48000000,
-      mainImage: "https://certified-static.hyundai.com/contents/goods/shootConts/tobepic/02/exterior/HIG241028009973/PRD602_233.JPG/dims/crop/2304x1536+600+770/resize/560x373/optimize",
+      mainImage:
+        "https://certified-static.hyundai.com/contents/goods/shootConts/tobepic/02/exterior/HIG241028009973/PRD602_233.JPG/dims/crop/2304x1536+600+770/resize/560x373/optimize",
       carNumber: "78라 1234",
       isLike: false,
       likeCount: 8,
@@ -64,7 +68,8 @@ export const mockCarListData: CarDataResponse = {
       year: "2023-06",
       mileage: 12000,
       sellingPrice: 95000000,
-      mainImage: "https://certified-static.hyundai.com/contents/goods/shootConts/tobepic/02/exterior/HIG241028009973/PRD602_233.JPG/dims/crop/2304x1536+600+770/resize/560x373/optimize",
+      mainImage:
+        "https://certified-static.hyundai.com/contents/goods/shootConts/tobepic/02/exterior/HIG241028009973/PRD602_233.JPG/dims/crop/2304x1536+600+770/resize/560x373/optimize",
       carNumber: "90마 5678",
       isLike: true,
       likeCount: 35,
