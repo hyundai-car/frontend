@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -14,14 +15,17 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.myme.mycarforme.MainActivity
 import com.myme.mycarforme.R
+import com.myme.mycarforme.data.network.ApiService
+import com.myme.mycarforme.data.network.DataManager
+import com.myme.mycarforme.data.network.RetrofitClient
 import com.myme.mycarforme.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
     private var _binding : ActivityLoginBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: LoginViewModel by viewModels()
 
+    private val viewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,25 +37,24 @@ class LoginActivity : AppCompatActivity() {
         }
         observeAuthState()
     }
+
     private fun observeAuthState() {
         viewModel.authState.observe(this) { state ->
             when (state) {
                 is AuthState.Success -> {
-
-                    startActivity(Intent(this, MainActivity::class.java))
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
                     finish()
                 }
+                is AuthState.Error -> {
+                    Toast.makeText(this, "로그인 에러가 발생했습니다. 다시 시도해주세요", Toast.LENGTH_SHORT).show()
+                }
                 else -> {
-
                 }
             }
         }
-
     }
-    private fun setupUI() {
-        // 로그인 버튼 터치 리스너
 
-    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1000) {

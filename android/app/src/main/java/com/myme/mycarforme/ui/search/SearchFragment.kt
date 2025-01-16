@@ -6,12 +6,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.JavascriptInterface
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.myme.mycarforme.WebAppInterface
 import com.myme.mycarforme.databinding.FragmentSearchBinding
 
 class SearchFragment : Fragment() {
@@ -47,7 +49,8 @@ class SearchFragment : Fragment() {
             webSettings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
             webSettings.domStorageEnabled = true // DOM 저장소 활성화
         }
-        webView?.loadUrl("http://mycarf0r.me/search")
+        webView?.loadUrl("http://192.168.201.101:5173/search")
+        webView.addJavascriptInterface(WebAppInterface(requireContext()), "Android")
     }
 
 

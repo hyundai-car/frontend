@@ -1,6 +1,7 @@
 package com.myme.mycarforme
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.webkit.WebView
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.myme.mycarforme.data.model.Car
+import com.myme.mycarforme.data.network.DataManager
 import com.myme.mycarforme.databinding.ActivityMainBinding
 import com.myme.mycarforme.ui.home.HomeFragment
 import com.myme.mycarforme.ui.my.Myfragment
@@ -30,11 +33,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         val navView: BottomNavigationView = binding.navView
         val homeFragment = HomeFragment()
         val searchFragment = SearchFragment()
         val recommendFragment = RecommendFragment()
         val myFragment = Myfragment()
+
+
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
