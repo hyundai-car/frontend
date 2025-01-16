@@ -8,8 +8,7 @@ type Props = {
   isFetching?: boolean;
 };
 
-export const SearchCarList = ({ isFetching = false }: Props) => {
-  // 액션슬롯을 내려줘서 자식 컴포넌트의 특정부분을 부모에서 제어
+export const RecommendCarList = ({ isFetching = false }: Props) => {
   const [carList] = useState(mockCarListData.contents);
 
   const getActionSlot = (carId: number) => <WishlistButton carId={carId} />;

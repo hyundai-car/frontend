@@ -1,9 +1,14 @@
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useSimpleSearchStore } from "../model/store";
 import { DIAGNOSTIC_QUESTIONS } from "@/entities/simpleSearch/questionBlock/model/constants";
 import { Icon } from "@/shared/ui/Icon/Icon";
-import { SimpleSearchResult } from "@/widgets/search/simpleSearchResult/ui/simpleSearchResult";
+import { SimpleSearchResult } from "@/widgets/search/simpleSearchResult/ui/SimpleSearchResult";
+
 export function SimpleSearchResultPage() {
+  const navigate = useNavigate();
+
   const answers = useSimpleSearchStore((state) => state.answers);
   useEffect(() => {
     if (!answers || answers.length === 0) {
@@ -35,17 +40,21 @@ export function SimpleSearchResultPage() {
   return (
     <div>
       <Header>
-        <Icon type="close" size={17} onClick={() => {}} />
-        <SimpleSearchResult />
+        <Icon
+          type="close"
+          size={17}
+          onClick={() => {
+            navigate("/search");
+          }}
+        />
       </Header>
+      <SimpleSearchResult />
     </div>
   );
 }
 
-import styled from "styled-components";
 const Header = styled.div`
   display: flex;
   justify-content: flex-end;
   padding: 10px;
-  background-color: red;
 `;
