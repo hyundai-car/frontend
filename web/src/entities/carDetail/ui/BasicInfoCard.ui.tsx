@@ -1,5 +1,4 @@
 import { Graph } from "@/entities/carDetail/ui/graph.ui";
-import { useCarDetailQuery } from "@/pages/carDetail/model/queries";
 import { GridList } from "@/widgets/delivery/ui/GridList.ui";
 import styled from "styled-components";
 

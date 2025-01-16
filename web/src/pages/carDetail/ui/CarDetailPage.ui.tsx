@@ -49,6 +49,7 @@ export function CarDetailPage() {
 const Container = styled.div``;
 const ImageSection = styled.div``;
 const TitleSection = styled.div`
+  padding: 0 20px;
   display: flex;
   flex-direction: column;
   gap: 3px;
