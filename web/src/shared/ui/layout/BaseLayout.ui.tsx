@@ -1,4 +1,3 @@
-import React from "react";
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 
@@ -14,5 +13,5 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  padding: 20px 20px; // 테스트용
+  // padding: 20px 20px; // 테스트용
 `;
