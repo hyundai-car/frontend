@@ -54,11 +54,4 @@ export const pathKeys = {
     result: ({ resultId }: SimpleSearchResultParams) =>
       pathKeys.simpleSearch.root().concat(`/result/${resultId}`),
   },
-
-  payments: {
-    root: () => pathKeys.root.concat("payments"),
-    contractInfo: () => pathKeys.payments.root().concat("/contract-info"),
-    details: () => pathKeys.payments.root().concat("/details"),
-    complete: () => pathKeys.payments.root().concat("/complete"),
-  },
 };

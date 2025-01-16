@@ -1,4 +1,4 @@
-import { PaymentsRoute } from "@/pages/payment";
+import { PaymentsRoute } from "@/pages/payments";
 import { CandidatesRoute, RecommendationRoute } from "@/pages/recommendation";
 import { SearchRoute } from "@/pages/search";
 import { withSuspense } from "@/shared/lib/hocs";

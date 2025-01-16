@@ -9,7 +9,9 @@ export type IconType =
   | "search"
   | "close"
   | "filter"
-  | "back";
+  | "back"
+  | "arrow-down"
+  | "arrow-up";
 
 // Props 타입 정의
 export interface IconProps {
