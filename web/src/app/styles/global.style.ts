@@ -24,6 +24,7 @@ const GlobalStyle = createGlobalStyle`
 		--dark-gray: rgba(169, 169, 169, 1);
 		--white: #ffffff;
 		--black: #000000;
+		--black-background: rgba(0, 0, 0, 0.5);
 
 		/* Text-size styles */
 		--lg-small: 20px;
