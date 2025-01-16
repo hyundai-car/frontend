@@ -4,6 +4,7 @@ import { ReactComponent as CalendarIcon } from "public/icons/calendar.svg";
 import { ReactComponent as MileageIcon } from "public/icons/routing.svg";
 import { BasicInfoCard } from "@/entities/carDetail";
 import { OptionInfo } from "@/entities/carDetail/ui/OptionInfo.ui";
+import { CarImages } from "@/widgets/carDetail/ui/CarImages.ui";
 export function CarDetailPage() {
   const { data } = useCarDetailQuery(); //TODO 나중에 carId 넘겨주기
   if (!data) return null;
@@ -12,6 +13,9 @@ export function CarDetailPage() {
 
   return (
     <Container>
+      <ImageSection>
+        <CarImages />
+      </ImageSection>
       <TitleSection>
         <h2>{carName}</h2>
         <OptionWrap>
@@ -43,6 +47,7 @@ export function CarDetailPage() {
 }
 
 const Container = styled.div``;
+const ImageSection = styled.div``;
 const TitleSection = styled.div`
   display: flex;
   flex-direction: column;
