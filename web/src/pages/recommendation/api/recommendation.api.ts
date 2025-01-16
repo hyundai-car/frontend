@@ -1,5 +1,5 @@
+import { BestCarResponse } from "@/pages/recommendation/api/types";
 import { MOCK_BestCarData } from "@/pages/recommendation/model/mock";
-import { BestCarResponse } from "@/pages/recommendation/api/\btypes";
 
 // TODO 임시 fetch 함수
 

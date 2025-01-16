@@ -1,6 +1,5 @@
 import { LikeList } from "@/features/recommendation";
 import { RecommendationButton } from "@/features/recommendation/ui/RecommendationButton";
-import React from "react";
 import styled from "styled-components";
 
 export function RecommendationPage() {

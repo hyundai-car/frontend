@@ -16,6 +16,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders["appAuthRedirectScheme"] = "mycarforme"
     }
 
     buildTypes {
@@ -68,6 +69,14 @@ dependencies {
 
     //naverMap
     implementation("com.naver.maps:map-sdk:3.20.0")
+
+
+    // 서버 통신
+    implementation(libs.retrofit) // Retrofit
+    implementation(libs.converter.gson) // Gson Converter
+    implementation(libs.logging.interceptor) // OkHttp 로깅
+    // 인증
+    implementation(libs.appauth)
 
 
 }
