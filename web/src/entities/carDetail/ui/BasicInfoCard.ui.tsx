@@ -1,5 +1,5 @@
 import { Graph } from "@/entities/carDetail/ui/Graph.ui";
-import { GridList } from "@/widgets/delivery/ui/GridList.ui";
+import { GridList } from "@/widgets/carDetail/ui/GridList.ui";
 import styled from "styled-components";
 
 export function BasicInfoCard() {

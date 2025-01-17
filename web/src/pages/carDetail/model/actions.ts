@@ -14,26 +14,26 @@ export const SaveCarDetailStore = (
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { optionListId, createdAt, updatedAt, ...optionData } =
-      data.optionLists;
+      data.car.optionLists;
 
     setCarId(carId);
     setCarGraphData({
-      mmScore: data.cars.mmScore,
-      initialRegistration: data.cars.initialRegistration,
-      fuelEfficiency: data.cars.fuelEfficiency,
-      mileage: data.cars.mileage,
-      accidentCount: data.accidentCount,
+      mmScore: data.car.mmScore,
+      initialRegistration: data.car.initialRegistration,
+      fuelEfficiency: data.car.fuelEfficiency,
+      mileage: data.car.mileage,
+      accidentCount: data.car.accidentCount,
     });
     setCarBasicData({
-      mmScore: data.cars.mmScore,
-      initialRegistration: data.cars.initialRegistration,
-      fuelEfficiency: data.cars.fuelEfficiency,
-      mileage: data.cars.mileage,
-      accidentCount: data.accidentCount,
-      carNumber: data.cars.carNumber,
-      exteriorColor: data.cars.exteriorColor,
-      fuelType: data.cars.fuelType,
-      seating: data.cars.seating,
+      mmScore: data.car.mmScore,
+      initialRegistration: data.car.initialRegistration,
+      fuelEfficiency: data.car.fuelEfficiency,
+      mileage: data.car.mileage,
+      accidentCount: data.car.accidentCount,
+      carNumber: data.car.carNumber,
+      exteriorColor: data.car.exteriorColor,
+      fuelType: data.car.fuelType,
+      seating: data.car.seating,
     });
 
     setCarOptionData(optionData);

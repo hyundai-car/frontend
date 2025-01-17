@@ -17,7 +17,7 @@ export function CarDetailPage() {
 
   if (!data) return <div>데이터를 찾을 수 없습니다</div>;
 
-  const { carName, initialRegistration, mileage, sellingPrice } = data.cars;
+  const { carName, initialRegistration, mileage, sellingPrice } = data.car;
 
   return (
     <Container>

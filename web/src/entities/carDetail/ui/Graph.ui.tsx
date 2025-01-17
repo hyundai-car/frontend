@@ -23,7 +23,7 @@ ChartJS.register(
 
 export function Graph() {
   const { carGraphData } = useCarDetailStore();
-  console.log(carGraphData);
+  // console.log(carGraphData);
   // TODO 그래프 정보 : 가성비점수, 사고이력, 최초등록일, 연비, 주행거리
   return (
     <Container>

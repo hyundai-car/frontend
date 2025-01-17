@@ -14,7 +14,7 @@ interface DetailResponse {
   displacement: number;
   fuelType: string;
   transmissionType: string;
-  location: string;
+  location: null | string;
   fuelEfficiency: number;
   mainImage: string;
   newCarPrice: number; // 만원 단위
@@ -23,6 +23,9 @@ interface DetailResponse {
   mmScore: number;
   createdAt: string; // YYYY-MM-DD 형식
   updatedAt: string; // YYYY-MM-DD 형식
+  optionLists: OptionListResponse;
+  accidentHistoryList: AccidentHistoryResponse[];
+  accidentCount: number;
 }
 
 export interface OptionListResponse {
@@ -58,8 +61,5 @@ export interface AccidentHistoryResponse {
 }
 
 export interface CarDetailResponse {
-  cars: DetailResponse;
-  optionLists: OptionListResponse;
-  accidentHistories: AccidentHistoryResponse[];
-  accidentCount: number;
+  car: DetailResponse;
 }
