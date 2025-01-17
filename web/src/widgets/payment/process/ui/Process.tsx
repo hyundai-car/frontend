@@ -3,18 +3,38 @@ import styled from "styled-components";
 import { PaymentHeader } from "../../header/ui/Header";
 import { PaymentButton } from "@/features/payments/ui/PaymentButton/PaymentButton";
 import { useNavigate, useParams } from "react-router-dom";
+import { showModal } from "@/shared/hooks/useModal";
 
 export function ProcessWidget() {
   const navigate = useNavigate();
   const { carId, type } = useParams();
   const header = type === "deposit" ? "계약" : "잔금 결제";
+  const price = type === "deposit" ? "30,0000" : "결제금액";
 
   const handlePayment = () => {
-    // 모달 추가, 폼 입력 검증 추가
     if (type === "deposit") {
-      navigate(`/payments/${carId}/deposit/process/complete`);
+      showModal({
+        title: "결제하시겠어요?",
+        subTitle: "계약금을 결제하시겠습니까?",
+        buttonLabel: "확인",
+        buttonColor: "blue",
+        onConfirm: () => {
+          // 폼 입력 검증
+          navigate(`/payments/${carId}/deposit/process/complete`);
+        },
+      });
     } else {
-      navigate(`/payments/${carId}/balance/process/complete`);
+      // 잔금결제
+      showModal({
+        title: "결제하시겠어요?",
+        subTitle: "잔금을 결제하시겠습니까?",
+        buttonLabel: "확인",
+        buttonColor: "blue",
+        onConfirm: () => {
+          // 폼 입력 검증
+          navigate(`/payments/${carId}/balance/process/complete`);
+        },
+      });
     }
   };
   return (
@@ -23,8 +43,8 @@ export function ProcessWidget() {
       <Container>
         <Wrap>
           <InfoRow>
-            <Title>주문 금액</Title>
-            <Price>300,000 원</Price>
+            <Title>결제 금액</Title>
+            <Price>{price} 원</Price>
           </InfoRow>
           <Title>결제카드 정보 입력</Title>
           <Desc>차량 계약자 명의의 신용카드 외 결제 불가</Desc>
