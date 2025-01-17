@@ -6,6 +6,6 @@ type DebugState = {
 };
 
 export const useDebugStore = create<DebugState>((set) => ({
-  isEnabled: true,
+  isEnabled: false,
   toggleDebug: () => set((state) => ({ isEnabled: !state.isEnabled })),
 }));
