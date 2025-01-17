@@ -56,7 +56,8 @@ const root = createBrowserRouter([
       },
       {
         element: <Outlet />,
-        children: [CarImgDetailRoute],
+        children: [CarImgDetailRoute]
+      },
       {
         element: createElement(BaseLayout),
         children: [SearchRoute],
