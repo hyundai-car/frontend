@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:background="@color/navy"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    tools:context=".ui.login.LoginActivity"
+    android:weightSum="1">
+
+    <!-- 이미지 부분: 화면 중앙에 위치하도록 설정 -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"> <!-- 50% 높이를 차지 -->
+
+        <ImageView
+            android:src="@drawable/mainlogoimage"
+            android:layout_width="200dp"
+            android:layout_height="200dp"/>
+
+        <ImageView
+            android:src="@drawable/ic_white_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <!-- 로그인 버튼 부분: 화면 맨 아래에 위치하도록 설정 -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
+        android:gravity="bottom">
+        <include
+            android:id="@+id/login_button"
+            layout="@layout/view_custom_login_button"/>
+    </LinearLayout>
+</LinearLayout>

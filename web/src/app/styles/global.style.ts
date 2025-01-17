@@ -8,11 +8,9 @@ const GlobalStyle = createGlobalStyle`
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+		outline: none;
+		-webkit-tap-highlight-color: transparent;
     }
-	*:focus {
-    outline: none;
-	}
-	
 	:root {
 		font-family: 'Inter';
     	-webkit-font-smoothing: antialiased;
@@ -26,6 +24,7 @@ const GlobalStyle = createGlobalStyle`
 		--dark-gray: rgba(169, 169, 169, 1);
 		--white: #ffffff;
 		--black: #000000;
+		--black-background: rgba(0, 0, 0, 0.5);
 
 		/* Text-size styles */
 		--lg-small: 20px;

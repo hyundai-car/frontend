@@ -26,7 +26,13 @@ const BackHeaderLayout = withSuspense(
     }))
   )
 );
-
+const NotFound = withSuspense(
+  lazy(() =>
+    import("@pages/404/NotFound").then((module) => ({
+      default: module.NotFound,
+    }))
+  )
+);
 /**
  * @description 라우터에 맞는 layout 정의
  */
@@ -51,6 +57,13 @@ const root = createBrowserRouter([
       {
         element: <Outlet />,
         children: [CarImgDetailRoute],
+      {
+        element: createElement(BaseLayout),
+        children: [SearchRoute],
+      },
+      {
+        path: "*",
+        element: <NotFound />,
       },
 
       // {
