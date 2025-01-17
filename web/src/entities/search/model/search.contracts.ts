@@ -3,8 +3,8 @@ import { z } from "zod";
 
 export const SearchSchema = z.object({
   carId: z.number(),
-  modelName: z.string(),
-  year: z.string(),
+  carName: z.string(), // 수정
+  initialRegistration: z.string(), // 수정
   mileage: z.number(),
   sellingPrice: z.number(),
   mainImage: z.string(),
