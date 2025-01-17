@@ -1,3 +1,4 @@
+import { PaymentsRoute } from "@/pages/payments";
 import { CarDetailRoute, CarImgDetailRoute } from "@/pages/carDetail";
 import { CandidatesRoute, RecommendationRoute } from "@/pages/recommendation";
 import { SearchRoute } from "@/pages/search";
@@ -56,11 +57,15 @@ const root = createBrowserRouter([
       },
       {
         element: <Outlet />,
-        children: [CarImgDetailRoute]
+        children: [CarImgDetailRoute],
       },
       {
         element: createElement(BaseLayout),
         children: [SearchRoute],
+      },
+      {
+        element: createElement(BaseLayout),
+        children: [PaymentsRoute],
       },
       {
         path: "*",

@@ -15,3 +15,5 @@ export const SearchQueryParamsSchema = z.object({
   size: z.number().optional(),
   filters: VehicleSearchFiltersSchema.optional(),
 });
+
+export const PaymentParamsSchema = z.object({ carId: z.string() });

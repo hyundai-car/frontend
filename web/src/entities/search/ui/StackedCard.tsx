@@ -1,7 +1,7 @@
 import { Icon } from "@/shared/ui/Icon/Icon";
 import styled from "styled-components";
 import { mockCarListData } from "../api/mockCarListData";
-import { convertToManWon } from "../libs/priceUtils";
+import { convertToManWon } from "../../../shared/lib/priceUtils";
 import { TSearch } from "../model/search.types";
 import { ReactNode } from "react";
 
@@ -57,7 +57,7 @@ export function StackedCard({
         <Footer>
           <InfoGroup>
             <InfoItem>
-              <Icon type="calendar" size={12} color="deepDarkGray" readonly />
+              <Icon type="date" size={12} color="deepDarkGray" readonly />
               <span>{year}</span>
             </InfoItem>
             <InfoItem>
