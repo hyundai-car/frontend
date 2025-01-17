@@ -1,4 +1,4 @@
-import { DiagnosticButton, SearchFilter } from "@/features/search";
+    import { DiagnosticButton, SearchFilter } from "@/features/search";
 import { DebugWrapper } from "@/widgets/DebugToggle";
 import { SearchCarList } from "@/widgets/search/searchCarList";
 
