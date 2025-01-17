@@ -1,49 +1,34 @@
-import { useState, type ReactNode } from 'react';
-import styled from 'styled-components';
-import { mockCarListData } from '@/entities/search/api/mockCarListData';
-import { StackedCard } from '@/entities/search';
-import { WishlistButton } from '@/features/wishlist';
-
+import { useState, type ReactNode } from "react";
+import { mockCarListData } from "@/entities/search/api/mockCarListData";
+import { StackedCard } from "@/entities/search";
+import { WishlistButton } from "@/features/wishlist";
+import { CarList } from "@/entities/search/carList/CarList";
+import { useNavigate } from "react-router-dom";
 type Props = {
   actionSlot?: (carId: number) => ReactNode;
   isFetching?: boolean;
-}
+};
 
-export const SearchCarList = ({isFetching }: Props) => {
+export const SearchCarList = ({ isFetching = false }: Props) => {
+  const navigate = useNavigate();
   // 액션슬롯을 내려줘서 자식 컴포넌트의 특정부분을 부모에서 제어
   const [carList] = useState(mockCarListData.contents);
 
-  const getActionSlot = (carId: number) => (
-    <WishlistButton carId={carId} />
-  )
-
-  if (isFetching && carList.length === 0) {
-    return <LoadingWrapper>Loading...</LoadingWrapper>;
-  }
+  const getActionSlot = (carId: number) => <WishlistButton carId={carId} />;
 
   return (
-    <Container $isFetching={isFetching}>
-      {carList.map((data) => (
+    <CarList
+      items={carList}
+      isFetching={isFetching}
+      getActionSlot={getActionSlot}
+      renderItem={(data, actionSlot) => (
         <StackedCard
           key={data.carId}
           data={data}
-          actionSlot={getActionSlot(data.carId)}
+          actionSlot={actionSlot}
+          onClick={() => navigate(`/carDetail/${data.carId}`)}
         />
-      ))}
-    </Container>
+      )}
+    />
   );
 };
-
-
-const Container = styled.div<{ $isFetching?: boolean }>`
-display: flex;
-flex-direction: column;
-gap: 20px;
-  opacity: ${({ $isFetching }) => ($isFetching ? 0.5 : 1)};
-  pointer-events: ${({ $isFetching }) => ($isFetching ? 'none' : 'auto')};
-`;
-
-const LoadingWrapper = styled.div`
-  padding: 24px;
-  text-align: center;
-`;

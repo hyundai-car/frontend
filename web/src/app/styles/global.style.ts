@@ -8,9 +8,14 @@ const GlobalStyle = createGlobalStyle`
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+		outline: none;
+		-webkit-tap-highlight-color: transparent;
     }
-	
 	:root {
+		font-family: 'Inter';
+    	-webkit-font-smoothing: antialiased;
+    	-moz-osx-font-smoothing: grayscale;
+
 		/* Color styles */
 		--navy: rgba(15, 23, 42, 1);
 		--blue: rgba(86, 98, 246, 1);
@@ -19,6 +24,7 @@ const GlobalStyle = createGlobalStyle`
 		--dark-gray: rgba(169, 169, 169, 1);
 		--white: #ffffff;
 		--black: #000000;
+		--black-background: rgba(0, 0, 0, 0.5);
 
 		/* Text-size styles */
 		--lg-small: 20px;
@@ -37,6 +43,21 @@ const GlobalStyle = createGlobalStyle`
 		--list-item:  0px 4px 35px rgba(0, 0, 0, 0.15);
 		--box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 	}
-`;
+	/* Hide scrollbar for Chrome, Safari and Opera */
+	html::-webkit-scrollbar,
+	body::-webkit-scrollbar,
+	*::-webkit-scrollbar {
+		display: none;
+		width: 0;
+	}
+
+	/* Hide scrollbar for IE, Edge and Firefox */
+	html,
+	body,
+	* {
+		-ms-overflow-style: none;  /* IE and Edge */
+		scrollbar-width: none;  /* Firefox */
+	}
+	`;
 
 export default GlobalStyle;

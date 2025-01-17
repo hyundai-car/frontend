@@ -8,7 +8,12 @@
  * 결과: '/cars/carsDetail?carNo=123'
  */
 
-import { CarsDetailParams, SearchQueryParams } from "@/shared/lib/react-router/router.types";
+import {
+  CarsDetailParams,
+  SearchQueryParams,
+  SimpleSearchParams,
+  SimpleSearchResultParams,
+} from "@/shared/lib/react-router/router.types";
 
 export const pathKeys = {
   root: "/",
@@ -27,20 +32,30 @@ export const pathKeys = {
   cars: {
     root: () => pathKeys.root.concat("cars/"),
     carsDetail: ({ carNo }: CarsDetailParams) =>
-      pathKeys.cars.root().concat("carsDetail?carNo=", carNo),
+      pathKeys.cars.root().concat("carsDetail?carNo=", String(carNo)),
+    carsDetailImages: ({ carNo }: CarsDetailParams) =>
+      pathKeys.cars.root().concat("carsDetail/images?carNo=", String(carNo)),
   },
+
+  //cars/carsDetail/images?carNo=123123
   search: () => pathKeys.root.concat("search"),
   searchResult: (params: SearchQueryParams) => {
     const searchParams = new URLSearchParams();
-    
-    if (params.query) searchParams.append('query', params.query);
-    if (params.page) searchParams.append('page', params.page.toString());
-    if (params.size) searchParams.append('size', params.size.toString());
-    
+
+    if (params.query) searchParams.append("query", params.query);
+    if (params.page) searchParams.append("page", params.page.toString());
+    if (params.size) searchParams.append("size", params.size.toString());
+
     const queryString = searchParams.toString();
-    return pathKeys.search().concat(
-      "/result",
-      queryString ? `?${queryString}` : ''
-    );
+    return pathKeys
+      .search()
+      .concat("/result", queryString ? `?${queryString}` : "");
+  },
+  simpleSearch: {
+    root: () => pathKeys.search().concat("/simple-search"),
+    step: ({ step }: SimpleSearchParams) =>
+      pathKeys.simpleSearch.root().concat(`/step/${step || "1"}`),
+    result: ({ resultId }: SimpleSearchResultParams) =>
+      pathKeys.simpleSearch.root().concat(`/result/${resultId}`),
   },
 };

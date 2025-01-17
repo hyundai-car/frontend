@@ -1,31 +1,51 @@
+import { Control } from "react-hook-form";
+import { FUEL_TYPES, BODY_TYPES } from "./constants";
 
-// 연료 타입
-export type FuelType = '가솔린' | '디젤' | 'LPG' | '하이브리드' | '전기' | 'CNG' | '수소';
-
-// 차종 타입
-export type BodyType = '경차' | '소형' | '준중형' | '중형' | '준대형' | '대형' | 'SUV';
-
-// 범위 타입 (예산, 주행거리, 연식)
+// 기본 타입 정의
+export type FuelType = (typeof FUEL_TYPES)[number];
+export type BodyType = (typeof BODY_TYPES)[number];
 export type Range = [number, number];
 
 // 필터 상태 타입
-export type FilterState = {
+export interface FilterState {
   fuel: FuelType[];
   bodyType: BodyType[];
-  priceRange: Range;   // 단위: 만원
+  priceRange: Range; // 단위: 만원
   mileageRange: Range; // 단위: km
-  yearRange: Range;    // 단위: 년도
-};
+  yearRange: Range; // 단위: 년도
+}
 
-// 필터 드로어 props 타입
-export type FilterDrawerProps = {
+// 필터 섹션 Props 타입
+export interface BaseFilterSectionProps {
+  title: string;
+  control: Control<FilterState>;
+}
+
+export interface SelectSectionProps extends BaseFilterSectionProps {
+  name: keyof Pick<FilterState, "fuel" | "bodyType">;
+  options: readonly string[];
+}
+
+export interface RangeSectionProps extends BaseFilterSectionProps {
+  name: keyof Pick<FilterState, "priceRange" | "mileageRange" | "yearRange">;
+  min: number;
+  max: number;
+  step: number;
+  formatValue: (value: number) => string;
+}
+
+// UI 컴포넌트 Props 타입
+export interface FilterDrawerProps {
   isOpen: boolean;
   onClose: () => void;
   filters: FilterState;
   onFilterChange: (filters: FilterState) => void;
-};
+}
 
-// 검색박스 props 타입
-export type SearchBoxProps = {
+export interface SearchBoxProps {
   onFilterClick: () => void;
-};
+}
+
+export interface SearchState extends FilterState {
+  keyword: string;
+}
