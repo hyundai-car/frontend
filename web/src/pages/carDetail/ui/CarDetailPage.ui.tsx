@@ -6,21 +6,18 @@ import { BasicInfoCard } from "@/entities/carDetail";
 import { OptionInfo } from "@/entities/carDetail/ui/OptionInfo.ui";
 import { CarImages } from "@/widgets/carDetail/ui/CarImages.ui";
 import { useSearchParams } from "react-router-dom";
-import { useCarDetailStore } from "@/pages/carDetail/model/store";
-import { useEffect } from "react";
+import { SaveCarDetailStore } from "@/pages/carDetail/model/actions";
+
 export function CarDetailPage() {
   const [searchParams] = useSearchParams();
-  const { setCarId } = useCarDetailStore();
   const carId = Number(searchParams.get("carNo"));
+
   const { data } = useCarDetailQuery(carId);
+  SaveCarDetailStore(data, carId);
 
-  useEffect(() => {
-    setCarId(carId);
-  }, [carId, searchParams, setCarId]);
+  if (!data) return <div>데이터를 찾을 수 없습니다</div>;
 
-  if (!data) return null;
   const { carName, initialRegistration, mileage, sellingPrice } = data.cars;
-  // const basicInfo = FormatBasicInfo(data);
 
   return (
     <Container>
@@ -43,7 +40,6 @@ export function CarDetailPage() {
           <strong>{sellingPrice}</strong> 만원
         </h1>
       </TitleSection>
-      {/* <BasicInfoCard basicData={basicInfo} /> */}
 
       <CardSection>
         <BasicInfoCard />

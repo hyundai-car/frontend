@@ -1,24 +1,48 @@
-// import { BasicInfo, CarData } from "@/shared/model/car.types";
+import { useCarDetailStore } from "@/pages/carDetail/model/store";
+import { CarDetailResponse } from "@/shared/api/api.types";
+import { useEffect } from "react";
 
-// export const FormatBasicInfo = (data: CarData) => {
-//   //   const bastInfo = {data.cars.mmScore, data,}
-//   //   필요한 key
-//   const requiredKeys: (keyof BasicInfo)[] = [
-//     "mmScore",
-//     "accidentCount",
-//     "initialRegistrationDate",
-//     "fuelEfficiency",
-//     "mileage",
-//     "carNumber",
-//     "exteriorColor",
-//     "fuelType",
-//     "seating",
-//   ];
+export const SaveCarDetailStore = (
+  data: CarDetailResponse | undefined,
+  carId: number
+) => {
+  const { setCarId, setCarGraphData, setCarBasicData, setCarOptionData } =
+    useCarDetailStore();
 
-//   const basicData = requiredKeys.reduce<Partial<BasicInfo>>((acc, key) => {
-//     if (key in data.cars) {
-//       acc[key] = data.cars[key];
-//     }
-//     return acc;
-//   }, {});
-// };
+  useEffect(() => {
+    if (!data) return;
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { optionListId, createdAt, updatedAt, ...optionData } =
+      data.optionLists;
+
+    setCarId(carId);
+    setCarGraphData({
+      mmScore: data.cars.mmScore,
+      initialRegistration: data.cars.initialRegistration,
+      fuelEfficiency: data.cars.fuelEfficiency,
+      mileage: data.cars.mileage,
+      accidentCount: data.accidentCount,
+    });
+    setCarBasicData({
+      mmScore: data.cars.mmScore,
+      initialRegistration: data.cars.initialRegistration,
+      fuelEfficiency: data.cars.fuelEfficiency,
+      mileage: data.cars.mileage,
+      accidentCount: data.accidentCount,
+      carNumber: data.cars.carNumber,
+      exteriorColor: data.cars.exteriorColor,
+      fuelType: data.cars.fuelType,
+      seating: data.cars.seating,
+    });
+
+    setCarOptionData(optionData);
+  }, [
+    data,
+    carId,
+    setCarId,
+    setCarGraphData,
+    setCarBasicData,
+    setCarOptionData,
+  ]);
+};

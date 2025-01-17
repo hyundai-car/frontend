@@ -1,6 +1,6 @@
-import { CarData } from "@/shared/model/car.types";
+import { CarDetailResponse } from "@/shared/api/api.types";
 
-export const MOCK_CarDetail: CarData = {
+export const MOCK_CarDetail: CarDetailResponse = {
   cars: {
     carId: 1001,
     carName: "현대 아반떼 CN7",

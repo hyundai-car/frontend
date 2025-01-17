@@ -1,10 +1,10 @@
 import { getCarDetailApi } from "@/pages/carDetail/api/carDetail.api";
-import { CarData } from "@/shared/model/car.types";
 import { useQuery } from "@tanstack/react-query";
+import { CarDetailResponse } from "@/shared/api/api.types";
 
 //TODO
 export const useCarDetailQuery = (carNo: number) => {
-  return useQuery<CarData>({
+  return useQuery<CarDetailResponse>({
     queryKey: ["carDetail"],
     queryFn: () => getCarDetailApi(carNo),
     staleTime: 5 * 60 * 1000, // 5분
