@@ -58,9 +58,7 @@ class Myfragment : Fragment() {
     private val recommendcar = mutableListOf(
         dummyCar,dummyCar,dummyCar,dummyCar,dummyCar
     )
-    private val likecar = mutableListOf(
-        dummyCar,dummyCar,dummyCar,dummyCar,dummyCar
-    )
+    private val likecar = ArrayList<Car>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -91,10 +89,10 @@ class Myfragment : Fragment() {
         super.onStart()
         context.let{
             DataManager.getLikeCarList(requireContext(),{
-                //        binding.myLikeRecyclerview.adapter = InfoCardAdapter(items = likecar)
-//        binding.myLikeRecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-//        binding.myUserLikeCount.text = String.format(likecar.size.toString())
-//        binding.myUserLikeSectionCount.text = String.format(likecar.size.toString())
+                        binding.myLikeRecyclerview.adapter = InfoCardAdapter(items = likecar)
+        binding.myLikeRecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.myUserLikeCount.text = String.format(likecar.size.toString())
+        binding.myUserLikeSectionCount.text = String.format(likecar.size.toString())
             })
             DataManager.getRecommendHistoryCarList(requireContext(),{
                 //        binding.myRecommendRecyclerview.adapter = InfoCardAdapter(items = recommendcar)
