@@ -2,6 +2,7 @@ package com.myme.mycarforme.ui.my
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.ContactsContract.Data
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.myme.mycarforme.data.model.Car
+import com.myme.mycarforme.data.network.DataManager
+import com.myme.mycarforme.data.utils.SharedPrefs
 import com.myme.mycarforme.databinding.FragmentMyBinding
 import com.myme.mycarforme.ui.home.InfoCardAdapter
 import com.myme.mycarforme.ui.map.MapActivity
@@ -64,23 +67,14 @@ class Myfragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val myViewModel =
-            ViewModelProvider(this).get(MyViewModel::class.java)
-
         _binding = FragmentMyBinding.inflate(inflater, container, false)
         val root: View = binding.root
 //        binding.myOrderRecyclerview.adapter = InfoCardAdapter(items = ordercar)
 //        binding.myOrderRecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 //        binding.myUserOrderCountText.text = String.format(ordercar.size.toString())
 //        binding.myUserOrderSectionText.text = String.format(ordercar.size.toString())
-//        binding.myRecommendRecyclerview.adapter = InfoCardAdapter(items = recommendcar)
-//        binding.myRecommendRecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-//        binding.myUserHistoryCountText.text = String.format(recommendcar.size.toString())
-//        binding.myUserHistorySectionCountText.text = String.format(recommendcar.size.toString())
-//        binding.myLikeRecyclerview.adapter = InfoCardAdapter(items = likecar)
-//        binding.myLikeRecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-//        binding.myUserLikeCount.text = String.format(likecar.size.toString())
-//        binding.myUserLikeSectionCount.text = String.format(likecar.size.toString())
+
+        binding.myUserNameText.text = SharedPrefs.getUserInfo(requireContext())?.name ?: ""
         val progressBarView = binding.myProgressbar
         val stepLabels = listOf("계약금 입금", "잔금 결제", "탁송 시작", "탁송 완료")
         progressBarView.setupSteps(stepCount = 4, labels = stepLabels)
@@ -91,6 +85,25 @@ class Myfragment : Fragment() {
         }
 
         return root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        context.let{
+            DataManager.getLikeCarList(requireContext(),{
+                //        binding.myLikeRecyclerview.adapter = InfoCardAdapter(items = likecar)
+//        binding.myLikeRecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+//        binding.myUserLikeCount.text = String.format(likecar.size.toString())
+//        binding.myUserLikeSectionCount.text = String.format(likecar.size.toString())
+            })
+            DataManager.getRecommendHistoryCarList(requireContext(),{
+                //        binding.myRecommendRecyclerview.adapter = InfoCardAdapter(items = recommendcar)
+//        binding.myRecommendRecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+//        binding.myUserHistoryCountText.text = String.format(recommendcar.size.toString())
+//        binding.myUserHistorySectionCountText.text = String.format(recommendcar.size.toString())
+            })
+        }
+
     }
 
     fun buttonTap() {

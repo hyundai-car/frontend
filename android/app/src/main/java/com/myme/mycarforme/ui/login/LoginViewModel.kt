@@ -6,16 +6,13 @@ import android.content.Intent
 import android.net.Uri
 import android.util.Base64
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.android.material.snackbar.Snackbar
 import com.myme.mycarforme.R
 import com.myme.mycarforme.data.network.ApiService
-import com.myme.mycarforme.data.network.CarListResponse
 import com.myme.mycarforme.data.network.LoginRequestBody
 import com.myme.mycarforme.data.network.LoginResponse
 import com.myme.mycarforme.data.network.RetrofitClient
@@ -109,7 +106,6 @@ class LoginViewModel : ViewModel() {
             response != null -> {
                 viewModelScope.launch {
                     try {
-                        // 백엔드로 code와 verifier 전송
                         val authCode = response.authorizationCode
 
                         loginUser(authCode!!, codeVerifier!!, context)
@@ -147,7 +143,7 @@ class LoginViewModel : ViewModel() {
                         // SharedPreferences에 토큰과 유저 정보 저장
                         SharedPrefs.saveToken(context, it.token.accessToken, it.token.refreshToken)
                         SharedPrefs.saveUserInfo(context, it.userInfo)
-                        Log.d("chk","$it.token.accessToken")
+                        Log.d("chk","${it.token}")
                     }
                 } else {
                     Toast.makeText(context, "$response", Toast.LENGTH_SHORT).show()

@@ -44,7 +44,6 @@ data class CarListResponse(
     val contents: List<Car>
 )
 
-
 // 페이지네이션 자동차 목록 응답 데이터
 data class CarPagedResponse(
     val content: List<Car>,
@@ -55,6 +54,14 @@ data class CarPagedResponse(
     val isFirst: Boolean,
     val isLast: Boolean
 )
+
+data class RefreshTokenResponse(
+    val accessToken: String,
+    val refreshToken: String,
+    val tokenType: String,
+    val expiresIn: Int
+)
+
 
 interface ApiService {
     @POST
@@ -76,4 +83,10 @@ interface ApiService {
         @Url url: String,
         @Header("Authorization") accessToken: String
     ): Call<CarPagedResponse>
+
+//    @POST
+//    fun getRefreshToken(
+//        @Url url:String,
+//        @Body refreshToken: String
+//    ): Call<RefreshTokenResponse>
 }

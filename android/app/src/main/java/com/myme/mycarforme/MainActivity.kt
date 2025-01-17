@@ -3,7 +3,7 @@ package com.myme.mycarforme
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.webkit.WebView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -11,7 +11,6 @@ import androidx.core.view.WindowInsetsCompat.CONSUMED
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.myme.mycarforme.data.model.Car
@@ -26,21 +25,38 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private var activeFragment: Fragment? = null
+//    private val homeViewModel: HomeViewModel by viewModels()
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+//        var popularCars = ArrayList<Car>()
+//        var mmCars = ArrayList<Car>()
+//        var nextCars = ArrayList<Car>()
+//        this.let {
+//            // 각 데이터를 비동기적으로 로드하고 콜백을 통해 RecyclerView에 세팅
+//            DataManager.getCarsListwithUrl(it, "popular") { cars ->
+//                popularCars = cars
+//                Log.d("chk","pop")
+//            }
+//            DataManager.getCarsListwithUrl(it, "mmscores") { cars ->
+//                mmCars = cars
+//                Log.d("chk","mm")
+//            }
+//            DataManager.getCarsListwithUrl(it, "sales") { cars ->
+//                nextCars = cars
+//                Log.d("chk","sales")
+//            }
+//        }
 
         val navView: BottomNavigationView = binding.navView
         val homeFragment = HomeFragment()
         val searchFragment = SearchFragment()
         val recommendFragment = RecommendFragment()
         val myFragment = Myfragment()
-
-
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
 

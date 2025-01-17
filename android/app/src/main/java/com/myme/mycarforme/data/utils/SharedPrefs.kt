@@ -27,6 +27,11 @@ object SharedPrefs {
         return prefs.getString(TOKEN_KEY, null)
     }
 
+    fun getRefreshToken(context: Context): String? {
+        val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        return prefs.getString(REFRESH_TOKEN_KEY, null)
+    }
+
     // 유저 정보를 SharedPreferences에 저장
     fun saveUserInfo(context: Context, userInfo: UserInfo) {
         val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)

@@ -17,20 +17,21 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-
-    private lateinit var popularCar: ArrayList<Car>
-    private lateinit var mmCar: ArrayList<Car>
-    private lateinit var nextCar: ArrayList<Car>
+//
+//    private val carViewModel: HomeViewModel by activityViewModels()
+//    private var popularCar = carViewModel.popularCar
+//    private var mmCar = carViewModel.mmCar
+//    private var nextCar = carViewModel.nextCar
+    private var popularCar = ArrayList<Car>()
+    private var mmCar = ArrayList<Car>()
+    private var nextCar = ArrayList<Car>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-
-        // 데이터 로드 후 UI 업데이트
-        loadCarData()
 
         // 이벤트 이미지 클릭 리스너
         val imageLinks = mapOf(
@@ -47,23 +48,27 @@ class HomeFragment : Fragment() {
                 openLink(url)
             }
         }
-
+        loadCarData()
         return binding.root
     }
 
     private fun loadCarData() {
         context?.let {
+            Log.d("chk","hey")
             // 각 데이터를 비동기적으로 로드하고 콜백을 통해 RecyclerView에 세팅
             DataManager.getCarsListwithUrl(it, "popular") { cars ->
                 popularCar = cars
+//                carViewModel.updatePopularCarList(cars)
                 updateRecyclerView()
             }
             DataManager.getCarsListwithUrl(it, "mmscores") { cars ->
                 mmCar = cars
+//                carViewModel.updatemmCarList(cars)
                 updateRecyclerView()
             }
             DataManager.getCarsListwithUrl(it, "sales") { cars ->
                 nextCar = cars
+//                carViewModel.updatenextCarList(cars)
                 updateRecyclerView()
             }
         }
@@ -71,14 +76,12 @@ class HomeFragment : Fragment() {
 
     private fun updateRecyclerView() {
         // 데이터가 로드되면 RecyclerView 업데이트
-        if (::popularCar.isInitialized && ::mmCar.isInitialized && ::nextCar.isInitialized) {
-            binding.homePopularRecyclerview.adapter = InfoCardAdapter(items = popularCar)
-            binding.homePopularRecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            binding.homeFutureRecyclerview.adapter = InfoCardAdapter(items = mmCar)
-            binding.homeFutureRecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            binding.homeNextRecyclerview.adapter = InfoCardAdapter(items = nextCar)
-            binding.homeNextRecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        }
+        binding.homePopularRecyclerview.adapter = InfoCardAdapter(items = popularCar)
+        binding.homePopularRecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.homeFutureRecyclerview.adapter = InfoCardAdapter(items = mmCar)
+        binding.homeFutureRecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.homeNextRecyclerview.adapter = InfoCardAdapter(items = nextCar)
+        binding.homeNextRecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }
 
     private fun openLink(url: String) {
