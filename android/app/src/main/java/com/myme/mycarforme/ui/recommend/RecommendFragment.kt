@@ -4,9 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.JavascriptInterface
+import android.webkit.WebChromeClient
+import android.webkit.WebSettings
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.myme.mycarforme.WebAppInterface
+import com.myme.mycarforme.data.utils.SharedPrefs
 import com.myme.mycarforme.databinding.FragmentRecommendBinding
 
 class RecommendFragment : Fragment() {
@@ -15,6 +22,7 @@ class RecommendFragment : Fragment() {
 
     // This property is only valid between onCreateView and
     // onDestroyView.
+    private lateinit var webView: WebView
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -27,12 +35,31 @@ class RecommendFragment : Fragment() {
 
         _binding = FragmentRecommendBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        val textView: TextView = binding.textDashboard
-        recommendViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+        webView = binding.recommendWebview
+        setupWebView()
+        webView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
         return root
+    }
+
+    fun setupWebView() {
+        webView.webViewClient = WebViewClient() // 내부 WebView에서 열리도록 설정
+        webView.webChromeClient = WebChromeClient()
+        webView.clearCache(true)
+        val webSettings: WebSettings? = webView.settings
+        if (webSettings != null) {
+            webSettings.javaScriptEnabled = true
+            webSettings.cacheMode = WebSettings.LOAD_NO_CACHE
+            webSettings.domStorageEnabled = true // DOM 저장소 활성화
+        }
+        webView?.loadUrl("http://mycarf0r.me/recommendation/candidates")
+        webView.addJavascriptInterface(AndroidBridge(), "AndroidBridge")
+    }
+
+    inner class AndroidBridge {
+        @JavascriptInterface
+        fun getToken(): String? {
+            return SharedPrefs.getAccessToken(requireContext())
+        }
     }
 
     override fun onDestroyView() {

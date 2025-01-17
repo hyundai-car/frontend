@@ -1,18 +1,21 @@
 package com.myme.mycarforme.ui.search
 
-import android.graphics.Bitmap
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.JavascriptInterface
+import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.myme.mycarforme.WebAppInterface
+import com.myme.mycarforme.data.utils.SharedPrefs
 import com.myme.mycarforme.databinding.FragmentSearchBinding
+
 
 class SearchFragment : Fragment() {
 
@@ -38,16 +41,27 @@ class SearchFragment : Fragment() {
         return root
     }
 
-
     fun setupWebView() {
-        webView?.webViewClient = WebViewClient() // 내부 WebView에서 열리도록 설정
+        webView.webViewClient = WebViewClient() // 내부 WebView에서 열리도록 설정
+        webView.webChromeClient = WebChromeClient()
+        webView.clearCache(true)
         val webSettings: WebSettings? = webView?.settings
         if (webSettings != null) {
             webSettings.javaScriptEnabled = true
-            webSettings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
+            //TODO: cachemode 바꾸기
+            webSettings.cacheMode = WebSettings.LOAD_NO_CACHE
             webSettings.domStorageEnabled = true // DOM 저장소 활성화
         }
-        webView?.loadUrl("http://mycarf0r.me/search")
+        webView.loadUrl("http://192.168.201.101:5173/search")
+        webView.addJavascriptInterface(AndroidBridge(), "AndroidBridge")
+
+    }
+
+    inner class AndroidBridge {
+        @JavascriptInterface
+        fun getToken(): String? {
+            return SharedPrefs.getAccessToken(requireContext())
+        }
     }
 
 
