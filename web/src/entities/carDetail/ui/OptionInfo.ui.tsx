@@ -1,4 +1,4 @@
-import { OptionInfoList } from "@/widgets/delivery/ui/\bOptionInfoList.ui";
+import { OptionInfoList } from "@/widgets/carDetail/ui/OptionInfoList.ui";
 import styled from "styled-components";
 
 export function OptionInfo() {
