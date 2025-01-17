@@ -28,7 +28,7 @@ export const SearchCarList = () => {
           key={data.carId}
           data={data}
           actionSlot={actionSlot}
-          onClick={() => navigate(`/carDetail/${data.carId}`)}
+          onClick={() => navigate(`/carDetail/carsDetail?carNo=${data.carId}`)}
         />
       )}
     />

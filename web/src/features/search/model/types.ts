@@ -1,3 +1,4 @@
+// feature/search/model/types.ts
 import { Control } from "react-hook-form";
 import { FUEL_TYPES, BODY_TYPES } from "./constants";
 
