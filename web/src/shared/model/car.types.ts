@@ -5,6 +5,8 @@ import {
 } from "@/shared/model/car.contracts";
 import { z } from "zod";
 
+// TODO Type 정리할 것
+
 /** 차량 비교항목 */
 export type Comparison = z.infer<typeof ComparisonSchema>;
 /** 차량 기본정보 */
@@ -13,14 +15,15 @@ export type Basic = z.infer<typeof BasicSchema>;
 export type Car = z.infer<typeof CarSchema>;
 export type BasicInfo = z.infer<typeof BasicSchema>;
 
-// TODO Type 정리할 것
-/** 차량 상세정보 */
+/**
+ * @description 차량 상세정보
+ * */
 interface Detail {
   carId: number;
   carName: string;
-  year: string; // YYYY-MM 형식
+  initialRegistration: string; // YY년 MM월 형식
   mileage: number;
-  sellingPrice: number;
+  sellingPrice: number; // 만원 단위
   exteriorColor: string;
   interiorColor: string;
   displacement: number;
@@ -29,13 +32,12 @@ interface Detail {
   location: string;
   fuelEfficiency: number;
   mainImage: string;
-  newCarPrice: number;
+  newCarPrice: number; // 만원 단위
   carNumber: string;
   seating: number;
+  mmScore: number;
   createdAt: string; // YYYY-MM-DD 형식
   updatedAt: string; // YYYY-MM-DD 형식
-  mmScore: number;
-  initialRegistrationDate: string;
 }
 
 export interface OptionList {
@@ -63,10 +65,9 @@ export interface OptionList {
 export interface AccidentHistory {
   accidentHistoryid: number;
   accidentDate: string; // YYYY-MM-DD 형식
-  accidentCount: number;
-  carPartsPrice: number;
-  carLaborPrice: number;
-  carPaintPrice: number;
+  carPartsPrice: number; // 만원 단위
+  carLaborPrice: number; // 만원 단위
+  carPaintPrice: number; // 만원 단위
   createdAt: string; // YYYY-MM-DD 형식
   updatedAt: string; // YYYY-MM-DD 형식
 }
@@ -75,4 +76,5 @@ export interface CarData {
   cars: Detail;
   optionLists: OptionList;
   accidentHistories: AccidentHistory[];
+  accidentCount: number;
 }

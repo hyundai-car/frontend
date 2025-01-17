@@ -5,10 +5,21 @@ import { ReactComponent as MileageIcon } from "public/icons/routing.svg";
 import { BasicInfoCard } from "@/entities/carDetail";
 import { OptionInfo } from "@/entities/carDetail/ui/OptionInfo.ui";
 import { CarImages } from "@/widgets/carDetail/ui/CarImages.ui";
+import { useSearchParams } from "react-router-dom";
+import { useCarDetailStore } from "@/pages/carDetail/model/store";
+import { useEffect } from "react";
 export function CarDetailPage() {
-  const { data } = useCarDetailQuery(); //TODO 나중에 carId 넘겨주기
+  const [searchParams] = useSearchParams();
+  const { setCarId } = useCarDetailStore();
+  const carId = Number(searchParams.get("carNo"));
+  const { data } = useCarDetailQuery(carId);
+
+  useEffect(() => {
+    setCarId(carId);
+  }, [carId, searchParams, setCarId]);
+
   if (!data) return null;
-  const { carName, year, mileage, sellingPrice } = data.cars;
+  const { carName, initialRegistration, mileage, sellingPrice } = data.cars;
   // const basicInfo = FormatBasicInfo(data);
 
   return (
@@ -21,14 +32,13 @@ export function CarDetailPage() {
         <OptionWrap>
           <Option>
             <StyledIcon as={CalendarIcon} />
-            <p>{year}</p>
+            <p>{initialRegistration}</p>
           </Option>
           <Option>
             <StyledIcon as={MileageIcon} />
             <p>{mileage}</p>
           </Option>
         </OptionWrap>
-        {/* TODO 만원 뺴서 계산하기 */}
         <h1>
           <strong>{sellingPrice}</strong> 만원
         </h1>

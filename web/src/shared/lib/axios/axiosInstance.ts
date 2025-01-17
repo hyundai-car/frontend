@@ -11,7 +11,9 @@ export const authenticated = axios.create({
   baseURL: `${import.meta.env.VITE_BASE_URL}/api`,
 });
 
-/** 요청 인터셉터 : 헤더에 access token 추가 */
+/**
+ * @description 요청 인터셉터 : 헤더에 access token 추가
+ * */
 authenticated.interceptors.request.use((config) => {
   const ACCESS_TOKEN = getCookie("ACCESS_TOKEN");
   // const ACCESS_TOKEN =
@@ -25,3 +27,19 @@ authenticated.interceptors.request.use((config) => {
   }
   return config;
 });
+
+/**
+ * @description 응답 인터셉터
+ * */
+authenticated.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (axios.isAxiosError(error)) {
+      if (error.response?.status === 500) {
+        throw new Error("서버 에러가 발생했습니다.");
+      }
+    }
+
+    throw new Error("알 수 없는 에러가 발생했습니다.");
+  }
+);
