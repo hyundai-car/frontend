@@ -7,7 +7,7 @@
 import { VehicleSearchFiltersSchema } from "@/entities/search/model/search-filters.contracts";
 import { z } from "zod";
 
-export const CarsDetailParamsSchema = z.object({ carNo: z.string() });
+export const CarsDetailParamsSchema = z.object({ carNo: z.number() });
 
 export const SearchQueryParamsSchema = z.object({
   query: z.string().optional(),
