@@ -37,18 +37,28 @@ export const CarSchema = z.object({
   isOnSale: z.number(),
   location: z.string(),
   mmScore: z.number(),
-  fuelEfficiency: z.number(),
-  mainImage: z.string(),
-  exteriorColor: z.string(),
-  seating: z.number(),
   accidentCount: z.number(),
   initialRegistrationDate: z.string(),
+  fuelEfficiency: z.number(),
+  mileage: z.number(),
+});
 
-  newCarPrice: z.number(),
-  carNumber: z.number(),
-  paymentDeliveryStatus: z.string(),
-  contranctedAt: z.date(),
-  payedAt: z.date(),
-  deliveryStartedAt: z.date(),
-  deliveryEndedAt: z.date(),
+/**
+ * 차량 기본 정보
+ */
+export const BasicSchema = z.object({
+  ...ComparisonSchema.shape,
+  carNumber: z.string(),
+  exterorColor: z.string(),
+  fuelType: z.string(),
+  seating: z.number(),
+});
+
+/**
+ * 차량 정보
+ */
+export const CarSchema = z.object({
+  carId: z.number(),
+  modelName: z.string(),
+  mainImage: z.string(),
 });

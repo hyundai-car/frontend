@@ -1,12 +1,12 @@
-import { ResultCard } from "@/entities/recommendation/ui/ResultCard.ui";
-import { ResultGraph } from "@/widgets/recommendation/ui/ResultGraph.ui";
-import { ResultList } from "@/widgets/recommendation/ui/ResultList.ui";
+import { Graph } from "@/entities/recommendation/ui/Graph.ui";
+import { RecommendationCard } from "@/entities/recommendation/ui/RecommendationCard.ui";
+import { GridList } from "@/widgets/recommendation/ui/GridList.ui";
 import styled from "styled-components";
 
 // 여기서 entity인 Result에 그리드widget(bottomSlot), 그래프widget(topSlot) 컴포넌트 넘겨줘야 한다.
-export function Result() {
-  // const { data } = useBestCar();
+export function Recommendation() {
   const userName = "타마마"; //TODO
+
   return (
     <Container>
       <Title>
@@ -15,7 +15,7 @@ export function Result() {
         </h1>
         <p>선택 차량 중 {userName}님께 딱 맞는 차를 추천해드릴게요!</p>
       </Title>
-      <ResultCard topSlot={<ResultGraph />} bottomSlot={<ResultList />} />
+      <RecommendationCard topSlot={<Graph />} bottomSlot={<GridList />} />
     </Container>
   );
 }

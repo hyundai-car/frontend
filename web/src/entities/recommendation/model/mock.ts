@@ -1,3 +1,5 @@
+import { BestCarResponse } from "@/entities/recommendation/api/types";
+
 export const MOCK_LikeList = [
   {
     carId: 0,
@@ -83,39 +85,31 @@ export const MOCK_LikeList = [
   },
 ];
 
-export const MOCK_BestCarData = {
+export const MOCK_BestCarData: BestCarResponse = {
   bestCar: {
-    carId: 1,
-    modelName: "제네시스 G80 3.3 GDI AWD",
-    year: 2020,
-    mileage: 50000,
-    sellingPrice: 45000000,
-    color: "검정색",
-    fuelType: "가솔린",
-    transmissionType: "자동",
-    isOnSale: 1,
-    location: "서울",
-    mmScore: 85,
-    fuelEfficiency: 10.2,
-    mainImage: "/images/car1.jpg",
-    exteriorColor: "블랙",
-    seating: 5,
-    newCarPrice: 55000000,
-    carNumber: 1234,
-    paymentDeliveryStatus: "배송완료",
-    contranctedAt: new Date("2024-01-01"),
-    payedAt: new Date("2024-01-02"),
-    deliveryStartedAt: new Date("2024-01-03"),
-    deliveryEndedAt: new Date("2024-01-04"),
-    accidentCount: 1,
-    initialRegistrationDate: "12321",
+    carId: 12345,
+    modelName: "Tesla Model S",
+    mainImage:
+      "https://www.motoya.co.kr/news/photo/202403/39979_237158_1919.jpg",
+    sellingPrice: 85000,
+    createdAt: "2025-01-01",
+    updatedAt: "2025-01-10",
+    mmScore: 95,
+    accidentCount: 0,
+    initialRegistrationDate: "2024-01-01",
+    fuelEfficiency: 130.5,
+    mileage: 12000,
+    carNumber: "123",
+    exterorColor: "asdf",
+    fuelType: "sadf",
+    seating: 1,
   },
-  comparisons: {
-    mmScoreAvg: 4.2,
-    accidentCountAvg: 1.5,
-    initialRegistrationDateAvg: "2021-08-20",
-    mileageAvg: 55000,
-    fuelEfficiencyAvg: 11.8,
+  comparisonAvg: {
+    mmScoreAvg: 89.5,
+    accidentCountAvg: 1.2,
+    initialRegistrationDateAvg: "2023-06-15",
+    mileageAvg: 15000,
+    fuelEfficiencyAvg: 125.7,
   },
-  otherCarIds: [11, 12, 14, 16],
+  otherCarIds: [54321, 67890, 11223],
 };
