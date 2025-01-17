@@ -1,9 +1,11 @@
+import { CarDetailRoute, CarImgDetailRoute } from "@/pages/carDetail";
 import { CandidatesRoute, RecommendationRoute } from "@/pages/recommendation";
 import { SearchRoute } from "@/pages/search";
 import { withSuspense } from "@/shared/lib/hocs";
 import { createElement, lazy } from "react";
 import {
   createBrowserRouter,
+  Outlet,
   RouterProvider,
   useRouteError,
 } from "react-router-dom";
@@ -44,7 +46,11 @@ const root = createBrowserRouter([
       },
       {
         element: createElement(BackHeaderLayout),
-        children: [RecommendationRoute, SearchRoute],
+        children: [RecommendationRoute, SearchRoute, CarDetailRoute],
+      },
+      {
+        element: <Outlet />,
+        children: [CarImgDetailRoute],
       },
 
       // {
