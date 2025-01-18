@@ -1,13 +1,26 @@
-import { MOCK_CarImgList } from "@/features/carDetail/model/mock";
 import styled from "styled-components";
 import { ReactComponent as CloseIcon } from "public/icons/close.svg";
+import { useGetImgListQuery } from "@/pages/carDetail/model/queries";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { ImgList } from "@/pages/carDetail/api/types";
+
 export function CarImgDetailPage() {
-  const imgUrls: string[] = MOCK_CarImgList.contents.map(
-    ({ imageUrl }) => imageUrl
-  );
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+
+  const carId = Number(searchParams.get("carNo"));
+  const { data } = useGetImgListQuery(carId);
+
+  const imgUrls: string[] =
+    data?.contents.map((content: ImgList) => content.imageUrl) ?? [];
+
+  const goBack = () => {
+    navigate(-1);
+  };
+
   return (
     <Container>
-      <CloseBtn>
+      <CloseBtn onClick={goBack}>
         <StyledIcon as={CloseIcon} />
       </CloseBtn>
       {imgUrls.map((imgUrl, index) => {

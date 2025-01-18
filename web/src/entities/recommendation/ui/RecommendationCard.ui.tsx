@@ -1,4 +1,3 @@
-import { useBestCarQuery } from "@/entities/recommendation/model/queries";
 import { useRecommendationResult } from "@/widgets/recommendation/model/actions";
 import { ReactNode } from "react";
 import styled from "styled-components";
