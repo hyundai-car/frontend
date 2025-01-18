@@ -31,8 +31,10 @@ export function RecommendationPage() {
 
 const Container = styled.div`
   width: 100dvw;
-  height: 100dvh;
+  min-height: 100dvh;
   padding: 0 20px;
+  margin-bottom: 80px;
+
   display: flex;
   flex-direction: column;
   gap: 30px;

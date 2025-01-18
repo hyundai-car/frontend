@@ -47,7 +47,7 @@ export function ComparisonCard({ data, isBest, comparedData }: Props) {
         <StyledIcon $isBest={isBest} $isSuperior={comparison?.accidentCount} />
         <Description $isBest={isBest} $isSuperior={comparison?.accidentCount}>
           <h6>사고 이력</h6>
-          <p>{data.car.accidentCount}</p>
+          <p>{data.car.accidentCount} 회</p>
         </Description>
       </Row>
       <Row>
@@ -61,7 +61,7 @@ export function ComparisonCard({ data, isBest, comparedData }: Props) {
         <StyledIcon $isBest={isBest} $isSuperior={comparison?.fuelEfficiency} />
         <Description $isBest={isBest} $isSuperior={comparison?.fuelEfficiency}>
           <h6>주행 거리</h6>
-          <p>{Math.ceil(data.car.fuelEfficiency)}</p>
+          <p>{Math.ceil(data.car.fuelEfficiency)} km</p>
         </Description>
       </Row>
       <Row>

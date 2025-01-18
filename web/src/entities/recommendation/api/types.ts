@@ -22,12 +22,12 @@ export interface BestCar extends Basic {
   updatedAt: string;
 }
 
-interface Normalization {
+export interface Normalization {
   accidentCountNorm: number;
   fuelEfficiencyNorm: number;
   initialRegistrationNorm: number;
   mileageNorm: number;
-  mScoreNorm: number;
+  mmScoreNorm: number;
 }
 export interface Graph {
   avg: Normalization;
