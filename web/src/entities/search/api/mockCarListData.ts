@@ -1,3 +1,4 @@
+// entities/search/api/mockCarListData.ts
 import { TSearch } from "../model/search.types";
 
 interface CarDataResponse {

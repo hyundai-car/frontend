@@ -1,3 +1,4 @@
+// features/search/model/store.ts
 import { create } from "zustand";
 import type { FilterState } from "./types";
 import { INITIAL_FILTERS } from "./constants";
