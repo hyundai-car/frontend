@@ -1,4 +1,4 @@
-import { rotate } from "@/entities/recommendation/model/constants";
+import { rotate, shine } from "@/entities/recommendation/model/constants";
 import { useRecommendationResult } from "@/widgets/recommendation/model/actions";
 import { ReactNode } from "react";
 import styled from "styled-components";
@@ -42,6 +42,7 @@ const Container = styled.div`
   height: 780px;
   position: relative;
 `;
+
 const Card = styled.div`
   position: relative;
   width: 100%;
@@ -49,6 +50,7 @@ const Card = styled.div`
   transform-style: preserve-3d;
   animation: ${rotate} 1.5s linear;
 `;
+
 const CardSide = styled.div`
   position: absolute;
   width: 100%;
@@ -57,7 +59,27 @@ const CardSide = styled.div`
   background-color: var(--navy);
   border-radius: 8px;
   padding: 39px 34px;
+
+  overflow: hidden;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.4) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    animation: ${shine} 5s infinite;
+    z-index: 1;
+  }
 `;
+
 const CardFront = styled(CardSide)``;
 
 const CardBack = styled(CardSide)`
@@ -66,6 +88,7 @@ const CardBack = styled(CardSide)`
   display: flex;
   justify-content: center;
   align-items: center;
+  /* z-index: 2; */
 `;
 
 const HeaderSection = styled.section`
