@@ -1,5 +1,4 @@
 import { useRecommendationStore } from "@/features/recommendation/model/store";
-import { SelectCard } from "@/features/recommendation/model/types";
 import { useCheckboxGroup } from "@/features/recommendation/model/useCheckboxGroup";
 import { LikeCard } from "@/features/recommendation/ui/LikeCard.ui";
 // import { MOCK_LikeList } from "@/entities/recommendation/model/mock";
@@ -10,7 +9,6 @@ import { useGetLikeListQuery } from "@/features/recommendation/model/queries";
 import { LikeItem } from "@/features/recommendation/api/api.types";
 
 export function LikeList() {
-  //TODO 임시데이터
   // const cardList = MOCK_LikeList;
   const { data } = useGetLikeListQuery();
   const setHasCheckedItems = useRecommendationStore(
@@ -28,6 +26,10 @@ export function LikeList() {
 
   useEffect(() => {
     setHasCheckedItems(checkedItems.size > 0);
+    localStorage.setItem(
+      "checkedItems",
+      JSON.stringify(Array.from(checkedItems))
+    );
   }, [checkedItems, setHasCheckedItems]);
 
   const contents = data?.contents ?? [];

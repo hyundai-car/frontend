@@ -91,6 +91,7 @@ authenticated.interceptors.response.use(
         error.response?.status,
         error.response?.data
       );
+
       if (error.response?.status === 401) {
         // 필요 시 토큰 삭제 및 재로그인 처리
         localStorage.removeItem(TOKEN_KEY);
@@ -109,5 +110,7 @@ authenticated.interceptors.response.use(
       console.error("알 수 없는 에러:", error.message);
       throw error;
     }
+
+    throw error;
   }
 );

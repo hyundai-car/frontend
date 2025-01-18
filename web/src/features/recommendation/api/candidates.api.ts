@@ -12,3 +12,10 @@ export const getLikeListApi = async () => {
   });
   return response.data;
 };
+
+export const postCandidatesApi = async (carIdList: number[]) => {
+  const response = await authenticated.post("/likes/comparisons", {
+    carIdList: carIdList, // request body
+  });
+  return response.data;
+};
