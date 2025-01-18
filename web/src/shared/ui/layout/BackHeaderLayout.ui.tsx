@@ -1,5 +1,5 @@
 /**
- * @description header(로고, 검색 버튼)이 있는 레이아웃
+ * @description header(뒤로가기 버튼)이 있는 레이아웃
  */
 
 import { Outlet } from "react-router-dom";
