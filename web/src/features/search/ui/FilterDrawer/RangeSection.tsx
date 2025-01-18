@@ -1,6 +1,6 @@
 import { Control, Controller } from "react-hook-form";
 import { Slider } from "@mui/material";
-import { Section, SectionTitle, SliderContainer, RangeText } from "../styles";
+import { Section, SectionTitle, SliderContainer } from "../styles";
 import { FilterState } from "../../model/types";
 import { RANGE_CONSTRAINTS } from "../../model/constants";
 
