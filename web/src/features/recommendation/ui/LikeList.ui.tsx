@@ -49,7 +49,7 @@ export function LikeList() {
         </Wrap>
 
         <Description>
-          전체 <span>{data?.totalElements}</span>개
+          전체 <span>{checkedItems.size}</span>개
         </Description>
       </HeaderSection>
 

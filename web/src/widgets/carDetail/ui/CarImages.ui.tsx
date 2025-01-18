@@ -1,6 +1,7 @@
 import Car360Image from "@/entities/carDetail/ui/Car360Image.ui";
 import { ClickCarImgList } from "@/features/carDetail/ui/ClickCarImgList.ui";
 import { useCar360ImagesQuery } from "@/pages/carDetail/model/queries";
+import { LoadingFallback } from "@/shared/ui/fallback/LoadingFallback";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 
@@ -17,7 +18,7 @@ export function CarImages() {
 
   // 로딩 상태 처리
   if (isLoading) {
-    return <Message>Loading car images...</Message>;
+    return <LoadingFallback />;
   }
 
   // 에러 상태 처리

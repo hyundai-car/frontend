@@ -17,9 +17,9 @@ export function RecommendationPage() {
 }
 
 const Container = styled.div`
-  width: 100dvw;
+  /* width: 100dvw; */
   height: 100dvh;
-  padding: 0 20px;
+  /* padding: 0 20px; */
 `;
 
 const Description = styled.p`

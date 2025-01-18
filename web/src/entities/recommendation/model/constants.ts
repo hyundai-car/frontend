@@ -1,4 +1,22 @@
 import { Normalization } from "@/entities/recommendation/api/types";
+import { keyframes } from "styled-components";
+
+export const rotate = keyframes`
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+`;
+export const shine = keyframes`
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+  }
+`;
 
 export const graphOptions = {
   scales: {
