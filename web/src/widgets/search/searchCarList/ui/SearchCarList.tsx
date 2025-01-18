@@ -3,7 +3,6 @@
 import { StackedCard } from "@/entities/search";
 import { WishlistButton } from "@/features/wishlist";
 import { CarList } from "@/entities/search/carList/CarList";
-import { useNavigate } from "react-router-dom";
 import { useSearchCarListQuery } from "../api/searchCarList.query";
 // type Props = {
 //   actionSlot?: (carId: number) => ReactNode;
@@ -11,7 +10,6 @@ import { useSearchCarListQuery } from "../api/searchCarList.query";
 // };
 
 export const SearchCarList = () => {
-  const navigate = useNavigate();
   // 액션슬롯을 내려줘서 자식 컴포넌트의 특정부분을 부모에서 제어
   // const [carList] = useState(mockCarListData.contents);
   const { data, isLoading } = useSearchCarListQuery();
@@ -33,12 +31,7 @@ export const SearchCarList = () => {
       isFetching={isLoading}
       getActionSlot={getActionSlot}
       renderItem={(data, actionSlot) => (
-        <StackedCard
-          key={data.carId}
-          data={data}
-          actionSlot={actionSlot}
-          onClick={() => navigate(`/carDetail/carsDetail?carNo=${data.carId}`)}
-        />
+        <StackedCard key={data.carId} data={data} actionSlot={actionSlot} />
       )}
     />
   );

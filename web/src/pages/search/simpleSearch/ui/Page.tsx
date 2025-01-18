@@ -4,9 +4,10 @@ import { SimpleSearchStep } from "@/shared/lib/react-router/router.types";
 import { Icon } from "@/shared/ui/Icon/Icon";
 import styled from "styled-components";
 import { BasicButton } from "@/shared/ui/button";
-import { useSimpleSearchStore } from "../model/store";
+
 import { useEffect } from "react";
 import { DIAGNOSTIC_QUESTIONS } from "@/entities/simpleSearch/questionBlock/model/constants";
+import { useSimpleSearchStore } from "@/entities/simpleSearch/model/store";
 
 export function SimpleSearchPage() {
   const navigate = useNavigate();
@@ -14,38 +15,50 @@ export function SimpleSearchPage() {
   const currentStep = Number(step || 1);
 
   const { answers, setStep, resetAnswers } = useSimpleSearchStore();
-  const currentAnswer = answers.find((a) => a.questionId === currentStep);
-  const hasSelection =
-    currentAnswer && currentAnswer.selectedOptions.length > 0;
+  // const currentAnswer = answers.find((a) => a.questionId === currentStep);
+  // const hasSelection =
+  //   currentAnswer && currentAnswer.selectedOptions.length > 0;
+  const hasSelection = answers[currentStep - 1] !== -1;
 
   useEffect(() => {
     setStep(currentStep);
   }, [currentStep]);
 
+  // const printDebugAnswers = () => {
+  //   console.log("========진단 결과========");
+  //   answers.forEach((answer) => {
+  //     const question = DIAGNOSTIC_QUESTIONS.find(
+  //       (q) => q.id === answer.questionId
+  //     );
+  //     const selectedLabels = question?.isMultipleChoice
+  //       ? answer.selectedOptions
+  //           .map(
+  //             (optionId) =>
+  //               question.options.find((opt) => opt.id === optionId)?.label
+  //           )
+  //           .join(", ")
+  //       : question?.options.find((opt) => opt.id === answer.questionId)?.label;
+
+  //     console.log(`질문: ${question?.question}`);
+  //     console.log(`선택: ${selectedLabels}`);
+  //   });
+  // };
   const printDebugAnswers = () => {
     console.log("========진단 결과========");
-    answers.forEach((answer) => {
-      const question = DIAGNOSTIC_QUESTIONS.find(
-        (q) => q.id === answer.questionId
-      );
-      const selectedLabels = question?.isMultipleChoice
-        ? answer.selectedOptions
-            .map(
-              (optionId) =>
-                question.options.find((opt) => opt.id === optionId)?.label
-            )
-            .join(", ")
-        : question?.options.find((opt) => opt.id === answer.questionId)?.label;
+    answers.forEach((answerIndex, questionIndex) => {
+      if (answerIndex !== -1) {
+        const question = DIAGNOSTIC_QUESTIONS[questionIndex];
+        const selectedOption = question?.options[answerIndex];
 
-      console.log(`질문: ${question?.question}`);
-      console.log(`선택: ${selectedLabels}`);
+        console.log(`질문 ${questionIndex + 1}: ${question?.question}`);
+        console.log(`응답 ${answerIndex + 1}: ${selectedOption?.label}`);
+      }
     });
   };
-
   const handleNext = () => {
     if (!hasSelection) return;
-
     if (currentStep === 5) {
+      // 결과보기 버튼 클릭 시
       printDebugAnswers(); // 디버깅용
       resetAnswers(); // answers 초기화
       navigate(pathKeys.simpleSearch.result({ resultId: "123" })); // 결과 페이지 연결

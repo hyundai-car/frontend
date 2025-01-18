@@ -11,7 +11,6 @@ type SearchStore = {
   setFilters: (filters: FilterState) => void;
   setFilterOpen: (isOpen: boolean) => void;
   printSearchConditions: () => void;
-  resetFilters: () => void;
 };
 
 export const useSearchStore = create<SearchStore>((set, get) => ({
@@ -47,6 +46,4 @@ export const useSearchStore = create<SearchStore>((set, get) => ({
     );
     console.log("========================");
   },
-  // 필터 초기화 메서드
-  resetFilters: () => set({ ...initialState }),
 }));

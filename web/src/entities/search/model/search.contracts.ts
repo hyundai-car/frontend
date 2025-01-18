@@ -15,11 +15,11 @@ export const SearchSchema = z.object({
   updatedAt: z.string(),
 });
 
-export const SearchResponseSchema = z.object({
-  contents: z.array(SearchSchema),
-  pagination: z.object({
-    total: z.number(),
-    page: z.number(),
-    limit: z.number(),
-  }),
-});
+// export const SearchResponseSchema = z.object({
+//   contents: z.array(SearchSchema),
+//   pagination: z.object({
+//     total: z.number(),
+//     page: z.number(),
+//     limit: z.number(),
+//   }),
+// });

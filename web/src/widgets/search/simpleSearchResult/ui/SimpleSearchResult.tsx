@@ -13,6 +13,7 @@ export const SimpleSearchResult = () => {
         <SubTitle>{name}님에게 가장 적절한 차량을 추천해드렸어요.</SubTitle>
       </TitleWrap>
       <RecommendCarList />
+      <div style={{ height: "20px" }}></div>
     </>
   );
 };
