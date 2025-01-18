@@ -9,4 +9,6 @@ export interface ISimpleResultCarInfo {
   mainImage: string;
 }
 
-export type TSimpleSearchAnswers = [number, number, number, number, number];
+// export type TSimpleSearchAnswers = [number, number, number, number, number];
+
+export type TRecommendAnswersRequest = [number, number, number, number, number];

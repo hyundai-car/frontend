@@ -2,23 +2,23 @@ import { Loading } from "@/shared/ui/loading/Loading";
 import styled from "styled-components";
 
 export const CarList = <T extends { carId: number }>({
-  data = [],
+  items = [],
   isFetching,
   getActionSlot,
   renderItem,
 }: {
-  data?: T[];
+  items?: T[];
   isFetching: boolean;
   getActionSlot?: (carId: number) => React.ReactNode;
   renderItem: (item: T, actionSlot?: React.ReactNode) => React.ReactNode;
 }) => {
-  if (data.length === 0) {
+  if (items.length === 0) {
     return <Loading iconSize={100} isLoading={isFetching} />;
   }
 
   return (
     <Container $isFetching={isFetching}>
-      {data.map((data) => renderItem(data, getActionSlot?.(data.carId)))}
+      {items.map((items) => renderItem(items, getActionSlot?.(items.carId)))}
     </Container>
   );
 };

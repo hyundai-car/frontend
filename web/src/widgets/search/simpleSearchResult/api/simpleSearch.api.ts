@@ -1,29 +1,9 @@
-import { TSimpleSearchAnswers } from "@/entities/simpleSearch/model/types";
+import { TRecommendAnswersRequest } from "@/entities/simpleSearch/model/types";
 import { authenticated } from "@/shared/lib/axios/axiosInstance";
-// interface SimpleSearchRequest {
-//   budget: string;
-//   usage: string;
-//   maintenance: string;
-//   experience: string;
-//   preferredType: string;
-// }
-interface RecommendCar {
-  recommendId: number;
-  recommendedAt: string;
-  recommendPriority: number;
-  recommendCondition: string;
-  recommendReason: string;
-  createdAt: string;
-  updatedAt: string;
-  car: TSimpleSearchAnswers;
-}
-
-interface SimpleSearchResponse {
-  contents: RecommendCar[];
-}
+import { SimpleSearchResponse } from "../model/types";
 
 export const fetchSimpleSearchResult = async (
-  answers: TSimpleSearchAnswers
+  answers: TRecommendAnswersRequest
 ): Promise<SimpleSearchResponse> => {
   const request = {
     budget: (answers[0] + 1).toString(),

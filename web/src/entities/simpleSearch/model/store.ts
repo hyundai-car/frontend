@@ -1,5 +1,5 @@
 import { DIAGNOSTIC_QUESTIONS } from "@/entities/simpleSearch/questionBlock/model/constants";
-// import { Answer } from "@/entities/simpleSearch/questionBlock/model/types";
+//import { Answer } from "@/entities/simpleSearch/questionBlock/model/types";
 import { create } from "zustand";
 // interface SimpleSearchState {
 //   currentStep: number;
