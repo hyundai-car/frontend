@@ -1,5 +1,5 @@
 import { DIAGNOSTIC_QUESTIONS } from "@/entities/simpleSearch/questionBlock/model/constants";
-import { AnswerSelect } from "@/entities/simpleSearch/questionBlock/ui/\bAnswerSelect";
+import { AnswerSelect } from "@/entities/simpleSearch/questionBlock/ui/AnswerSelect";
 import { QuestionBlock } from "@/entities/simpleSearch/questionBlock/ui/QuestionBlock";
 import { useSimpleSearchStore } from "@/pages/search/simpleSearch/model/store";
 

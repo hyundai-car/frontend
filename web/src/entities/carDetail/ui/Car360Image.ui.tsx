@@ -42,7 +42,7 @@ class Car360Image extends Component<Props, State> {
 
     this.animationInterval = setInterval(() => {
       if (currentIndex < 37) {
-        this.setState({ imageIndex: currentIndex % 36 });
+        this.setState({ imageIndex: (currentIndex + 35) % 36 });
         currentIndex++;
       } else {
         if (this.animationInterval) {
