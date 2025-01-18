@@ -1,4 +1,5 @@
 import { useBestCarQuery } from "@/entities/recommendation/model/queries";
+import { useRecommendationResult } from "@/widgets/recommendation/model/actions";
 import { ReactNode } from "react";
 import styled from "styled-components";
 
@@ -8,14 +9,12 @@ type Props = {
 };
 
 export function RecommendationCard({ topSlot, bottomSlot }: Props) {
-  // const { data } = useBestCarQuery() as { data: BestCarResponse };
-  const { data } = useBestCarQuery();
-  const bestCar = data?.bestCar;
+  const { bestCar } = useRecommendationResult();
 
   return (
     <Container>
       <HeaderSection>
-        <h1>{bestCar?.modelName}</h1>
+        <h1>{bestCar.carName}</h1>
         <p>선택 차량 평균과 추천차량의 데이터를 비교해드릴게요</p>
       </HeaderSection>
       <MainSection>{topSlot}</MainSection>
