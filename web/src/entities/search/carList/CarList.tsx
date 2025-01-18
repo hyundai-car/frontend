@@ -1,7 +1,7 @@
 import { Loading } from "@/shared/ui/loading/Loading";
 import styled from "styled-components";
 
-export const CarList = <T extends { carId: number }>({
+export const CarList = <T extends { carId: number; isLike: boolean }>({
   items = [],
   isFetching,
   getActionSlot,
@@ -9,7 +9,7 @@ export const CarList = <T extends { carId: number }>({
 }: {
   items?: T[];
   isFetching: boolean;
-  getActionSlot?: (carId: number) => React.ReactNode;
+  getActionSlot?: (carId: number, isLike: boolean) => React.ReactNode;
   renderItem: (item: T, actionSlot?: React.ReactNode) => React.ReactNode;
 }) => {
   if (items.length === 0) {
@@ -18,7 +18,9 @@ export const CarList = <T extends { carId: number }>({
 
   return (
     <Container $isFetching={isFetching}>
-      {items.map((items) => renderItem(items, getActionSlot?.(items.carId)))}
+      {items.map((items) =>
+        renderItem(items, getActionSlot?.(items.carId, items.isLike))
+      )}
     </Container>
   );
 };

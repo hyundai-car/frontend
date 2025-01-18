@@ -1,33 +1,40 @@
 // import { useState, type ReactNode } from "react";
 // import { mockCarListData } from "@/entities/search/api/mockCarListData";
 import { StackedCard } from "@/entities/search";
-import { WishlistButton } from "@/features/wishlist";
 import { CarList } from "@/entities/search/carList/CarList";
 import { useSimpleSearchQuery } from "../api/simpleSearch.query";
 import { useSimpleSearchStore } from "@/entities/simpleSearch/model/store";
-// type Props = {
-//   actionSlot?: (carId: number) => ReactNode;
-//   isFetching?: boolean;
-// };
+import { useEffect } from "react";
 
-export const RecommendCarList = () => {
+export const RecommendCarList = ({
+  setRecommendCondition,
+}: {
+  setRecommendCondition: React.Dispatch<React.SetStateAction<string>>;
+}) => {
   // const [carList] = useState(mockCarListData.contents);
   const { answers } = useSimpleSearchStore();
   const { data, isLoading } = useSimpleSearchQuery(
     answers as [number, number, number, number, number]
   );
 
-  const getActionSlot = (carId: number) => <WishlistButton carId={carId} />;
+  useEffect(() => {
+    console.log(data?.contents[0]?.recommendCondition);
+    if (data?.contents?.[0]?.recommendCondition) {
+      setRecommendCondition(data.contents[0].recommendCondition);
+    }
+  }, []);
+  const carItems =
+    data?.contents?.map((item) => ({
+      ...item.car,
+      isLike: false,
+    })) ?? [];
 
   return (
     <CarList
       // items={carList}
-      items={data?.contents.map((item) => item.car) || []}
+      items={carItems}
       isFetching={isLoading}
-      getActionSlot={getActionSlot}
-      renderItem={(data, actionSlot) => (
-        <StackedCard key={data.carId} data={data} actionSlot={actionSlot} />
-      )}
+      renderItem={(data) => <StackedCard key={data.carId} data={data} />}
     />
   );
 };

@@ -1,14 +1,14 @@
-import type { TSearch } from "@/entities/search/model/search.types";
 import { FilterState } from "@/features/search/model/types";
 import { authenticated } from "@/shared/lib/axios/axiosInstance";
 import { convertFiltersToParams } from "../lib/converter";
+import { ISearchCar } from "@/entities/search/model/types";
 
 export const fetchCarList = async (
   keyword: string,
   filters: FilterState,
   page: number = 0
 ): Promise<{
-  contents: TSearch[];
+  contents: ISearchCar[];
   isLast: boolean;
   pageNumber: number;
 }> => {
@@ -20,7 +20,7 @@ export const fetchCarList = async (
   console.log("API Request Params:", params);
 
   const { data } = await authenticated.get<{
-    contents: TSearch[];
+    contents: ISearchCar[];
     totalPages: number;
   }>("/cars", {
     params,

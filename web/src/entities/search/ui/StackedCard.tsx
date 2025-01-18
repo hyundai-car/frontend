@@ -33,20 +33,11 @@ export function StackedCard({
   return (
     <Card onClick={() => navigate(`/carDetail/carsDetail?carNo=${data.carId}`)}>
       <ImageContainer>
-        {"isLike" in data && (
-          <HeartButton>
-            {actionSlot || (
-              <Icon
-                type="heart"
-                color={data.isLike ? "red" : "gray"}
-                onClick={() => console.log("heart clicked")}
-              />
-            )}
-          </HeartButton>
+        {"isLike" in data && actionSlot && (
+          <HeartButton>{actionSlot}</HeartButton>
         )}
         <CardImage src={mainImage} alt="Card image" />
       </ImageContainer>
-
       <ContentContainer>
         <TitleRow>
           <Title>{carName}</Title>

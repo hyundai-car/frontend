@@ -1,9 +1,7 @@
 import styled from "styled-components";
 import { RecommendCarList } from "./RecommendCarList";
 import { useState } from "react";
-const getLocalStorageValue = (key: string): string | null => {
-  return localStorage.getItem(key);
-};
+import { getLocalStorageValue } from "@/shared/util/localStorage";
 
 export const SimpleSearchResult = () => {
   const [recommendCondition, setRecommendCondition] =
