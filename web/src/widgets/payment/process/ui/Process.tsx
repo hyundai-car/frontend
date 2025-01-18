@@ -5,7 +5,10 @@ import { PaymentButton } from "@/features/payments/ui/PaymentButton/PaymentButto
 import { useNavigate, useParams } from "react-router-dom";
 import { showModal } from "@/shared/hooks/useModal";
 import { usePaymentStore } from "@/entities/payments/contractInfo/model/store";
-import { usePaymentDepositMutation } from "@/features/payments/api/payments.query";
+import {
+  usePaymentBalanceMutation,
+  usePaymentDepositMutation,
+} from "@/features/payments/api/payments.query";
 
 export function ProcessWidget() {
   const navigate = useNavigate();
@@ -14,8 +17,9 @@ export function ProcessWidget() {
   const { price } = usePaymentStore();
 
   const header = isDeposit ? "계약" : "잔금 결제";
-  const uiPrice = isDeposit ? 300000 : price;
+  const uiPrice = isDeposit ? 300000 : price * 10000 + 45000 - 300000;
   const { mutate: payDeposit } = usePaymentDepositMutation();
+  const { mutate: payBalance } = usePaymentBalanceMutation();
 
   const handlePayment = () => {
     if (isDeposit) {
@@ -25,6 +29,7 @@ export function ProcessWidget() {
         buttonLabel: "확인",
         buttonColor: "blue",
         onConfirm: () => {
+          // 확인 버튼
           // api 연결
           payDeposit(Number(carId), {
             onSuccess: () => {
@@ -45,7 +50,15 @@ export function ProcessWidget() {
         buttonLabel: "확인",
         buttonColor: "blue",
         onConfirm: () => {
-          // 폼 입력 검증
+          // 확인 버튼
+          payBalance(Number(carId), {
+            onSuccess: () => {
+              console.log("잔금 결제 성공");
+            },
+            onError: (error) => {
+              console.error("잔금 결제 실패:", error);
+            },
+          });
           navigate(`/payments/${carId}/balance/process/complete`);
         },
       });
