@@ -8,8 +8,10 @@ import { useEffect } from "react";
 
 export const RecommendCarList = ({
   setRecommendCondition,
+  setIsLoading,
 }: {
   setRecommendCondition: React.Dispatch<React.SetStateAction<string>>;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   // const [carList] = useState(mockCarListData.contents);
   const { answers } = useSimpleSearchStore();
@@ -21,8 +23,9 @@ export const RecommendCarList = ({
     // console.log(data?.contents[0]?.recommendCondition);
     if (data?.contents?.[0]?.recommendCondition) {
       setRecommendCondition(data.contents[0].recommendCondition);
+      setIsLoading(false);
     }
-  }, []);
+  }, [data]);
   const carItems =
     data?.contents?.map((item) => ({
       ...item.car,

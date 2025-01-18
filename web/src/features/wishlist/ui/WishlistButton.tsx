@@ -40,7 +40,7 @@ export const WishlistButton = ({ carId, isLike }: Props) => {
 
   return (
     <Icon
-      type="heart"
+      type="heart-empty"
       color={isLike ? "blue" : "grayBlue"}
       onClick={handleToggle}
     />
