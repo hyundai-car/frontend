@@ -1,7 +1,10 @@
-import { mockContractInfoData } from "../api/mock";
-const { name, email, phoneNumber } = mockContractInfoData.customer;
+import { getLocalStorageValue } from "@/shared/util/localStorage";
+// import { mockContractInfoData } from "../api/mock";
+// const { name, email, phoneNumber } = mockContractInfoData.customer;
 
 export function ContractOrderInfo() {
+  const userInfo = JSON.parse(getLocalStorageValue("userInfo") || "{}");
+  const { name, email, phoneNumber } = userInfo;
   return (
     <Container>
       <Title>주문자 정보</Title>

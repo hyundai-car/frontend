@@ -1,5 +1,5 @@
 import { OptionInfoItem } from "@/entities/carDetail/ui/OptionInfoItem.ui";
-import { useCarDetailQuery } from "@/pages/carDetail/model/queries";
+// import { useCarDetailQuery } from "@/pages/carDetail/model/queries";
 import { useCarDetailStore } from "@/pages/carDetail/model/store";
 import styled from "styled-components";
 
