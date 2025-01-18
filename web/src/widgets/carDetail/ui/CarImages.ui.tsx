@@ -14,7 +14,6 @@ export function CarImages() {
     isError,
     error,
   } = useCar360ImagesQuery(carId);
-  console.log(carImages);
 
   // 로딩 상태 처리
   if (isLoading) {

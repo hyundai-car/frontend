@@ -2,6 +2,7 @@ import { itemName } from "@/widgets/recommendation/model/constants";
 
 export type ItemName = (typeof itemName)[number];
 
+
 // export interface ComparisonAvg {
 //   mmScoreAvg: number;
 //   accidentCountAvg: number;

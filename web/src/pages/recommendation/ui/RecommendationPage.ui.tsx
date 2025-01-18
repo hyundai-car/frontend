@@ -1,11 +1,14 @@
 import { BasicButton } from "@/shared/ui/button";
+import { useRecommendationResult } from "@/widgets/recommendation/model/actions";
 import { Comparision } from "@/widgets/recommendation/ui/Comparison.ui";
 import { Recommendation } from "@/widgets/recommendation/ui/Recommendation.ui";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 export function RecommendationPage() {
   //TODO api
-
+  const { bestCarId } = useRecommendationResult();
+  const navigate = useNavigate();
   return (
     <Container>
       {/* 결과 */}
@@ -18,7 +21,7 @@ export function RecommendationPage() {
         <BasicButton
           color="blue"
           onClick={function (): void {
-            console.log("추천 상세 페이지 url");
+            navigate(`/cars/carsDetail?carNo=${bestCarId}`);
           }}
           disabled={false}
         >
@@ -31,8 +34,10 @@ export function RecommendationPage() {
 
 const Container = styled.div`
   width: 100dvw;
-  height: 100dvh;
+  min-height: 100dvh;
   padding: 0 20px;
+  margin-bottom: 80px;
+
   display: flex;
   flex-direction: column;
   gap: 30px;

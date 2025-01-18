@@ -1,3 +1,5 @@
+import { Normalization } from "@/entities/recommendation/api/types";
+
 export const graphOptions = {
   scales: {
     r: {
@@ -37,22 +39,40 @@ export const graphOptions = {
   },
 };
 
-export const graphData = {
-  labels: ["가성비점수", "사고이력", "최초등록일", "연비", "주행거리"],
-  datasets: [
-    {
-      label: "추천 차량",
-      data: [65, 59, 90, 81, 56],
-      fill: true,
-      backgroundColor: "#9787ffa6",
-      //   borderColor: "rgb(217, 217, 217)",
-    },
-    {
-      label: "선택 차량 전체 평균",
-      data: [28, 48, 40, 19, 96],
-      fill: true,
-      backgroundColor: "rgba(255, 255, 255, 0.66)",
-      //   borderColor: "rgb(255, 255, 255)",
-    },
-  ],
+export const graphData = (
+  bestGraph: Normalization,
+  avgGraph: Normalization
+) => {
+  console.log(bestGraph);
+  return {
+    labels: ["가성비점수", "사고이력", "최초등록일", "연비", "주행거리"],
+    datasets: [
+      {
+        label: "추천 차량",
+        data: [
+          Math.ceil(bestGraph.mmScoreNorm),
+          Math.ceil(bestGraph.accidentCountNorm),
+          Math.ceil(bestGraph.initialRegistrationNorm),
+          Math.ceil(bestGraph.fuelEfficiencyNorm),
+          Math.ceil(bestGraph.mileageNorm),
+        ],
+        fill: true,
+        backgroundColor: "#9787ffa6",
+        //   borderColor: "rgb(217, 217, 217)",
+      },
+      {
+        label: "선택 차량 전체 평균",
+        data: [
+          Math.ceil(avgGraph.mmScoreNorm),
+          Math.ceil(avgGraph.accidentCountNorm),
+          Math.ceil(avgGraph.initialRegistrationNorm),
+          Math.ceil(avgGraph.fuelEfficiencyNorm),
+          Math.ceil(avgGraph.mileageNorm),
+        ],
+        fill: true,
+        backgroundColor: "rgba(255, 255, 255, 0.66)",
+        //   borderColor: "rgb(255, 255, 255)",
+      },
+    ],
+  };
 };
