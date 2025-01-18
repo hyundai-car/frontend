@@ -1,6 +1,6 @@
 import { Icon } from "@/shared/ui/Icon/Icon";
 import styled from "styled-components";
-import { mockCarListData } from "../api/mockCarListData";
+// import { mockCarListData } from "../api/mockCarListData";
 import { convertToManWon } from "../../../shared/lib/priceUtils";
 import { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
@@ -11,10 +11,7 @@ type Props = {
   data?: IBaseCar | ISearchCar;
   actionSlot?: ReactNode;
 };
-export function StackedCard({
-  data = mockCarListData.contents[0],
-  actionSlot,
-}: Props) {
+export function StackedCard({ data, actionSlot }: Props) {
   const navigate = useNavigate();
   if (!data) {
     throw new Error("Data is undefined");
