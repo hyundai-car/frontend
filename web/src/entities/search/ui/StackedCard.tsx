@@ -1,7 +1,7 @@
 import { Icon } from "@/shared/ui/Icon/Icon";
 import styled from "styled-components";
 import { mockCarListData } from "../api/mockCarListData";
-import { convertToManWon } from "../libs/priceUtils";
+import { convertToManWon } from "../../../shared/lib/priceUtils";
 import { TSearch } from "../model/search.types";
 import { ReactNode } from "react";
 
@@ -19,14 +19,15 @@ export function StackedCard({
     throw new Error("Data is undefined");
   }
   const {
-    modelName,
-    year,
+    carName,
+    initialRegistration,
     mileage,
     sellingPrice,
     mainImage,
     isLike,
     likeCount,
   } = data;
+
   const price = convertToManWon(sellingPrice).toLocaleString();
   return (
     <Card onClick={onClick}>
@@ -45,7 +46,7 @@ export function StackedCard({
 
       <ContentContainer>
         <TitleRow>
-          <Title>{modelName}</Title>
+          <Title>{carName}</Title>
           <LikeCount>
             <span>{likeCount}</span>
             <Icon type="heart-circle" size={20} color="blue" readonly />
@@ -57,8 +58,8 @@ export function StackedCard({
         <Footer>
           <InfoGroup>
             <InfoItem>
-              <Icon type="calendar" size={12} color="deepDarkGray" readonly />
-              <span>{year}</span>
+              <Icon type="date" size={12} color="deepDarkGray" readonly />
+              <span>{initialRegistration}</span>
             </InfoItem>
             <InfoItem>
               <Icon type="routing" size={12} color="deepDarkGray" readonly />
@@ -117,6 +118,7 @@ const Title = styled.h3`
   font-style: normal;
   font-weight: 600;
   line-height: 17px;
+  width: 250px;
 `;
 
 const LikeCount = styled.div`

@@ -27,8 +27,8 @@ const StyledDebugWrapper = styled.div<{ $layerName: string }>`
     content: "${({ $layerName }) => $layerName}";
     position: absolute;
     top: 0;
-    left: 0;
-    font-size: 10px;
+    right: 0;
+    font-size: 8px;
     padding: 2px;
     background-color: ${({ $layerName }) => getLayerColor($layerName)}dd;
     color: white;

@@ -1,0 +1,67 @@
+import { CarDetailResponse } from "@/shared/api/api.types";
+
+export const MOCK_CarDetail: CarDetailResponse = {
+  cars: {
+    carId: 1001,
+    carName: "현대 아반떼 CN7",
+    initialRegistration: "22년 05월",
+    mileage: 15000,
+    sellingPrice: 2350, // 만원 단위로 변경
+    exteriorColor: "팬텀 블랙",
+    interiorColor: "블랙",
+    displacement: 1598,
+    fuelType: "가솔린",
+    transmissionType: "자동 7단",
+    location: "서울 강남구",
+    fuelEfficiency: 15.4,
+    mainImage: "https://example.com/avante-cn7.jpg",
+    newCarPrice: 2750, // 만원 단위로 변경
+    carNumber: "12가 3456",
+    seating: 4,
+    mmScore: 4.0,
+    createdAt: "2024-01-15",
+    updatedAt: "2024-01-16",
+  },
+  optionLists: {
+    optionListId: 2001,
+    hasNavigation: true,
+    hasHiPass: true,
+    hasHeatedSteeringWheel: true,
+    hasHeatedSeats: true,
+    hasVentilatedFrontSeats: true,
+    hasPowerFrontSeats: false,
+    isLeatherSeats: true,
+    hasPowerTrunk: false,
+    hasSunroof: true,
+    hasHeadUpDisplay: false,
+    hasSurroundViewMonitor: true,
+    hasRearViewMonitor: true,
+    hasBlindSpotWarning: true,
+    hasLaneDepartureWarning: true,
+    hasSmartCruiseControl: true,
+    hasFrontParkingSensors: true,
+    createdAt: "2024-01-15",
+    updatedAt: "2024-01-15",
+  },
+  accidentHistories: [
+    {
+      accidentHistoryid: 3001,
+      accidentDate: "2023-08-15",
+      carPartsPrice: 45, // 만원 단위로 변경
+      carLaborPrice: 20,
+      carPaintPrice: 30,
+      createdAt: "2023-08-16",
+      updatedAt: "2023-08-16",
+    },
+    {
+      accidentHistoryid: 3002,
+      accidentDate: "2023-11-22",
+      carPartsPrice: 15,
+      carLaborPrice: 10,
+      carPaintPrice: 20,
+      createdAt: "2023-11-23",
+      updatedAt: "2023-11-23",
+    },
+  ],
+  accidentCount: 2,
+};

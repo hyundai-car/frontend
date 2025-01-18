@@ -1,5 +1,5 @@
 import { SelectCard } from "@/features/recommendation/model/types";
-import { formatNumber } from "@/pages/recommendation/model/format.utils";
+import { formatNumber } from "@/entities/recommendation/model/format.utils";
 import { Checkbox } from "@/shared/ui/checkbox/Checkbox.ui";
 import styled from "styled-components";
 
