@@ -11,7 +11,8 @@ export type IconType =
   | "filter"
   | "back"
   | "arrow-down"
-  | "arrow-up";
+  | "arrow-up"
+  | "loading";
 
 // Props 타입 정의
 export interface IconProps {

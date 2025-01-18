@@ -11,7 +11,7 @@ import { useSearchStore } from "../model/store";
 import { forwardRef } from "react";
 
 export const FilterDrawer = ({ isOpen, onClose }: FilterDrawerProps) => {
-  const { filters, setFilters, printSearchConditions } = useSearchStore();
+  const { filters, setFilters } = useSearchStore();
   const { control, handleSubmit, reset } = useForm<FilterState>({
     defaultValues: filters,
   });
@@ -19,7 +19,7 @@ export const FilterDrawer = ({ isOpen, onClose }: FilterDrawerProps) => {
   // 폼 제출 처리, 나중에 API 호출로 변경될 부분
   const onSubmit = (data: FilterState) => {
     setFilters(data);
-    printSearchConditions();
+    // printSearchConditions();
     onClose();
   };
 

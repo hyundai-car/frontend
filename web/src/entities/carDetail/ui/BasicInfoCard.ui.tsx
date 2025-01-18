@@ -1,22 +1,8 @@
-import { Graph } from "@/entities/carDetail/ui/graph.ui";
-import { GridList } from "@/widgets/delivery/ui/GridList.ui";
+import { Graph } from "@/entities/carDetail/ui/Graph.ui";
+import { GridList } from "@/widgets/carDetail/ui/GridList.ui";
 import styled from "styled-components";
 
 export function BasicInfoCard() {
-  //   const { data } = useCarDetailQuery();
-  //   if (!data) return null;
-
-  //   const {
-  //     mmScore,
-  //     initialRegistrationDate,
-  //     fuelEfficiency,
-  //     mileage,
-  //     carNumber,
-  //     exteriorColor,
-  //     fuelType,
-  //     seating,
-  //   } = data.cars;
-
   return (
     <Container>
       <HeaderSection>
