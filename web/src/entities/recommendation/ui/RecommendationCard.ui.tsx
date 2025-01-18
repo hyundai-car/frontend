@@ -2,7 +2,6 @@ import { rotate, shine } from "@/entities/recommendation/model/constants";
 import { useRecommendationResult } from "@/widgets/recommendation/model/actions";
 import { ReactNode } from "react";
 import styled from "styled-components";
-// import { ReactComponent as Logo } from "public/images/logo.svg";
 
 type Props = {
   topSlot: ReactNode;
@@ -88,7 +87,6 @@ const CardBack = styled(CardSide)`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* z-index: 2; */
 `;
 
 const HeaderSection = styled.section`
