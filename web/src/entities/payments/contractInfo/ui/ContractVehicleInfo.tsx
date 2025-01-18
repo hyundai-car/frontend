@@ -1,25 +1,48 @@
 import styled from "styled-components";
 import { Icon } from "@/shared/ui/Icon/Icon";
-import { mockContractInfoData } from "../api/mock";
-import { convertToManWon } from "@/shared/lib/priceUtils";
+// import { mockContractInfoData } from "../api/mock";
+// import { convertToManWon } from "@/shared/lib/priceUtils";
+import { usePaymentsCarInfoQuery } from "@/features/payments/api/carInfo.query";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { usePaymentStore } from "../model/store";
 
 export function ContractVehicleInfo() {
-  const { car } = mockContractInfoData;
-  const { modelName, year, mileage, price, mainImage } = car;
-  const formatPrice = convertToManWon(price).toLocaleString();
+  const { carId } = useParams<{ carId: string }>();
+  // const { car } = mockContractInfoData;
+  // const { modelName, year, mileage, price, mainImage } = car;
+  const setPrice = usePaymentStore((state) => state.setPrice);
+  const { data } = usePaymentsCarInfoQuery(carId ? +carId : 0);
+
+  useEffect(() => {
+    setPrice(data?.sellingPrice || 0);
+    console.log("차량 가격:", data?.sellingPrice);
+  }, [data]);
+
+  console.log("차량 상세 정보:", data);
+
+  const {
+    carName = "",
+    initialRegistration = "",
+    mileage = 0,
+    sellingPrice = 0,
+    mainImage = "",
+  } = data || {};
+
+  // const formatPrice = convertToManWon(sellingPrice).toLocaleString();
 
   return (
     <Container>
       <Title>차량 정보</Title>
       <CarInfoBox>
-        <CarImage src={mainImage} alt={modelName} />
+        <CarImage src={mainImage} alt={carName} />
         <CarDetails>
           <div>
-            <CarName>{modelName}</CarName>
+            <CarName>{carName}</CarName>
             <InfoRow>
               <InfoItem>
                 <Icon type="date" size={12} color="darkGray" />
-                <Desc>{year}</Desc>
+                <Desc>{initialRegistration}</Desc>
               </InfoItem>
               <InfoItem>
                 <Icon type="routing" size={12} color="darkGray" />
@@ -27,7 +50,7 @@ export function ContractVehicleInfo() {
               </InfoItem>
             </InfoRow>
           </div>
-          <Price>{formatPrice} 만원</Price>
+          <Price>{sellingPrice.toLocaleString()} 만원</Price>
         </CarDetails>
       </CarInfoBox>
       <Detail>*부대비용이 포함되어 있지 않은 차량 가격입니다.</Detail>

@@ -1,15 +1,20 @@
-import { mockContractInfoData } from "../api/mock";
-const { carPrice } = mockContractInfoData.paymentInfo;
+// import { mockContractInfoData } from "../api/mock";
+// const { carPrice } = mockContractInfoData.paymentInfo;
+import styled from "styled-components";
+import { usePaymentStore } from "../model/store";
 
 export function ContractPaymentInfo() {
-  const total = carPrice + 20000 + 25000;
+  const { price } = usePaymentStore((state) => state);
+
+  const total = price * 10000 + 20000 + 25000;
+
   return (
     <Container>
       <Title>주문 금액</Title>
       <Wrap>
         <InfoRow>
           <Label>차량 주문 금액</Label>
-          <Value>{carPrice.toLocaleString()} 원</Value>
+          <Value>{(price * 10000).toLocaleString()} 원</Value>
         </InfoRow>
         <InfoRow>
           <Label>탁송료</Label>
@@ -27,8 +32,6 @@ export function ContractPaymentInfo() {
     </Container>
   );
 }
-import styled from "styled-components";
-
 const Container = styled.div`
   padding: 17px 0;
 `;
