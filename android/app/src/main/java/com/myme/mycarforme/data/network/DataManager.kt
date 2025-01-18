@@ -31,13 +31,12 @@ object DataManager {
                         // 데이터 로드 후 callback 호출
                         callback(carList)
                     } else {
-                        Toast.makeText(context, "Failed to get cars", Toast.LENGTH_SHORT).show()
+                        Log.d("chk","$url, $response")
                     }
                 }
 
                 override fun onFailure(call: Call<CarListResponse>, t: Throwable) {
                     Log.d("chk","${t.message}")
-                    Toast.makeText(context, "Request failed: ${t.message}", Toast.LENGTH_SHORT).show()
                 }
             })
         }
@@ -55,18 +54,16 @@ object DataManager {
                         val carListResponse = response.body()
                         carListResponse?.contents?.forEach {
                             carList.add(it)
-                            Log.d("chk","$it")
                         }
                         // 데이터 로드 후 callback 호출
                         callback(carList)
                     } else {
-                        Toast.makeText(context, "Failed to get cars", Toast.LENGTH_SHORT).show()
+                        Log.d("chk","$url, $response")
                     }
                 }
 
                 override fun onFailure(call: Call<CarListResponse>, t: Throwable) {
                     Log.d("chk","${t.message}")
-                    Toast.makeText(context, "Request failed: ${t.message}", Toast.LENGTH_SHORT).show()
                 }
             })
         }
@@ -84,12 +81,11 @@ object DataManager {
                         val carListResponse = response.body()
                         carListResponse?.contents?.forEach {
                             carList.add(it)
-                            Log.d("chk","$it")
                         }
                         // 데이터 로드 후 callback 호출
                         callback(carList)
                     } else {
-                        Toast.makeText(context, "Failed to get cars", Toast.LENGTH_SHORT).show()
+                        Log.d("chk","$url, $response")
                     }
                 }
 
@@ -100,4 +96,108 @@ object DataManager {
             })
         }
     }
+
+    fun likeCar(context: Context, carId: Int, onComplete: () -> Unit){
+        val url = "https://mycarf0r.me/api/likes/$carId"
+        val accessToken = SharedPrefs.getAccessToken(context)
+        if (accessToken != null) {
+            apiService.likeCar(url, accessToken, LikeRequestBody(carId)).enqueue(object : Callback<LikeResponse> {
+                override fun onResponse(call: Call<LikeResponse>, response: Response<LikeResponse>) {
+                    if (response.isSuccessful) {
+                        Log.d("chk","likesuccess")
+                        onComplete()
+                    } else {
+                        Log.d("chk","$url, $response")
+                    }
+                }
+
+                override fun onFailure(call: Call<LikeResponse>, t: Throwable) {
+                    Log.d("chk","${t.message}")
+                    Toast.makeText(context, "Request failed: ${t.message}", Toast.LENGTH_SHORT).show()
+                }
+            })
+        }
+    }
+
+    fun getOrderedCarList(context: Context, callback: (ArrayList<OrderCars>) -> Unit) {
+        val accessToken = SharedPrefs.getAccessToken(context)
+        val carList = ArrayList<OrderCars>()
+        if (accessToken != null) {
+            val url = "https://mycarf0r.me/api/orders"
+
+            apiService.getOrderCarList(url, accessToken).enqueue(object : Callback<OrderedCarResponse> {
+                override fun onResponse(call: Call<OrderedCarResponse>, response: Response<OrderedCarResponse>) {
+                    if (response.isSuccessful) {
+                        val carListResponse = response.body()
+                        carListResponse?.orderedCars?.forEach {
+                            carList.add(it)
+                        }
+                        // 데이터 로드 후 callback 호출
+                        callback(carList)
+                    } else {
+                        Log.d("chk","$url, $response")
+                    }
+                }
+
+                override fun onFailure(call: Call<OrderedCarResponse>, t: Throwable) {
+                    Log.d("chk","${t.message}")
+                }
+            })
+        }
+    }
+
+    fun getOrderingCar(context : Context, callback: (Int)-> Unit){
+        val accessToken = SharedPrefs.getAccessToken(context)
+        if (accessToken != null) {
+            val url = "https://mycarf0r.me/api/orders"
+
+            apiService.getOrderCarList(url, accessToken).enqueue(object : Callback<Int> {
+                override fun onResponse(call: Call<OrderedCarResponse>, response: Response<OrderedCarResponse>) {
+                    if (response.isSuccessful) {
+                        val carListResponse = response.body()
+                        carListResponse?.orderedCars?.forEach {
+                            carList.add(it)
+                        }
+                        // 데이터 로드 후 callback 호출
+                        callback(carListResponse?.contractingId)
+                    } else {
+                        Log.d("chk","$url, $response")
+                    }
+                }
+
+                override fun onFailure(call: Call<OrderedCarResponse>, t: Throwable) {
+                    Log.d("chk","${t.message}")
+                }
+            })
+        }
+    }
+
+    fun getOrderStatus(context : Context, callback: (Int)-> Unit){
+        val accessToken = SharedPrefs.getAccessToken(context)
+        if (accessToken != null) {
+            val url = "https://mycarf0r.me/api/orders"
+
+            apiService.getOrderCarList(url, accessToken).enqueue(object : Callback<Int> {
+                override fun onResponse(call: Call<OrderedCarResponse>, response: Response<OrderedCarResponse>) {
+                    if (response.isSuccessful) {
+                        val carListResponse = response.body()
+                        carListResponse?.orderedCars?.forEach {
+                            carList.add(it)
+                        }
+                        // 데이터 로드 후 callback 호출
+                        callback(carListResponse?.contractingId)
+                    } else {
+                        Log.d("chk","$url, $response")
+                    }
+                }
+
+                override fun onFailure(call: Call<OrderedCarResponse>, t: Throwable) {
+                    Log.d("chk","${t.message}")
+                }
+            })
+        }
+    }
+
+
+
 }

@@ -44,17 +44,6 @@ data class CarListResponse(
     val contents: List<Car>
 )
 
-// 페이지네이션 자동차 목록 응답 데이터
-data class CarPagedResponse(
-    val content: List<Car>,
-    val pageNumber: Int,
-    val pageSize: Int,
-    val totalElements: Int,
-    val totalPages: Int,
-    val isFirst: Boolean,
-    val isLast: Boolean
-)
-
 data class RefreshTokenResponse(
     val accessToken: String,
     val refreshToken: String,
@@ -62,6 +51,31 @@ data class RefreshTokenResponse(
     val expiresIn: Int
 )
 
+data class LikeRequestBody(
+    val carId : Int,
+)
+
+data class LikeResponse(
+    val carId : Int,
+    val isLike : Boolean,
+    val createdAt : String,
+    val updatedAt : String,
+)
+
+data class OrderedCarResponse(
+    val contractingId: Int?,
+    val orderedCars : List<OrderCars>
+)
+
+data class OrderCars(
+    val carId: Int,
+    val carName: String,
+    val initalRegistration: String,
+    val mileage: Int,
+    val sellingPrice: Int,
+    val mainImage: String,
+    val likecount: Int,
+)
 
 interface ApiService {
     @POST
@@ -77,16 +91,24 @@ interface ApiService {
         @Header("Authorization") accessToken: String
     ): Call<CarListResponse>
 
-    // 페이지네이션이 있는 자동차 목록 요청
     @POST
-    fun getCarsPaged(
+    fun likeCar(
         @Url url: String,
-        @Header("Authorization") accessToken: String
-    ): Call<CarPagedResponse>
+        @Header("Authorization") accessToken: String,
+        @Body likeRequestBody: LikeRequestBody
+    ): Call<LikeResponse>
 
-//    @POST
-//    fun getRefreshToken(
-//        @Url url:String,
-//        @Body refreshToken: String
-//    ): Call<RefreshTokenResponse>
+    @GET
+    fun getOrderCarList(
+        @Url url:String,
+        @Header("Authorization") accessToken: String,
+    ): Call<OrderedCarResponse>
+
+    @POST
+    fun getRefreshToken(
+        @Url url:String,
+        @Body refreshToken: String
+    ): Call<RefreshTokenResponse>
+
+
 }

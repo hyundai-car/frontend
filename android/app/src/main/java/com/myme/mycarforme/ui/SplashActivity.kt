@@ -2,6 +2,7 @@ package com.myme.mycarforme.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.ContactsContract.Data
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -25,8 +26,13 @@ import retrofit2.Response
 class SplashActivity : AppCompatActivity() {
 
     private var popularCar =  ArrayList<Car>()
-    private  var mmCar=  ArrayList<Car>()
-    private  var nextCar=  ArrayList<Car>()
+    private var mmCar=  ArrayList<Car>()
+    private var nextCar=  ArrayList<Car>()
+
+    private var popularCarLoaded = false
+    private var mmCarLoaded = false
+    private var nextCarLoaded = false
+
     private val apiService: ApiService by lazy {
         RetrofitClient.getClient().create(ApiService::class.java)
     }
@@ -72,40 +78,40 @@ class SplashActivity : AppCompatActivity() {
         return SharedPrefs.getAccessToken(this)
     }
 
-//    private fun refreshToken(): String {
-//        var reaccesToken : String = ""
-//        SharedPrefs.getRefreshToken(this)?.let {
-//            apiService.getRefreshToken("https://mycarf0r.me/api/auth/reissue", it).enqueue(object : Callback<RefreshTokenResponse> {
-//                override fun onResponse(
-//                    call: Call<RefreshTokenResponse>,
-//                    response: Response<RefreshTokenResponse>
-//                ) {
-//                    if (response.isSuccessful) {
-//                        // 응답 데이터 파싱
-//                        val loginResponse = response.body()
-//                        loginResponse?.let {
-//                            // SharedPreferences에 토큰과 유저 정보 저장
-//                            SharedPrefs.saveToken(this@SplashActivity, it.accessToken, it.refreshToken)
-//                            reaccesToken = it.accessToken
-//                        }
-//                    } else {
-//                        Toast.makeText(this@SplashActivity, "$response", Toast.LENGTH_SHORT).show()
-//                    }
-//                }
-//                override fun onFailure(call: Call<RefreshTokenResponse>, t: Throwable) {
-//                    Toast.makeText(this@SplashActivity, "Request failed: ${t.message}", Toast.LENGTH_SHORT).show()
-//                }
-//            })
-//        }
-//        return reaccesToken
-//    }
+    private fun refreshToken(): String {
+        var reaccesToken : String = ""
+        SharedPrefs.getRefreshToken(this)?.let {
+            apiService.getRefreshToken("https://mycarf0r.me/api/auth/reissue", it).enqueue(object : Callback<RefreshTokenResponse> {
+                override fun onResponse(
+                    call: Call<RefreshTokenResponse>,
+                    response: Response<RefreshTokenResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        // 응답 데이터 파싱
+                        val loginResponse = response.body()
+                        loginResponse?.let {
+                            // SharedPreferences에 토큰과 유저 정보 저장
+                            SharedPrefs.saveToken(this@SplashActivity, it.accessToken, it.refreshToken)
+                            reaccesToken = it.accessToken
+                        }
+                    } else {
+                        Toast.makeText(this@SplashActivity, "$response", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                override fun onFailure(call: Call<RefreshTokenResponse>, t: Throwable) {
+                    Toast.makeText(this@SplashActivity, "Request failed: ${t.message}", Toast.LENGTH_SHORT).show()
+                }
+            })
+        }
+        return reaccesToken
+    }
 
     private fun navigateToMain() {
         Log.d("chk","$1")
         val mainIntent = Intent(this, MainActivity::class.java)
-        mainIntent.putExtra("popular",popularCar)
-        mainIntent.putExtra("mm",mmCar)
-        mainIntent.putExtra("next",nextCar)
+        mainIntent.putExtra("popular", popularCar)
+        mainIntent.putExtra("mm", mmCar)
+        mainIntent.putExtra("next", nextCar)
         startActivity(mainIntent)
         finish()
     }
@@ -117,17 +123,25 @@ class SplashActivity : AppCompatActivity() {
 
     private fun loadCarData() {
         this.let {
-            // 각 데이터를 비동기적으로 로드하고 콜백을 통해 RecyclerView에 세팅
             DataManager.getCarsListwithUrl(it, "popular") { cars ->
                 popularCar = cars
+                popularCarLoaded = true
+                checkAllDataLoaded()
             }
             DataManager.getCarsListwithUrl(it, "mmscores") { cars ->
                 mmCar = cars
+                mmCarLoaded = true
+                checkAllDataLoaded()
             }
-            DataManager.getCarsListwithUrl(it, "sales") { cars ->
+            DataManager.getCarsListwithUrl(it, "upcoming") { cars ->
                 nextCar = cars
+                nextCarLoaded = true
+                checkAllDataLoaded()
             }
-            Log.d("chk","1")
+        }
+    }
+    private fun checkAllDataLoaded() {
+        if (popularCarLoaded && mmCarLoaded && nextCarLoaded) {
             navigateToMain()
             finish()
         }
