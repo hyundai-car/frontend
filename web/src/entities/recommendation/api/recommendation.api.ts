@@ -1,3 +1,5 @@
+/** //TODO 삭제 예정 */
+
 import { BestCarResponse } from "@/entities/recommendation/api/types";
 import { MOCK_BestCarData } from "@/entities/recommendation/model/mock";
 

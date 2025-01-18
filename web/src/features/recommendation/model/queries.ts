@@ -20,9 +20,8 @@ export const usePostCandidatesQuery = () => {
   return useMutation({
     mutationFn: (carIdList: number[]) => postCandidatesApi(carIdList),
     onSuccess: (response) => {
-      // 응답 처리
       console.log("응답:", response);
-	  
+      localStorage.setItem("recommendationResult", JSON.stringify(response));
       navigate("/recommendation/result");
     },
     onError: (error) => {

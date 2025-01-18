@@ -1,25 +1,42 @@
+/**
+ * @description 추천후보페이지에서 추천 api에서 받은 response type
+ */
+
 import { Basic } from "@/shared/model/car.types";
 
 /** 찜 선택 리스트 전체 평균 데이터 타입 */
-interface ComparisonAvg {
+export interface ComparisonAvg {
   mmScoreAvg: number;
   accidentCountAvg: number;
-  initialRegistrationDateAvg: string;
+  initialRegistrationAvg: string;
   mileageAvg: number;
   fuelEfficiencyAvg: number;
 }
 
 export interface BestCar extends Basic {
   carId: number;
-  modelName: string;
+  carName: string;
   mainImage: string;
   sellingPrice: number;
   createdAt: string;
   updatedAt: string;
 }
 
+interface Normalization {
+  accidentCountNorm: number;
+  fuelEfficiencyNorm: number;
+  initialRegistrationNorm: number;
+  mileageNorm: number;
+  mScoreNorm: number;
+}
+export interface Graph {
+  avg: Normalization;
+  best: Normalization;
+}
+
 export interface BestCarResponse {
   bestCar: BestCar;
-  comparisonAvg: ComparisonAvg;
+  comparisons: ComparisonAvg;
+  graph: Graph;
   otherCarIds: number[];
 }
