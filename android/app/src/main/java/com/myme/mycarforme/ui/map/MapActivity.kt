@@ -83,8 +83,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         Glide.with(binding.mapBottomCarImage.context)
             .load(movingCar?.mainImage)
             .into(binding.mapBottomCarImage)
-        binding.mapBottomCarNameText.text = movingCar?.carNumber
-        binding.mapBottomCarModelText.text = movingCar?.modelName
+        binding.mapBottomCarNameText.text = movingCar?.carName
         binding.mapBottomCarInfoCard.setOnClickListener {
             //TODO: 클릭시 차량 디테일로 넘어가기
         }
@@ -130,7 +129,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                         //ToDo: pathTime은 도착 시간
                         pathTime = traoptimal.getJSONObject(0).getJSONObject("summary").getString("departureTime")
                         val formattedTime = formatTimeWithAMPM(pathTime)
-                        Log.d("chk","${formattedTime}")
                         withContext(Dispatchers.Main) {
                             binding.mapBottomDateText.text = formattedTime
                         }
@@ -271,8 +269,4 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             "잘못된 시간 포맷"
         }
     }
-
-
-
-
 }

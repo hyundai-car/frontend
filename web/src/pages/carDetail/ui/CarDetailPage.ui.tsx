@@ -5,11 +5,19 @@ import { ReactComponent as MileageIcon } from "public/icons/routing.svg";
 import { BasicInfoCard } from "@/entities/carDetail";
 import { OptionInfo } from "@/entities/carDetail/ui/OptionInfo.ui";
 import { CarImages } from "@/widgets/carDetail/ui/CarImages.ui";
+import { useSearchParams } from "react-router-dom";
+import { SaveCarDetailStore } from "@/pages/carDetail/model/actions";
+
 export function CarDetailPage() {
-  const { data } = useCarDetailQuery(); //TODO 나중에 carId 넘겨주기
-  if (!data) return null;
-  const { carName, year, mileage, sellingPrice } = data.cars;
-  // const basicInfo = FormatBasicInfo(data);
+  const [searchParams] = useSearchParams();
+  const carId = Number(searchParams.get("carNo"));
+
+  const { data } = useCarDetailQuery(carId);
+  SaveCarDetailStore(data, carId);
+
+  if (!data) return <div>데이터를 찾을 수 없습니다</div>;
+
+  const { carName, initialRegistration, mileage, sellingPrice } = data.car;
 
   return (
     <Container>
@@ -21,19 +29,17 @@ export function CarDetailPage() {
         <OptionWrap>
           <Option>
             <StyledIcon as={CalendarIcon} />
-            <p>{year}</p>
+            <p>{initialRegistration}</p>
           </Option>
           <Option>
             <StyledIcon as={MileageIcon} />
             <p>{mileage}</p>
           </Option>
         </OptionWrap>
-        {/* TODO 만원 뺴서 계산하기 */}
         <h1>
           <strong>{sellingPrice}</strong> 만원
         </h1>
       </TitleSection>
-      {/* <BasicInfoCard basicData={basicInfo} /> */}
 
       <CardSection>
         <BasicInfoCard />

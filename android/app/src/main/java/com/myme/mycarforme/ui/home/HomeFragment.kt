@@ -3,68 +3,44 @@ package com.myme.mycarforme.ui.home
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.myme.mycarforme.R
 import com.myme.mycarforme.data.model.Car
+import com.myme.mycarforme.data.network.DataManager
 import com.myme.mycarforme.databinding.FragmentHomeBinding
-import java.time.LocalDate
-import java.time.YearMonth
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
-    private val dummyCar = Car(
-        carId = 1689541, // Parse the carId
-        modelName = "2024 GV80 Coupe 가솔린 3.5 터보 AWD 쿠페 디자인 셀렉션Ⅱ 카본",
-        year = YearMonth.parse("2021-07"),
-        mileage = 16510,
-        sellingPrice = 42128,
-        mainImage = "https://certified-static.hyundai.com/contents/goods/shootConts/tobepic/02/exterior/HIG241028009973/PRD602_200.JPG/dims/crop/3464x1520+188+840",
-        carNumber = "168구9541",
-        isLike = false,
-        likeCount = 0,
-        createdAt = LocalDate.parse("2021-07-15"),
-        updatedAt = LocalDate.parse("2021-07-15") // Assuming the same date for now
-    )
-    private val popularCar = mutableListOf(
-        dummyCar,dummyCar,dummyCar,dummyCar,dummyCar
-    )
-
-    private val funtureCar = mutableListOf(
-        dummyCar,dummyCar,dummyCar,dummyCar,dummyCar
-    )
-
-    private val nextCar = mutableListOf(
-        dummyCar,dummyCar,dummyCar,dummyCar,dummyCar
-    )
-
+//
+//    private val carViewModel: HomeViewModel by activityViewModels()
+//    private var popularCar = carViewModel.popularCar
+//    private var mmCar = carViewModel.mmCar
+//    private var nextCar = carViewModel.nextCar
+    private var popularCar = ArrayList<Car>()
+    private var mmCar = ArrayList<Car>()
+    private var nextCar = ArrayList<Car>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+        // 이벤트 이미지 클릭 리스너
         val imageLinks = mapOf(
             binding.homeEventimage1 to "https://certified.hyundai.com/m/display/getSpdpInfo.do?catNo=80000010332",
             binding.homeEventimage2 to "https://certified.hyundai.com/m/display/getSpdpInfo.do?catNo=80000010333",
             binding.homeEventimage3 to "https://certified.hyundai.com/m/display/getSpdpInfo.do?catNo=80000010325",
             binding.homeEventimage4 to "https://certified.hyundai.com/m/display/getSpdpInfo.do?catNo=80000010326",
             binding.homeEventimage5 to "https://certified.hyundai.com/m/display/getSpdpInfo.do?catNo=80000010327",
-            binding.homeEventimage6 to "https://certified.hyundai.com/m/display/getSpdpInfo.do?catNo=80000010328",
+            binding.homeEventimage6 to "https://certified.hyundai.com/m/display/getSpdpInfo.do?catNo=80000010328"
         )
 
         for ((imageView, url) in imageLinks) {
@@ -72,16 +48,42 @@ class HomeFragment : Fragment() {
                 openLink(url)
             }
         }
+        loadCarData()
+        return binding.root
+    }
 
-        val root: View = binding.root
+    private fun loadCarData() {
+        context?.let {
+            Log.d("chk","hey")
+            // 각 데이터를 비동기적으로 로드하고 콜백을 통해 RecyclerView에 세팅
+            DataManager.getCarsListwithUrl(it, "popular") { cars ->
+                popularCar = cars
+//                carViewModel.updatePopularCarList(cars)
+                updateRecyclerView()
+            }
+            DataManager.getCarsListwithUrl(it, "mmscores") { cars ->
+                mmCar = cars
+//                carViewModel.updatemmCarList(cars)
+                updateRecyclerView()
+            }
+            DataManager.getCarsListwithUrl(it, "sales") { cars ->
+                nextCar = cars
+//                carViewModel.updatenextCarList(cars)
+                updateRecyclerView()
+            }
+        }
+    }
+
+    private fun updateRecyclerView() {
+        // 데이터가 로드되면 RecyclerView 업데이트
         binding.homePopularRecyclerview.adapter = InfoCardAdapter(items = popularCar)
         binding.homePopularRecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        binding.homeFutureRecyclerview.adapter = InfoCardAdapter(items = funtureCar)
+        binding.homeFutureRecyclerview.adapter = InfoCardAdapter(items = mmCar)
         binding.homeFutureRecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.homeNextRecyclerview.adapter = InfoCardAdapter(items = nextCar)
         binding.homeNextRecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        return root
     }
+
     private fun openLink(url: String) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         startActivity(intent)

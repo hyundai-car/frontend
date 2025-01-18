@@ -6,13 +6,17 @@ import android.content.Intent
 import android.net.Uri
 import android.util.Base64
 import android.util.Log
-import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.android.material.snackbar.Snackbar
 import com.myme.mycarforme.R
+import com.myme.mycarforme.data.network.ApiService
+import com.myme.mycarforme.data.network.LoginRequestBody
+import com.myme.mycarforme.data.network.LoginResponse
+import com.myme.mycarforme.data.network.RetrofitClient
+import com.myme.mycarforme.data.utils.SharedPrefs
 import kotlinx.coroutines.launch
 import net.openid.appauth.AuthorizationException
 import net.openid.appauth.AuthorizationRequest
@@ -22,6 +26,9 @@ import java.security.MessageDigest
 import java.security.SecureRandom
 import net.openid.appauth.AuthorizationServiceConfiguration
 import net.openid.appauth.ResponseTypeValues
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LoginViewModel : ViewModel() {
     private val _authState = MutableLiveData<AuthState>(AuthState.Idle)
@@ -36,6 +43,10 @@ class LoginViewModel : ViewModel() {
     private val redirectUri = Uri.parse("mycarforme://redirect")
 
     private var codeVerifier: String? = null
+
+    private val apiService: ApiService by lazy {
+        RetrofitClient.getClient().create(ApiService::class.java)
+    }
 
     private fun generateCodeVerifier(): String {
         val secureRandom = SecureRandom()
@@ -95,23 +106,10 @@ class LoginViewModel : ViewModel() {
             response != null -> {
                 viewModelScope.launch {
                     try {
-                        // 백엔드로 code와 verifier 전송
                         val authCode = response.authorizationCode
 
-                        Log.d("AUTHORIZATION CODE", "$authCode")
-                        Log.d("VERIFIER", "$codeVerifier")
-//                        val rootView = (context as? Activity)?.window?.decorView?.findViewById<View>(android.R.id.content)
-//                        rootView?.let {
-//                            Snackbar.make(it, "Authorization Code : $authCode", Snackbar.LENGTH_SHORT).show()
-//                        }
+                        loginUser(authCode!!, codeVerifier!!, context)
 
-                        val additionalParams = response.additionalParameters
-                        additionalParams.forEach { (key, value) ->
-                            Log.d("chk", "$key = $value")
-                        }
-                        // 토큰 저장
-                        Log.d("chk","${response}")
-                        // 메인페이지에서 필요한 API 미리 호출
                         if (true) {
                             _authState.value = AuthState.Success
                         } else {
@@ -130,6 +128,33 @@ class LoginViewModel : ViewModel() {
         codeVerifier = null
     }
 
+    private fun loginUser(authCode: String, verifier: String, context : Context) {
+        val loginRequestBody = LoginRequestBody(authCode, verifier)
+
+        // 동적 URL을 설정
+        val url = "https://mycarf0r.me/api/auth/login"
+
+        apiService.loginUser(url, loginRequestBody).enqueue(object : Callback<LoginResponse> {
+            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                if (response.isSuccessful) {
+                    // 응답 데이터 파싱
+                    val loginResponse = response.body()
+                    loginResponse?.let {
+                        // SharedPreferences에 토큰과 유저 정보 저장
+                        SharedPrefs.saveToken(context, it.token.accessToken, it.token.refreshToken)
+                        SharedPrefs.saveUserInfo(context, it.userInfo)
+                        Log.d("chk","${it.token}")
+                    }
+                } else {
+                    Toast.makeText(context, "$response", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                Toast.makeText(context, "Request failed: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
 }
 
 sealed class AuthState {
