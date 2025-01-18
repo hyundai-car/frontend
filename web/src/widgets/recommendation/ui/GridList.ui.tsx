@@ -10,33 +10,14 @@ import { ReactComponent as GasStationIcon } from "public/icons/gasStation.svg";
 import { ReactComponent as groupIcon } from "public/icons/group.svg";
 import { ReactComponent as RoutingIcon } from "public/icons/routing.svg";
 import { ReactComponent as ProfileIcon } from "public/icons/profile.svg";
-import { compareWithAvg } from "@/widgets/recommendation/model/actions";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { BestCarResponse } from "@/entities/recommendation/api/types";
+import {
+  compareWithAvg,
+  useRecommendationResult,
+} from "@/widgets/recommendation/model/actions";
 
 export function GridList() {
-  const [resultData, setResultData] = useState<BestCarResponse | null>(null);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    try {
-      const savedData = localStorage.getItem("recommendationResult");
-      if (!savedData) throw new Error();
-      setResultData(JSON.parse(savedData) as BestCarResponse);
-    } catch {
-      navigate("/recommendation/candidates"); // 파싱 오류 시 리다이렉션 처리
-    }
-  }, [navigate]);
-
-  if (!resultData) return <div>Loading</div>;
-  const bestCar = resultData?.bestCar;
-  console.log("asdf", bestCar);
-
-  const comparisonAvg = resultData?.comparisons;
-
-  // comparisions에서의 값과 bestCar에서의 값 비교해서 color 넣어주기
-  const ComparedResult = compareWithAvg(bestCar, comparisonAvg);
+  const { bestCar, comparisons } = useRecommendationResult();
+  const ComparedResult = compareWithAvg(bestCar, comparisons);
 
   return (
     <Container>

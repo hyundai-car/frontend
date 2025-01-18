@@ -1,8 +1,10 @@
+import { BestCarResponse } from "@/entities/recommendation/api/types";
 import { useBestCarQuery } from "@/entities/recommendation/model/queries";
 import { ComparisonCard } from "@/entities/recommendation/ui/ComparisonCard";
 import { SelectBox } from "@/shared/ui/selectbox";
 import { MOCK_ComparisonList } from "@/widgets/recommendation/model/mock";
 import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 export function Comparision() {
@@ -21,6 +23,17 @@ export function Comparision() {
       setSelectedCarId(data.otherCarIds[0]);
     }
   }, [data]);
+
+  /////////////
+  const navigate = useNavigate();
+  useEffect(() => {
+    try {
+      const savedData = localStorage.getItem("recommendationResult");
+      if (!savedData && !savedData?.otherCarIds) throw new Error();
+    } catch {
+      navigate("/recommendation/candidates"); // 파싱 오류 시 리다이렉션 처리
+    }
+  }, []);
 
   //TODO
   const options = [
