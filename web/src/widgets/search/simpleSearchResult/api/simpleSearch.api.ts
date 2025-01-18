@@ -13,7 +13,7 @@ export const fetchSimpleSearchResult = async (
     preferredType: (answers[4] + 1).toString(),
   };
 
-  console.log("Simple Search Request:", request);
+  // console.log("Simple Search Request:", request);
 
   const { data } = await authenticated.post<SimpleSearchResponse>(
     "/recommendations/conditions",

@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { BasicButton } from "@/shared/ui/button";
 
 import { useEffect } from "react";
-import { DIAGNOSTIC_QUESTIONS } from "@/entities/simpleSearch/questionBlock/model/constants";
+// import { DIAGNOSTIC_QUESTIONS } from "@/entities/simpleSearch/questionBlock/model/constants";
 import { useSimpleSearchStore } from "@/entities/simpleSearch/model/store";
 
 export function SimpleSearchPage() {
@@ -26,40 +26,21 @@ export function SimpleSearchPage() {
 
   // const printDebugAnswers = () => {
   //   console.log("========진단 결과========");
-  //   answers.forEach((answer) => {
-  //     const question = DIAGNOSTIC_QUESTIONS.find(
-  //       (q) => q.id === answer.questionId
-  //     );
-  //     const selectedLabels = question?.isMultipleChoice
-  //       ? answer.selectedOptions
-  //           .map(
-  //             (optionId) =>
-  //               question.options.find((opt) => opt.id === optionId)?.label
-  //           )
-  //           .join(", ")
-  //       : question?.options.find((opt) => opt.id === answer.questionId)?.label;
+  //   answers.forEach((answerIndex, questionIndex) => {
+  //     if (answerIndex !== -1) {
+  //       const question = DIAGNOSTIC_QUESTIONS[questionIndex];
+  //       const selectedOption = question?.options[answerIndex];
 
-  //     console.log(`질문: ${question?.question}`);
-  //     console.log(`선택: ${selectedLabels}`);
+  //       console.log(`질문 ${questionIndex + 1}: ${question?.question}`);
+  //       console.log(`응답 ${answerIndex + 1}: ${selectedOption?.label}`);
+  //     }
   //   });
   // };
-  const printDebugAnswers = () => {
-    console.log("========진단 결과========");
-    answers.forEach((answerIndex, questionIndex) => {
-      if (answerIndex !== -1) {
-        const question = DIAGNOSTIC_QUESTIONS[questionIndex];
-        const selectedOption = question?.options[answerIndex];
-
-        console.log(`질문 ${questionIndex + 1}: ${question?.question}`);
-        console.log(`응답 ${answerIndex + 1}: ${selectedOption?.label}`);
-      }
-    });
-  };
   const handleNext = () => {
     if (!hasSelection) return;
     if (currentStep === 5) {
       // 결과보기 버튼 클릭 시
-      printDebugAnswers(); // 디버깅용
+      // printDebugAnswers(); // 디버깅용
       resetAnswers(); // answers 초기화
       navigate(pathKeys.simpleSearch.result()); // 결과 페이지 연결
     } else {

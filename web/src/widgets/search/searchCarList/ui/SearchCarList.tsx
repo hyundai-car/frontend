@@ -19,7 +19,7 @@ export const SearchCarList = () => {
     useSearchCarListQuery();
 
   useEffect(() => {
-    console.log("searchCarList : ", flatDataContents);
+    // console.log("searchCarList : ", flatDataContents);
     if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }

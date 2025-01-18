@@ -18,7 +18,7 @@ export const RecommendCarList = ({
   );
 
   useEffect(() => {
-    console.log(data?.contents[0]?.recommendCondition);
+    // console.log(data?.contents[0]?.recommendCondition);
     if (data?.contents?.[0]?.recommendCondition) {
       setRecommendCondition(data.contents[0].recommendCondition);
     }
