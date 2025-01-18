@@ -32,7 +32,7 @@ export function GridList() {
         Icon={CashIcon}
         color={result.mmScore ? "white" : "black"}
         backColor={result.mmScore ? "blue" : "white"}
-        value={bestCar?.mmScore}
+        value={Math.round(bestCar?.mmScore)}
       />
       <GridItem
         itemName="사고이력"
