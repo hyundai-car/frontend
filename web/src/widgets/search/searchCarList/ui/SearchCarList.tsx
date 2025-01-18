@@ -18,6 +18,15 @@ export const SearchCarList = () => {
 
   const getActionSlot = (carId: number) => <WishlistButton carId={carId} />;
 
+  if (!isLoading && (!data || data.contents.length === 0)) {
+    // 데이터가 없을 경우 메시지와 버튼 표시
+    return (
+      <Container>
+        <Message>검색 결과가 없습니다.</Message>
+      </Container>
+    );
+  }
+
   return (
     <CarList
       items={data?.contents || []}
@@ -35,25 +44,15 @@ export const SearchCarList = () => {
   );
 };
 
-// import { useSearchCarListQuery } from "../api/searchCarList.query";
+import styled from "styled-components";
+const Container = styled.div`
+  margin: 0 auto;
+  margin-top: 20px;
+  text-align: center;
+`;
 
-// export const SearchCarList = () => {
-//   const { data, isLoading, error } = useSearchCarListQuery();
-
-//   if (isLoading) return <div>Loading...</div>;
-
-//   if (error) {
-//     console.error("Query Error:", error);
-//     return <div>Error loading cars</div>;
-//   }
-
-//   return (
-//     <div>
-//       {data?.contents.map((car) => (
-//         <div key={car.carId}>
-//           {car.modelName} - {car.sellingPrice.toLocaleString()}원
-//         </div>
-//       ))}
-//     </div>
-//   );
-// };
+const Message = styled.p`
+  font-size: 17px;
+  color: gray;
+  margin-bottom: 20px;
+`;
