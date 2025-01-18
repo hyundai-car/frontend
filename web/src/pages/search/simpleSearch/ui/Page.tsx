@@ -61,7 +61,7 @@ export function SimpleSearchPage() {
       // 결과보기 버튼 클릭 시
       printDebugAnswers(); // 디버깅용
       resetAnswers(); // answers 초기화
-      navigate(pathKeys.simpleSearch.result({ resultId: "123" })); // 결과 페이지 연결
+      navigate(pathKeys.simpleSearch.result()); // 결과 페이지 연결
     } else {
       navigate(
         pathKeys.simpleSearch.step({

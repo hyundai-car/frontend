@@ -1,15 +1,12 @@
-import {
-  CarInfo,
-  TSimpleSearchAnswers,
-} from "@/entities/simpleSearch/model/types";
+import { TSimpleSearchAnswers } from "@/entities/simpleSearch/model/types";
 import { authenticated } from "@/shared/lib/axios/axiosInstance";
-interface SimpleSearchRequest {
-  budget: string;
-  usage: string;
-  maintenance: string;
-  experience: string;
-  preferredType: string;
-}
+// interface SimpleSearchRequest {
+//   budget: string;
+//   usage: string;
+//   maintenance: string;
+//   experience: string;
+//   preferredType: string;
+// }
 interface RecommendCar {
   recommendId: number;
   recommendedAt: string;
@@ -18,7 +15,7 @@ interface RecommendCar {
   recommendReason: string;
   createdAt: string;
   updatedAt: string;
-  car: CarInfo;
+  car: TSimpleSearchAnswers;
 }
 
 interface SimpleSearchResponse {

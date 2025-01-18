@@ -19,9 +19,5 @@ export type SimpleSearchStep = "1" | "2" | "3" | "4" | "5";
 export interface SimpleSearchParams {
   step?: SimpleSearchStep;
 }
-export interface SimpleSearchResultParams {
-  // TODO(K) 결과 페이지에 필요한 파라미터들
-  resultId: string;
-}
 
 export type PaymentParams = z.infer<typeof PaymentParamsSchema>;
