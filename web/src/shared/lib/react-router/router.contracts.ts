@@ -4,7 +4,7 @@
  * @exmaple
  */
 
-import { VehicleSearchFiltersSchema } from "@/entities/search/model/search-filters.contracts";
+// import { VehicleSearchFiltersSchema } from "@/entities/search/model/search-filters.contracts";
 import { z } from "zod";
 
 export const CarsDetailParamsSchema = z.object({ carNo: z.number() });
@@ -13,7 +13,7 @@ export const SearchQueryParamsSchema = z.object({
   query: z.string().optional(),
   page: z.number().optional(),
   size: z.number().optional(),
-  filters: VehicleSearchFiltersSchema.optional(),
+  // filters: VehicleSearchFiltersSchema.optional(),
 });
 
 export const PaymentParamsSchema = z.object({ carId: z.string() });

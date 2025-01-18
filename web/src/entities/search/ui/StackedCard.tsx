@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { mockCarListData } from "../api/mockCarListData";
 import { convertToManWon } from "../../../shared/lib/priceUtils";
 import { TSearch } from "../model/search.types";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ISimpleResultCarInfo } from "@/entities/simpleSearch/model/types";
 
@@ -35,12 +35,11 @@ export function StackedCard({
   const isLike = isTSearch(data) ? data.isLike : false;
 
   const price = convertToManWon(sellingPrice).toLocaleString();
-  const navigate = useNavigate();
 
   return (
     <Card onClick={() => navigate(`/carDetail/carsDetail?carNo=${data.carId}`)}>
       <ImageContainer>
-        {!isTSearch && (
+        {isTSearch && (
           <HeartButton>
             {actionSlot || (
               <Icon
