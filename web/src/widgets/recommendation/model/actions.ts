@@ -2,6 +2,13 @@ import { BestCar, ComparisonAvg } from "@/entities/recommendation/api/types";
 import { Comparison } from "@/shared/model/car.types";
 import { useNavigate } from "react-router-dom";
 
+export const compareWithSelectedCar = (
+  bestValue: number,
+  comparedValue: number
+) => {
+  if (bestValue > comparedValue) return true;
+};
+
 export const compareWithAvg = (
   bestCar: BestCar,
   comparisions: ComparisonAvg

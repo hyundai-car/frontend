@@ -64,7 +64,11 @@ export function Comparision() {
         <Section>
           <Header>추천차량</Header>
           {bestCarDetail && (
-            <ComparisonCard data={bestCarDetail} isBest={true} />
+            <ComparisonCard
+              data={bestCarDetail}
+              isBest={true}
+              comparedData={selectedItemCarInfo?.car}
+            />
           )}
         </Section>
         <Section>
