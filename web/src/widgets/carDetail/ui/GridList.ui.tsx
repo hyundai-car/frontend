@@ -42,7 +42,11 @@ export function GridList() {
         Icon={CalendarIcon}
         value={initialRegistration}
       />
-      <GridItem itemName="연비" Icon={groupIcon} value={fuelEfficiency} />
+      <GridItem
+        itemName="연비"
+        Icon={groupIcon}
+        value={Math.ceil(fuelEfficiency)}
+      />
       <GridItem itemName="주행거리" Icon={RoutingIcon} value={mileage} />
       <GridItem itemName="번호판" Icon={CarIcon} value={carNumber} />
       <GridItem itemName="차량색상" Icon={BrushIcon} value={exteriorColor} />
