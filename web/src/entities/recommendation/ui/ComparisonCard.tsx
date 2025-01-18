@@ -1,22 +1,13 @@
 import styled from "styled-components";
 import { ReactComponent as CrownIcon } from "public/icons/crown.svg";
-import { BestCar } from "@/entities/recommendation/api/types";
-
-type Props = {
-  cardId: number;
-  modelName: string;
-  initialRegistrationDate: string;
-  mileage: number;
-  year: number;
-  price: number;
-  mainImage: string;
-};
+import { CarDetailResponse } from "@/shared/api/api.types";
 
 export function ComparisonCard({
   data,
   isBest,
 }: {
-  data: Props | BestCar;
+  // data: Props | BestCar;
+  data: CarDetailResponse;
   isBest: boolean;
 }) {
   console.log(data);
@@ -24,55 +15,62 @@ export function ComparisonCard({
   return (
     <Container $isBest={isBest}>
       <ImgWrap>
-        <img src={data.mainImage} />
+        <img src={data.car.mainImage} />
       </ImgWrap>
       <Row>
         <StyledIcon />
         <Description $isBest={isBest}>
-          <h6>최초 등록일</h6>
-          <p>{data.initialRegistrationDate}</p>
+          <h6>가성비 점수</h6>
+          <p>{data.car.initialRegistration}</p>
+        </Description>
+      </Row>
+      <Row>
+        <StyledIcon />
+        <Description $isBest={isBest}>
+          <h6>사고 이력</h6>
+          <p>{data.car.accidentCount}</p>
+        </Description>
+      </Row>
+      <Row>
+        <StyledIcon />
+        <Description $isBest={isBest}>
+          <h6>연비</h6>
+          <p>{data.car.mileage}</p>
         </Description>
       </Row>
       <Row>
         <StyledIcon />
         <Description $isBest={isBest}>
           <h6>주행 거리</h6>
-          <p>{data.mileage}</p>
+          <p>{Math.ceil(data.car.fuelEfficiency)}</p>
         </Description>
       </Row>
       <Row>
         <StyledIcon />
         <Description $isBest={isBest}>
-          <h6>연비</h6>
-          <p>{data.mileage}</p>
+          <h6>번호판</h6>
+          <p>{data.car.carNumber}</p>
         </Description>
       </Row>
       <Row>
         <StyledIcon />
         <Description $isBest={isBest}>
-          <h6>연비</h6>
-          <p>{data.mileage}</p>
+          <h6>차량색상</h6>
+          <p>{data.car.exteriorColor}</p>
         </Description>
       </Row>
       <Row>
         <StyledIcon />
         <Description $isBest={isBest}>
-          <h6>연비</h6>
-          <p>{data.mileage}</p>
+          <h6>연료타입</h6>
+          <p>{data.car.fuelType}</p>
         </Description>
       </Row>
       <Row>
         <StyledIcon />
         <Description $isBest={isBest}>
-          <h6>연비</h6>
-          <p>{data.mileage}</p>
-        </Description>
-      </Row>
-      <Row>
-        <StyledIcon />
-        <Description $isBest={isBest}>
-          <h6>연비</h6>
-          <p>{data.mileage}</p>
+          <h6>승차인원</h6>
+          <p>{data.car.seating}</p>
         </Description>
       </Row>
     </Container>
@@ -114,6 +112,10 @@ const Description = styled.div<{ $isBest: boolean }>`
   display: flex;
   flex-direction: column;
   gap: 5px;
+  line-height: 1.3;
+  /* white-space: nowrap; 텍스트를 한 줄로 제한 */
+  /* overflow: hidden; 넘치는 텍스트를 숨김 */
+  /* text-overflow: ellipsis; 넘친 부분에 ... 표시 */
   p {
     color: var(--white);
     color: ${({ $isBest }) => ($isBest ? "var(--white)" : "var(--navy)")};

@@ -43,6 +43,7 @@ export const useRecommendationResult = () => {
       comparisons: resultData.comparisons,
       graph: resultData.graph,
       otherCarIds: resultData.otherCarIds,
+      bestCarId: resultData.bestCar.carId,
     };
   } catch {
     navigate("/recommendation/candidates");

@@ -6,8 +6,9 @@ import { getCar360ImagesApi } from "@/entities/carDetail/api/Car360Image.api";
 //TODO
 export const useCarDetailQuery = (carNo: number) => {
   return useQuery<CarDetailResponse>({
-    queryKey: ["carDetail"],
+    queryKey: ["carDetail", carNo],
     queryFn: () => getCarDetailApi(carNo),
+    enabled: !!carNo, // carId가 있을 때만 쿼리 실행
     staleTime: 5 * 60 * 1000, // 5분
     gcTime: 30 * 60 * 1000, // 30분
     retry: 1,
