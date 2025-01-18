@@ -2,11 +2,17 @@
 // const { carPrice } = mockContractInfoData.paymentInfo;
 import styled from "styled-components";
 import { usePaymentStore } from "../model/store";
+import { useEffect } from "react";
 
 export function ContractPaymentInfo() {
-  const { price } = usePaymentStore((state) => state);
+  const { price, setPrice } = usePaymentStore((state) => state);
 
   const total = price * 10000 + 20000 + 25000;
+
+  useEffect(() => {
+    setPrice(total);
+    console.log(price);
+  }, []);
 
   return (
     <Container>

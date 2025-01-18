@@ -4,22 +4,36 @@ import { PaymentHeader } from "../../header/ui/Header";
 import { PaymentButton } from "@/features/payments/ui/PaymentButton/PaymentButton";
 import { useNavigate, useParams } from "react-router-dom";
 import { showModal } from "@/shared/hooks/useModal";
+import { usePaymentStore } from "@/entities/payments/contractInfo/model/store";
+import { usePaymentDepositMutation } from "@/features/payments/api/payments.query";
 
 export function ProcessWidget() {
   const navigate = useNavigate();
   const { carId, type } = useParams();
-  const header = type === "deposit" ? "계약" : "잔금 결제";
-  const price = type === "deposit" ? "30,0000" : "결제금액";
+  const isDeposit = type === "deposit";
+  const { price } = usePaymentStore();
+
+  const header = isDeposit ? "계약" : "잔금 결제";
+  const uiPrice = isDeposit ? 300000 : price;
+  const { mutate: payDeposit } = usePaymentDepositMutation();
 
   const handlePayment = () => {
-    if (type === "deposit") {
+    if (isDeposit) {
       showModal({
         title: "결제하시겠어요?",
         subTitle: "계약금을 결제하시겠습니까?",
         buttonLabel: "확인",
         buttonColor: "blue",
         onConfirm: () => {
-          // 폼 입력 검증
+          // api 연결
+          payDeposit(Number(carId), {
+            onSuccess: () => {
+              console.log("계약금 결제 성공");
+            },
+            onError: (error) => {
+              console.error("계약금 결제 실패:", error);
+            },
+          });
           navigate(`/payments/${carId}/deposit/process/complete`);
         },
       });
@@ -43,8 +57,8 @@ export function ProcessWidget() {
       <Container>
         <Wrap>
           <InfoRow>
-            <Title>결제 금액</Title>
-            <Price>{price} 원</Price>
+            <Title>{isDeposit ? "계약" : "결제"} 금액</Title>
+            <Price>{uiPrice.toLocaleString()} 원</Price>
           </InfoRow>
           <Title>결제카드 정보 입력</Title>
           <Desc>차량 계약자 명의의 신용카드 외 결제 불가</Desc>
