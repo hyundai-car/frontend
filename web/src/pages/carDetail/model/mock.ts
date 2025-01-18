@@ -1,12 +1,12 @@
-import { CarData } from "@/shared/model/car.types";
+import { CarDetailResponse } from "@/shared/api/api.types";
 
-export const MOCK_CarDetail: CarData = {
+export const MOCK_CarDetail: CarDetailResponse = {
   cars: {
     carId: 1001,
     carName: "현대 아반떼 CN7",
-    year: "2022-05",
+    initialRegistration: "22년 05월",
     mileage: 15000,
-    sellingPrice: 23500000,
+    sellingPrice: 2350, // 만원 단위로 변경
     exteriorColor: "팬텀 블랙",
     interiorColor: "블랙",
     displacement: 1598,
@@ -15,13 +15,12 @@ export const MOCK_CarDetail: CarData = {
     location: "서울 강남구",
     fuelEfficiency: 15.4,
     mainImage: "https://example.com/avante-cn7.jpg",
-    newCarPrice: 27500000,
+    newCarPrice: 2750, // 만원 단위로 변경
     carNumber: "12가 3456",
     seating: 4,
+    mmScore: 4.0,
     createdAt: "2024-01-15",
     updatedAt: "2024-01-16",
-    mmScore: 4,
-    initialRegistrationDate: "2024-01-12",
   },
   optionLists: {
     optionListId: 2001,
@@ -48,22 +47,21 @@ export const MOCK_CarDetail: CarData = {
     {
       accidentHistoryid: 3001,
       accidentDate: "2023-08-15",
-      accidentCount: 1,
-      carPartsPrice: 450000,
-      carLaborPrice: 200000,
-      carPaintPrice: 300000,
+      carPartsPrice: 45, // 만원 단위로 변경
+      carLaborPrice: 20,
+      carPaintPrice: 30,
       createdAt: "2023-08-16",
       updatedAt: "2023-08-16",
     },
     {
       accidentHistoryid: 3002,
       accidentDate: "2023-11-22",
-      accidentCount: 1,
-      carPartsPrice: 150000,
-      carLaborPrice: 100000,
-      carPaintPrice: 200000,
+      carPartsPrice: 15,
+      carLaborPrice: 10,
+      carPaintPrice: 20,
       createdAt: "2023-11-23",
       updatedAt: "2023-11-23",
     },
   ],
+  accidentCount: 2,
 };

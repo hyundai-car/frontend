@@ -2,9 +2,9 @@ import { withSuspense } from "@/shared/lib/hocs";
 import { pathKeys } from "@/shared/lib/react-router";
 import { createElement, lazy } from "react";
 import { Navigate, RouteObject } from "react-router-dom";
-import { SimpleSearchPage } from "../simpleSearch/ui/SimpleSearch.ui";
-import { SimpleSearchStep } from "../simpleSearch/ui/SimpleSearchStep.ui";
-import { SimpleSearchResult } from "../simpleSearch/ui/SimpleSearchResult.ui";
+import { SimpleSearchPage } from "./simpleSearch/ui/Page";
+import { SimpleSearchStep } from "../../widgets/search/simpleSearchStep/ui/SimpleSearchStep";
+import { SimpleSearchResultPage } from "./simpleSearch/ui/ResultPage";
 /**
  * @description
  */
@@ -43,7 +43,7 @@ export const SearchRoute: RouteObject = {
         },
         {
           path: "result/:resultId",
-          element: createElement(SimpleSearchResult),
+          element: createElement(SimpleSearchResultPage),
         },
       ],
     },

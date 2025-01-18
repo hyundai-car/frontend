@@ -37,3 +37,5 @@ dist-ssr
 .externalNativeBuild
 .cxx
 local.properties
+
+.env

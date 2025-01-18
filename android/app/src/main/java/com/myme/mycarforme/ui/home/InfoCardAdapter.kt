@@ -8,9 +8,9 @@ import com.myme.mycarforme.R
 import com.myme.mycarforme.data.model.Car
 import com.myme.mycarforme.databinding.ViewInfocardBinding
 
-class InfoCardAdapter(private val items:List<Car>) :
+class InfoCardAdapter(private val items: ArrayList<Car>) :
     RecyclerView.Adapter<InfoCardAdapter.CardViewHolder>() {
-
+//    val carList = items.value
     inner class CardViewHolder(private val binding: ViewInfocardBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Car) {
@@ -18,9 +18,9 @@ class InfoCardAdapter(private val items:List<Car>) :
                 .load(item.mainImage)
                 .into(binding.infocardImage)
 
-            binding.infocardCarmodeltext.text = item.modelName
+            binding.infocardCarmodeltext.text = item.carName
             binding.infocardPricetext.text = String.format("%,d", item.sellingPrice)
-            binding.infocardDatetext.text = item.year.toString()
+            binding.infocardDatetext.text = item.initialRegistration
             binding.infocardDisttext.text = String.format("%,d", item.mileage) +"KM"
             binding.infocardLikenumtext.text = String.format("%,d", item.likeCount)
             binding.infocardHeartButton.setOnClickListener {
