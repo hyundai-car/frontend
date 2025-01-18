@@ -1,6 +1,6 @@
 import { ValueOf } from "@/shared/model/utils";
 import { ItemName } from "@/widgets/recommendation/model/types";
-import { BasicInfo } from "@/shared/model/car.types";
+import { Basic } from "@/shared/model/car.types";
 import { FC, SVGProps } from "react";
 import styled, { DefaultTheme } from "styled-components";
 
@@ -9,7 +9,7 @@ type Props = {
   Icon: FC<SVGProps<SVGSVGElement>>; // SVG 컴포넌트를 받는 타입
   color?: keyof DefaultTheme["colors"];
   backColor?: keyof DefaultTheme["colors"];
-  value: ValueOf<BasicInfo>;
+  value: ValueOf<Basic>;
 };
 type StyledIconProps = {
   component: FC<SVGProps<SVGSVGElement>>;

@@ -1,32 +1,47 @@
 import { MOCK_CarImgList } from "@/features/carDetail/model/mock";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 
 export function ClickCarImgList() {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const carId = Number(searchParams.get("carNo"));
   const imgUrls: string[] = MOCK_CarImgList.contents.map(
     ({ imageUrl }) => imageUrl
   );
 
+  const handleButton = () => {
+    navigate(`/cars/carsDetail/images?carNo=${carId}`);
+  };
+
   return (
-    <Container>
-      <ImgWrap>
-        <img src={imgUrls[0]} />
-      </ImgWrap>
-      <ImgWrap>
-        <img src={imgUrls[2]} />
-      </ImgWrap>
-      <ImgWrap>
-        <img src={imgUrls[4]} />
-      </ImgWrap>
-      <Screen>
-        <OverlayText>34+</OverlayText>
+    <ButtonWrap onClick={handleButton}>
+      <Container>
         <ImgWrap>
-          <img src={imgUrls[3]} />
+          <img src={imgUrls[0]} />
         </ImgWrap>
-      </Screen>
-    </Container>
+        <ImgWrap>
+          <img src={imgUrls[2]} />
+        </ImgWrap>
+        <ImgWrap>
+          <img src={imgUrls[4]} />
+        </ImgWrap>
+        <Screen>
+          <OverlayText>34+</OverlayText>
+          <ImgWrap>
+            <img src={imgUrls[3]} />
+          </ImgWrap>
+        </Screen>
+      </Container>
+    </ButtonWrap>
   );
 }
 
+const ButtonWrap = styled.button`
+  width: 100%;
+  border: none;
+  background-color: var(--white);
+`;
 const Container = styled.div`
   padding: 0 20px;
   display: flex;

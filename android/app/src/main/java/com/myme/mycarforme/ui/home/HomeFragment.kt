@@ -8,7 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.myme.mycarforme.MainActivity
+import com.myme.mycarforme.MainViewModel
 import com.myme.mycarforme.data.model.Car
 import com.myme.mycarforme.data.network.DataManager
 import com.myme.mycarforme.databinding.FragmentHomeBinding
@@ -17,14 +20,12 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-//
-//    private val carViewModel: HomeViewModel by activityViewModels()
-//    private var popularCar = carViewModel.popularCar
-//    private var mmCar = carViewModel.mmCar
-//    private var nextCar = carViewModel.nextCar
-    private var popularCar = ArrayList<Car>()
-    private var mmCar = ArrayList<Car>()
-    private var nextCar = ArrayList<Car>()
+    private lateinit var mainViewModel: MainViewModel
+
+    private lateinit var popularAdapter: InfoCardAdapter
+    private lateinit var mmAdapter: InfoCardAdapter
+    private lateinit var nextAdapter: InfoCardAdapter
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,7 +33,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-
+        mainViewModel = (activity as MainActivity).mainViewModel
         // 이벤트 이미지 클릭 리스너
         val imageLinks = mapOf(
             binding.homeEventimage1 to "https://certified.hyundai.com/m/display/getSpdpInfo.do?catNo=80000010332",
@@ -48,40 +49,39 @@ class HomeFragment : Fragment() {
                 openLink(url)
             }
         }
-        loadCarData()
+
+        popularAdapter = InfoCardAdapter(items = ArrayList(), requireContext(), CardType.Normal, mainViewModel)
+        mmAdapter = InfoCardAdapter(items = ArrayList(), requireContext(), CardType.Normal, mainViewModel)
+        nextAdapter = InfoCardAdapter(items = ArrayList(), requireContext(), CardType.Normal, mainViewModel)
+
+        binding.homePopularRecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.homeFutureRecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.homeNextRecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+        binding.homePopularRecyclerview.adapter = popularAdapter
+        binding.homeFutureRecyclerview.adapter = mmAdapter
+        binding.homeNextRecyclerview.adapter = nextAdapter
+
+        observeLiveData()
+
         return binding.root
     }
 
-    private fun loadCarData() {
-        context?.let {
-            Log.d("chk","hey")
-            // 각 데이터를 비동기적으로 로드하고 콜백을 통해 RecyclerView에 세팅
-            DataManager.getCarsListwithUrl(it, "popular") { cars ->
-                popularCar = cars
-//                carViewModel.updatePopularCarList(cars)
-                updateRecyclerView()
-            }
-            DataManager.getCarsListwithUrl(it, "mmscores") { cars ->
-                mmCar = cars
-//                carViewModel.updatemmCarList(cars)
-                updateRecyclerView()
-            }
-            DataManager.getCarsListwithUrl(it, "sales") { cars ->
-                nextCar = cars
-//                carViewModel.updatenextCarList(cars)
-                updateRecyclerView()
-            }
-        }
-    }
+    private fun observeLiveData() {
+        mainViewModel.popularCars.observe(viewLifecycleOwner, Observer { cars ->
+            // popularCars 데이터가 변경되면 RecyclerView 갱신
+            popularAdapter.updateItems(cars)
+        })
 
-    private fun updateRecyclerView() {
-        // 데이터가 로드되면 RecyclerView 업데이트
-        binding.homePopularRecyclerview.adapter = InfoCardAdapter(items = popularCar)
-        binding.homePopularRecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        binding.homeFutureRecyclerview.adapter = InfoCardAdapter(items = mmCar)
-        binding.homeFutureRecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        binding.homeNextRecyclerview.adapter = InfoCardAdapter(items = nextCar)
-        binding.homeNextRecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        mainViewModel.mmCars.observe(viewLifecycleOwner, Observer { cars ->
+            // mmCars 데이터가 변경되면 RecyclerView 갱신
+            mmAdapter.updateItems(cars)
+        })
+
+        mainViewModel.nextCars.observe(viewLifecycleOwner, Observer { cars ->
+            // nextCars 데이터가 변경되면 RecyclerView 갱신
+            nextAdapter.updateItems(cars)
+        })
     }
 
     private fun openLink(url: String) {

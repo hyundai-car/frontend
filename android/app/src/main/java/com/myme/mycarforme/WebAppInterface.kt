@@ -4,16 +4,19 @@ import android.content.Context
 import android.util.Log
 import android.webkit.JavascriptInterface
 import android.widget.Toast
+import com.myme.mycarforme.data.utils.SharedPrefs
 
 class WebAppInterface(private val context: Context) {
 
     @JavascriptInterface
-    fun showToast(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    fun getAccessToken(): String? {
+        val acceesToken = SharedPrefs.getAccessToken(context)
+        Log.d("chk", "getAccessToken with $acceesToken")
+        return acceesToken
     }
 
     @JavascriptInterface
-    fun performAction() {
+    fun refreshToken() {
         Log.d("WebAppInterface", "Action performed from WebView!")
     }
 }

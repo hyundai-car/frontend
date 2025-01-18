@@ -1,10 +1,10 @@
-import { SelectCard } from "@/features/recommendation/model/types";
-import { formatNumber } from "@/entities/recommendation/model/format.utils";
 import { Checkbox } from "@/shared/ui/checkbox/Checkbox.ui";
 import styled from "styled-components";
+import { LikeItem } from "@/features/recommendation/api/api.types";
+import { formatNumber } from "@/shared/utils/format.utils";
 
 type Props = {
-  item: SelectCard;
+  item: LikeItem;
   checked: boolean;
   onChange: () => void;
 };
@@ -21,9 +21,9 @@ export function LikeCard({ item, checked, onChange }: Props) {
           </LeftSection>
 
           <RightSection>
-            <h1>{item.modelName}</h1>
+            <h1>{item.carName}</h1>
             <div>
-              <span>{item.year}</span>{" "}
+              <span>{item.initialRegistration}</span>{" "}
               <span>{formatNumber(item.mileage)}km</span>
             </div>
             <h1>{formatNumber(item.mileage)} 만원</h1>

@@ -8,7 +8,7 @@
  * const MyComponentWithSuspense = withSuspense(MyComponent);
  */
 
-import { Loading } from "@/shared/ui/loading/Loading";
+import { LoadingFallback } from "@/shared/ui/fallback/LoadingFallback";
 import React, {
   ComponentType,
   // ForwardedRef,
@@ -16,11 +16,7 @@ import React, {
   Suspense,
 } from "react";
 
-const DefaultFallback: React.FC = () => (
-  <>
-    <Loading iconSize={150} />
-  </>
-);
+const DefaultFallback: React.FC = () => <LoadingFallback />;
 
 export function withSuspense<P extends object>(
   WrappedComponent: ComponentType<P>,
