@@ -2,12 +2,12 @@ import { Loading } from "@/shared/ui/loading/Loading";
 import styled from "styled-components";
 
 export const CarList = <T extends { carId: number }>({
-  data,
+  data = [],
   isFetching,
   getActionSlot,
   renderItem,
 }: {
-  data: T[];
+  data?: T[];
   isFetching: boolean;
   getActionSlot?: (carId: number) => React.ReactNode;
   renderItem: (item: T, actionSlot?: React.ReactNode) => React.ReactNode;

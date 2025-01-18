@@ -1,16 +1,16 @@
 // entities/search/api/mockCarListData.ts
-import { TSearch } from "../model/search.types";
 
+import { ISearchCar } from "../model/types";
 interface CarDataResponse {
-  contents: TSearch[];
+  contents: ISearchCar[];
 }
 
 export const mockCarListData: CarDataResponse = {
   contents: [
     {
       carId: 1,
-      modelName: "그랜저 하이브리드",
-      year: "2022-05",
+      carName: "목업 그랜저 하이브리드",
+      initialRegistration: "2022-05",
       mileage: 25000,
       sellingPrice: 35000000,
       mainImage:
@@ -23,8 +23,8 @@ export const mockCarListData: CarDataResponse = {
     },
     {
       carId: 2,
-      modelName: "제네시스 G80",
-      year: "2023-03",
+      carName: "목업 제네시스 G80",
+      initialRegistration: "2023-03",
       mileage: 15000,
       sellingPrice: 55000000,
       mainImage:
@@ -37,8 +37,8 @@ export const mockCarListData: CarDataResponse = {
     },
     {
       carId: 3,
-      modelName: "테슬라 모델 Y",
-      year: "2023-08",
+      carName: "목업 테슬라 모델 Y",
+      initialRegistration: "2023-08",
       mileage: 8000,
       sellingPrice: 65000000,
       mainImage:
@@ -51,8 +51,8 @@ export const mockCarListData: CarDataResponse = {
     },
     {
       carId: 4,
-      modelName: "BMW 520i",
-      year: "2022-11",
+      carName: "BMW 520i",
+      initialRegistration: "2022-11",
       mileage: 30000,
       sellingPrice: 48000000,
       mainImage:
@@ -65,8 +65,8 @@ export const mockCarListData: CarDataResponse = {
     },
     {
       carId: 5,
-      modelName: "포르쉐 카이엔",
-      year: "2023-06",
+      carName: "포르쉐 카이엔",
+      initialRegistration: "2023-06",
       mileage: 12000,
       sellingPrice: 95000000,
       mainImage:

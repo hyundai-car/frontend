@@ -2,26 +2,23 @@ import { Icon } from "@/shared/ui/Icon/Icon";
 import styled from "styled-components";
 import { mockCarListData } from "../api/mockCarListData";
 import { convertToManWon } from "../../../shared/lib/priceUtils";
-import { TSearch } from "../model/search.types";
-import { ReactNode, useEffect } from "react";
+import { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
-import { ISimpleResultCarInfo } from "@/entities/simpleSearch/model/types";
+// import { ISimpleResultCarInfo } from "@/entities/simpleSearch/model/types";
+import { IBaseCar, ISearchCar } from "../model/types";
 
 type Props = {
-  data?: TSearch | ISimpleResultCarInfo;
+  data?: IBaseCar | ISearchCar;
   actionSlot?: ReactNode;
 };
 export function StackedCard({
   data = mockCarListData.contents[0],
   actionSlot,
 }: Props) {
+  const navigate = useNavigate();
   if (!data) {
     throw new Error("Data is undefined");
   }
-  // 타입 가드로 `TSearch`와 `ISimpleResultCarInfo`를 구분
-  const isTSearch = (data: TSearch | ISimpleResultCarInfo): data is TSearch =>
-    "isLike" in data;
-
   const {
     carName,
     initialRegistration,
@@ -31,20 +28,17 @@ export function StackedCard({
     likeCount,
   } = data;
 
-  // `isLike` 처리
-  const isLike = isTSearch(data) ? data.isLike : false;
-
   const price = convertToManWon(sellingPrice).toLocaleString();
 
   return (
     <Card onClick={() => navigate(`/carDetail/carsDetail?carNo=${data.carId}`)}>
       <ImageContainer>
-        {isTSearch && (
+        {"isLike" in data && (
           <HeartButton>
             {actionSlot || (
               <Icon
                 type="heart"
-                color={isLike ? "red" : "gray"}
+                color={data.isLike ? "red" : "gray"}
                 onClick={() => console.log("heart clicked")}
               />
             )}
