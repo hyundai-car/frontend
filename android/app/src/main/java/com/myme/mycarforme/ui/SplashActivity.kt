@@ -32,6 +32,10 @@ class SplashActivity : AppCompatActivity() {
     private var popularCarLoaded = false
     private var mmCarLoaded = false
     private var nextCarLoaded = false
+    private var statusLoaded = false
+
+    private var nowStatus = "NONE"
+    private var orderingCarId = 0
 
     private val apiService: ApiService by lazy {
         RetrofitClient.getClient().create(ApiService::class.java)
@@ -107,11 +111,11 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun navigateToMain() {
-        Log.d("chk","$1")
         val mainIntent = Intent(this, MainActivity::class.java)
         mainIntent.putExtra("popular", popularCar)
         mainIntent.putExtra("mm", mmCar)
         mainIntent.putExtra("next", nextCar)
+        mainIntent.putExtra("user",nowStatus)
         startActivity(mainIntent)
         finish()
     }
@@ -122,7 +126,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun loadCarData() {
-        this.let {
+        this.let { it ->
             DataManager.getCarsListwithUrl(it, "popular") { cars ->
                 popularCar = cars
                 popularCarLoaded = true
@@ -138,10 +142,30 @@ class SplashActivity : AppCompatActivity() {
                 nextCarLoaded = true
                 checkAllDataLoaded()
             }
+            DataManager.getOrderingCar(it) { orderingCarId ->
+                if(orderingCarId != null){
+                    val mainIntent = Intent(this, MainActivity::class.java)
+                    mainIntent.putExtra("carid",orderingCarId)
+                    DataManager.getOrderingStatus(it,orderingCarId){status->
+                        Log.d("chk","$status")
+                        if (status != null) {
+                            nowStatus = status
+                        } else{
+                            nowStatus = "NONE"
+                        }
+                        statusLoaded = true
+                        checkAllDataLoaded()
+                    }
+                }
+                else{
+                    statusLoaded = true
+                    checkAllDataLoaded()
+                }
+            }
         }
     }
     private fun checkAllDataLoaded() {
-        if (popularCarLoaded && mmCarLoaded && nextCarLoaded) {
+        if (popularCarLoaded && mmCarLoaded && nextCarLoaded && statusLoaded) {
             navigateToMain()
             finish()
         }

@@ -1,20 +1,14 @@
 package com.myme.mycarforme
 
 import android.content.Context
-import android.provider.ContactsContract.Data
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.map
 import com.myme.mycarforme.data.model.Car
 import com.myme.mycarforme.data.network.DataManager
 import com.myme.mycarforme.data.network.OrderCars
-import com.myme.mycarforme.data.network.OrderedCarResponse
 
-enum class userStatus{
-    CONTRACTED, PAID, DELIVERING, DELIVERED, NONE
-}
+
 
 class MainViewModel : ViewModel() {
     // 각 데이터 리스트를 MutableLiveData로 선언
@@ -35,6 +29,12 @@ class MainViewModel : ViewModel() {
 
     private val _orderCars = MutableLiveData<List<OrderCars>>()
     val orderCars: LiveData<List<OrderCars>> = _orderCars
+
+    private val _userStatus = MutableLiveData<String>()
+    val userStatus: LiveData<String> = _userStatus
+
+    private val _carId = MutableLiveData<Int>()
+    val carId : LiveData<Int> = _carId
 
     fun pushCarsDataMain(popCars: ArrayList<Car>, mCars:ArrayList<Car>, nCars:ArrayList<Car>){
         _popularCars.postValue(popCars)
@@ -116,6 +116,14 @@ class MainViewModel : ViewModel() {
 
     fun removeLikeCars(carId: Int){
         _likeCars.value = _likeCars.value?.filterNot { it.carId == carId }
+    }
+
+    fun saveStatus(status: String?){
+        _userStatus.value = status ?: "NONE"
+    }
+
+    fun saveCar(id: Int){
+        _carId.value = id
     }
 }
 

@@ -1,6 +1,7 @@
 package com.myme.mycarforme.ui.search
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,17 +53,11 @@ class SearchFragment : Fragment() {
             webSettings.cacheMode = WebSettings.LOAD_NO_CACHE
             webSettings.domStorageEnabled = true // DOM 저장소 활성화
         }
-        webView.loadUrl("http://192.168.201.101:5173/search")
-        webView.addJavascriptInterface(AndroidBridge(), "AndroidBridge")
+        webView.loadUrl("http://localhost:5173/search")
+        webView.addJavascriptInterface(WebAppInterface(requireContext()), "AndroidBridge")
 
     }
 
-    inner class AndroidBridge {
-        @JavascriptInterface
-        fun getToken(): String? {
-            return SharedPrefs.getAccessToken(requireContext())
-        }
-    }
 
 
     override fun onDestroyView() {

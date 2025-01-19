@@ -36,10 +36,12 @@ class MainActivity : AppCompatActivity() {
         val popularCar = intent.getParcelableArrayListExtra<Car>("popular")
         val mmCar = intent.getParcelableArrayListExtra<Car>("mm")
         val nextCar = intent.getParcelableArrayListExtra<Car>("next")
-        Log.d("chk","$popularCar")
+        val status = intent.getStringExtra("user")
+        val orderingID = intent.getIntExtra("carid",0)
         mainViewModel.pushCarsDataMain(popularCar!!,mmCar!!,nextCar!!)
-//        mainViewModel.loadCarsDataMain(this)
         mainViewModel.loadCarDataMy(this)
+        mainViewModel.saveStatus(status)
+        mainViewModel.saveCar(orderingID)
 
         val navView: BottomNavigationView = binding.navView
         val homeFragment = HomeFragment()
@@ -69,8 +71,9 @@ class MainActivity : AppCompatActivity() {
             true
         }
         binding.mainToolbar.toolbarActionButton.setOnClickListener {
-            switchFragment(searchFragment)
-            binding.navView.selectedItemId = R.id.navigation_search
+//            switchFragment(searchFragment)
+//            binding.navView.selectedItemId = R.id.navigation_search
+            DataManager.putCont(this,1)
         }
         ViewCompat.setOnApplyWindowInsetsListener(
             window.decorView

@@ -51,16 +51,10 @@ class RecommendFragment : Fragment() {
             webSettings.cacheMode = WebSettings.LOAD_NO_CACHE
             webSettings.domStorageEnabled = true // DOM 저장소 활성화
         }
-        webView?.loadUrl("http://mycarf0r.me/recommendation/candidates")
-        webView.addJavascriptInterface(AndroidBridge(), "AndroidBridge")
+        webView?.loadUrl("http://localhost:5173/recommendation/candidates")
+        webView.addJavascriptInterface(WebAppInterface(requireContext()), "AndroidBridge")
     }
 
-    inner class AndroidBridge {
-        @JavascriptInterface
-        fun getToken(): String? {
-            return SharedPrefs.getAccessToken(requireContext())
-        }
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()

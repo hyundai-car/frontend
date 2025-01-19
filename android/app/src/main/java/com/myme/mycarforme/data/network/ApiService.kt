@@ -10,6 +10,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.PUT
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Url
@@ -77,6 +78,21 @@ data class OrderCars(
     val likecount: Int,
 )
 
+data class History(
+    val contractedAt: String,
+    val paidAt : String,
+    val deliveryStartedAt : String,
+    val deliveryEndedAt : String,
+)
+
+data class nowOrderingResponse(
+    val carId: Int,
+    val paymentDeliveryStatus : String,
+    val statusHistories : History,
+    val createdAt: String,
+    val updatedAt: String,
+)
+
 interface ApiService {
     @POST
     fun loginUser(
@@ -110,5 +126,22 @@ interface ApiService {
         @Body refreshToken: String
     ): Call<RefreshTokenResponse>
 
+    @GET
+    fun getOrderStatus(
+        @Url url:String,
+        @Header("Authorization") accessToken: String,
+    ): Call<nowOrderingResponse>
+
+    @PUT
+    fun putCar(
+        @Url url: String,
+        @Header("Authorization") accessToken: String,
+    ): Call<Any>
+
+    @PUT
+    fun putPaid(
+        @Url url: String,
+        @Header("Authorization") accessToken: String,
+    ): Call<Any>
 
 }

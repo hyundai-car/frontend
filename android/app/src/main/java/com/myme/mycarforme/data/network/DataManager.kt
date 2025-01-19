@@ -146,18 +146,14 @@ object DataManager {
         }
     }
 
-    fun getOrderingCar(context : Context, callback: (Int)-> Unit){
+    fun getOrderingCar(context : Context, callback: (Int?)-> Unit){
         val accessToken = SharedPrefs.getAccessToken(context)
         if (accessToken != null) {
             val url = "https://mycarf0r.me/api/orders"
-
-            apiService.getOrderCarList(url, accessToken).enqueue(object : Callback<Int> {
+            apiService.getOrderCarList(url, accessToken).enqueue(object : Callback<OrderedCarResponse> {
                 override fun onResponse(call: Call<OrderedCarResponse>, response: Response<OrderedCarResponse>) {
                     if (response.isSuccessful) {
                         val carListResponse = response.body()
-                        carListResponse?.orderedCars?.forEach {
-                            carList.add(it)
-                        }
                         // 데이터 로드 후 callback 호출
                         callback(carListResponse?.contractingId)
                     } else {
@@ -172,32 +168,74 @@ object DataManager {
         }
     }
 
-    fun getOrderStatus(context : Context, callback: (Int)-> Unit){
+    fun getOrderingStatus(context : Context, carId: Int, callback: (String?)-> Unit){
         val accessToken = SharedPrefs.getAccessToken(context)
         if (accessToken != null) {
-            val url = "https://mycarf0r.me/api/orders"
+            val url = "https://mycarf0r.me/api/orders/$carId/status"
 
-            apiService.getOrderCarList(url, accessToken).enqueue(object : Callback<Int> {
-                override fun onResponse(call: Call<OrderedCarResponse>, response: Response<OrderedCarResponse>) {
+            apiService.getOrderStatus(url, accessToken).enqueue(object : Callback<nowOrderingResponse> {
+                override fun onResponse(call: Call<nowOrderingResponse>, response: Response<nowOrderingResponse>) {
                     if (response.isSuccessful) {
                         val carListResponse = response.body()
-                        carListResponse?.orderedCars?.forEach {
-                            carList.add(it)
-                        }
                         // 데이터 로드 후 callback 호출
-                        callback(carListResponse?.contractingId)
+                        callback( carListResponse?.paymentDeliveryStatus)
                     } else {
                         Log.d("chk","$url, $response")
                     }
                 }
 
-                override fun onFailure(call: Call<OrderedCarResponse>, t: Throwable) {
+                override fun onFailure(call: Call<nowOrderingResponse>, t: Throwable) {
                     Log.d("chk","${t.message}")
                 }
             })
         }
     }
 
+    fun putCont(context : Context, carId: Int){
+        val accessToken = SharedPrefs.getAccessToken(context)
+        if (accessToken != null) {
+            val url = "https://mycarf0r.me/api/orders/$carId/contract"
+
+            apiService.putCar(url, accessToken).enqueue(object : Callback<Any> {
+                override fun onResponse(call: Call<Any>, response: Response<Any>) {
+                    if (response.isSuccessful) {
+                        val carListResponse = response.body()
+                        // 데이터 로드 후 callback 호출
+                        Log.d("chk","contract")
+                    } else {
+                        Log.d("chk","$url, $response")
+                    }
+                }
+
+                override fun onFailure(call: Call<Any>, t: Throwable) {
+                    Log.d("chk","${t.message}")
+                }
+            })
+        }
+    }
+
+    fun putPaid(context : Context, carId: Int){
+        val accessToken = SharedPrefs.getAccessToken(context)
+        if (accessToken != null) {
+            val url = "https://mycarf0r.me/api/orders/1/pay"
+
+            apiService.putCar(url, accessToken).enqueue(object : Callback<Any> {
+                override fun onResponse(call: Call<Any>, response: Response<Any>) {
+                    if (response.isSuccessful) {
+                        val carListResponse = response.body()
+                        // 데이터 로드 후 callback 호출
+                        Log.d("chk","pay")
+                    } else {
+                        Log.d("chk","$url, $response")
+                    }
+                }
+
+                override fun onFailure(call: Call<Any>, t: Throwable) {
+                    Log.d("chk","${t.message}")
+                }
+            })
+        }
+    }
 
 
 }
