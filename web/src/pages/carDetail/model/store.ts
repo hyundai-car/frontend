@@ -1,15 +1,16 @@
-import { Basic, Comparison, Option } from "@/shared/model/car.types";
+import { Normalization } from "@/shared/api/api.types";
+import { Basic, Option } from "@/shared/model/car.types";
 import { create } from "zustand";
 
 interface CarDetailStore {
   carId: number | undefined;
 
-  carGraphData: Comparison | undefined;
+  carGraphData: Normalization | undefined;
   carBasicData: Basic | undefined;
   carOptionData: Option | undefined;
 
   setCarId: (id: number) => void;
-  setCarGraphData: (carGraphData: Comparison) => void;
+  setCarGraphData: (carGraphData: Normalization) => void;
   setCarBasicData: (carBasicData: Basic) => void;
   setCarOptionData: (carOptionData: Option) => void;
 }

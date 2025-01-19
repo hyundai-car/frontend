@@ -26,6 +26,7 @@ interface DetailResponse {
   optionLists: OptionListResponse;
   accidentHistoryList: AccidentHistoryResponse[];
   accidentCount: number;
+  graph: Normalization;
 }
 
 export interface OptionListResponse {
@@ -58,6 +59,14 @@ export interface AccidentHistoryResponse {
   carPaintPrice: number; // 만원 단위
   createdAt: string; // YYYY-MM-DD 형식
   updatedAt: string; // YYYY-MM-DD 형식
+}
+
+export interface Normalization {
+  accidentCountNorm: number;
+  fuelEfficiencyNorm: number;
+  initialRegistrationNorm: number;
+  mileageNorm: number;
+  mmScoreNorm: number;
 }
 
 export interface CarDetailResponse {
