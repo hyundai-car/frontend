@@ -69,18 +69,20 @@ object DataManager {
         }
     }
 
-    fun getRecommendHistoryCarList(context: Context, callback: (ArrayList<Car>) -> Unit) {
+    fun getRecommendHistoryCarList(context: Context, callback: (ArrayList<recoCars>) -> Unit) {
         val accessToken = SharedPrefs.getAccessToken(context)
-        val carList = ArrayList<Car>()
+        val carList = ArrayList<recoCars>()
         if (accessToken != null) {
-            val url = "https://mycarf0r.me/api/recommendations/histories"
+            val url = "https://mycarf0r.me/api/recommendations/history"
 
-            apiService.getCarsList(url, accessToken).enqueue(object : Callback<CarListResponse> {
-                override fun onResponse(call: Call<CarListResponse>, response: Response<CarListResponse>) {
+            apiService.getRecommendCarsList(url, accessToken).enqueue(object : Callback<RecommendCarsResponse> {
+                override fun onResponse(call: Call<RecommendCarsResponse>, response: Response<RecommendCarsResponse>) {
                     if (response.isSuccessful) {
                         val carListResponse = response.body()
                         carListResponse?.contents?.forEach {
-                            carList.add(it)
+                            it.car.forEach{
+                                carList.add(it)
+                            }
                         }
                         // 데이터 로드 후 callback 호출
                         callback(carList)
@@ -89,7 +91,7 @@ object DataManager {
                     }
                 }
 
-                override fun onFailure(call: Call<CarListResponse>, t: Throwable) {
+                override fun onFailure(call: Call<RecommendCarsResponse>, t: Throwable) {
                     Log.d("chk","${t.message}")
                     Toast.makeText(context, "Request failed: ${t.message}", Toast.LENGTH_SHORT).show()
                 }
@@ -237,5 +239,46 @@ object DataManager {
         }
     }
 
+    fun getCode(context : Context, callback: (String?)-> Unit){
+        val accessToken = SharedPrefs.getAccessToken(context)
+        if (accessToken != null) {
+            val url = "https://mycarf0r.me/api/sorders/trackingCode"
+            apiService.getTrackCode(url, accessToken).enqueue(object : Callback<trackingCodeResponse> {
+                override fun onResponse(call: Call<trackingCodeResponse>, response: Response<trackingCodeResponse>) {
+                    if (response.isSuccessful) {
+                        // 데이터 로드 후 callback 호출
+                        Log.d("chk1234","${response.body()}")
+                        callback(response.body()?.trackingCode)
+                    } else {
+                        Log.d("chk","$url, $response")
+                    }
+                }
 
+                override fun onFailure(call: Call<trackingCodeResponse>, t: Throwable) {
+                    Log.d("chk","${call}")
+                }
+            })
+        }
+    }
+
+    fun sendCode(context : Context, token : String, callback: ()-> Unit){
+        val accessToken = SharedPrefs.getAccessToken(context)
+        if (accessToken != null) {
+            val url = "https://mycarf0r.me/api/fcm/token"
+            apiService.sendCode(url, accessToken, Fcmtoken(token)).enqueue(object : Callback<Any> {
+                override fun onResponse(call: Call<Any>, response: Response<Any>) {
+                    if (response.isSuccessful) {
+                        // 데이터 로드 후 callback 호출
+                        Log.d("chk","sendToken $token")
+                        callback()
+                    } else {
+                        Log.d("chk","$url, $response")
+                    }
+                }
+                override fun onFailure(call: Call<Any>, t: Throwable) {
+                    Log.d("chk","${t}")
+                }
+            })
+        }
+    }
 }

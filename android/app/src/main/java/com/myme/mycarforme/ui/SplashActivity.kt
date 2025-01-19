@@ -37,11 +37,14 @@ class SplashActivity : AppCompatActivity() {
     private var nowStatus = "NONE"
     private var orderingCarId = 0
 
+    private lateinit var mainIntent : Intent
+
     private val apiService: ApiService by lazy {
         RetrofitClient.getClient().create(ApiService::class.java)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mainIntent = Intent(this, MainActivity::class.java)
         checkLoginStatus()
     }
 
@@ -60,7 +63,6 @@ class SplashActivity : AppCompatActivity() {
 //                        val isRefreshed = refreshToken()
                         val isRefreshed = "12"
                         if (isRefreshed != "") {
-                            Log.d("chk","11111111")
                             loadCarData()
                         } else {
                             navigateToSignUp()
@@ -111,7 +113,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun navigateToMain() {
-        val mainIntent = Intent(this, MainActivity::class.java)
+
         mainIntent.putExtra("popular", popularCar)
         mainIntent.putExtra("mm", mmCar)
         mainIntent.putExtra("next", nextCar)
@@ -144,8 +146,8 @@ class SplashActivity : AppCompatActivity() {
             }
             DataManager.getOrderingCar(it) { orderingCarId ->
                 if(orderingCarId != null){
-                    val mainIntent = Intent(this, MainActivity::class.java)
                     mainIntent.putExtra("carid",orderingCarId)
+                    Log.d("chk","$orderingCarId")
                     DataManager.getOrderingStatus(it,orderingCarId){status->
                         Log.d("chk","$status")
                         if (status != null) {

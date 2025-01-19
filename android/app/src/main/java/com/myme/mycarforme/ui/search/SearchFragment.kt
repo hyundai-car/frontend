@@ -53,7 +53,7 @@ class SearchFragment : Fragment() {
             webSettings.cacheMode = WebSettings.LOAD_NO_CACHE
             webSettings.domStorageEnabled = true // DOM 저장소 활성화
         }
-        webView.loadUrl("http://localhost:5173/search")
+        webView.loadUrl("http://mycarf0r.me/search")
         webView.addJavascriptInterface(WebAppInterface(requireContext()), "AndroidBridge")
 
     }

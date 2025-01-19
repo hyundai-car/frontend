@@ -2,6 +2,8 @@ package com.myme.mycarforme.ui.my
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.ContactsContract.Data
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -79,14 +81,14 @@ class MyFragment : Fragment() {
 
         // 추천 차량 데이터 관찰
         viewModel.recommendedCars.observe(viewLifecycleOwner) { cars ->
-            recommendedCarsAdapter.updateItems(cars)
+            recommendedCarsAdapter.updateReItems(cars)
             binding.myUserHistoryCountText.text = cars.size.toString()
             binding.myUserHistorySectionCountText.text = cars.size.toString()
         }
 
         // 주문한 차량 데이터 관찰
         viewModel.orderCars.observe(viewLifecycleOwner) { cars ->
-            orderedCarsAdapter.updateItems(cars.map { Car(it.carId,it.carName,it.initalRegistration,it.mileage,it.sellingPrice,it.mainImage,0.0,true,it.likecount,"none","none") }) // OrderedCarResponse를 Car로 변환
+            orderedCarsAdapter.updateItems(cars.map { Car(it.carId,it.carName,it.initialRegistration,it.mileage,it.sellingPrice,it.mainImage,0.0,true,it.likecount,"none","none") }) // OrderedCarResponse를 Car로 변환
             binding.myUserOrderCountText.text = cars.size.toString()
             binding.myUserOrderSectionText.text = cars.size.toString()
         }
@@ -110,13 +112,17 @@ class MyFragment : Fragment() {
                 }
             }
             "PAID"->{
-
+                progressBarView.setupSteps(stepCount = 4, labels = stepLabels)
+                progressBarView.updateSteps(3)
+                binding.myProgressbutton.setup("배송 현황 보기") {
+                    goToMap()
+                }
             }
             "DELIVERING"->{
                 progressBarView.setupSteps(stepCount = 4, labels = stepLabels)
                 progressBarView.updateSteps(3)
 
-                binding.myProgressbutton.setup("배송 현황 보기") {
+                binding.myProgressbutton.setup("배송 현황 보기2") {
                     goToMap()
                 }
             }
@@ -135,13 +141,18 @@ class MyFragment : Fragment() {
 
     private fun goToPaid(){
         //TODO: 결제 페이지로 보내기
-        DataManager.putPaid(requireContext(),viewModel.carId.value ?: 0)
+        DataManager.putPaid(requireContext(),viewModel.carId ?: 0)
 
     }
 
     private fun goToMap() {
         val intent = Intent(requireContext(), MapActivity::class.java)
-        startActivity(intent)
+        val it = viewModel.getOrderingCar(viewModel.carId)
+        if (it != null){
+            val tomapCar = Car(it.carId, it.carName, it.carNumber, it.mileage, it.sellingPrice, it.mainImage, 0.0, true, it.likecount, "","")
+            intent.putExtra("cardata",tomapCar)
+            startActivity(intent)
+        }
     }
 
     override fun onDestroyView() {

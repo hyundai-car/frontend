@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.recommend.RecommendFragment">
     <WebView
+        android:layout_marginHorizontal="16dp"
         android:scrollbars="none"
         android:id="@+id/recommend_webview"
         android:layout_width="match_parent"

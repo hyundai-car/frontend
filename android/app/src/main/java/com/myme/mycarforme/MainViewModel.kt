@@ -7,11 +7,9 @@ import androidx.lifecycle.ViewModel
 import com.myme.mycarforme.data.model.Car
 import com.myme.mycarforme.data.network.DataManager
 import com.myme.mycarforme.data.network.OrderCars
-
-
+import com.myme.mycarforme.data.network.recoCars
 
 class MainViewModel : ViewModel() {
-    // 각 데이터 리스트를 MutableLiveData로 선언
     private val _popularCars = MutableLiveData<List<Car>>()
     val popularCars: LiveData<List<Car>> = _popularCars
 
@@ -24,8 +22,8 @@ class MainViewModel : ViewModel() {
     private val _likeCars = MutableLiveData<List<Car>>()
     val likeCars: LiveData<List<Car>> = _likeCars
 
-    private val _recommendedCars = MutableLiveData<List<Car>>()
-    val recommendedCars: LiveData<List<Car>> = _recommendedCars
+    private val _recommendedCars = MutableLiveData<List<recoCars>>()
+    val recommendedCars: LiveData<List<recoCars>> = _recommendedCars
 
     private val _orderCars = MutableLiveData<List<OrderCars>>()
     val orderCars: LiveData<List<OrderCars>> = _orderCars
@@ -33,8 +31,7 @@ class MainViewModel : ViewModel() {
     private val _userStatus = MutableLiveData<String>()
     val userStatus: LiveData<String> = _userStatus
 
-    private val _carId = MutableLiveData<Int>()
-    val carId : LiveData<Int> = _carId
+    var carId = 0
 
     fun pushCarsDataMain(popCars: ArrayList<Car>, mCars:ArrayList<Car>, nCars:ArrayList<Car>){
         _popularCars.postValue(popCars)
@@ -42,7 +39,6 @@ class MainViewModel : ViewModel() {
         _nextCars.postValue(nCars)
     }
 
-    // 서버에서 데이터 불러오는 메소드
     fun loadCarsDataMain(context: Context) {
         DataManager.getCarsListwithUrl(context, "popular") { cars ->
             _popularCars.postValue(cars)
@@ -123,7 +119,18 @@ class MainViewModel : ViewModel() {
     }
 
     fun saveCar(id: Int){
-        _carId.value = id
+        carId = id
     }
+
+    fun getOrderingCar(carId: Int): OrderCars? {
+        _orderCars.value?.map{
+            if(it.carId == carId){
+                return it
+            }
+        }
+        return null
+    }
+
+
 }
 

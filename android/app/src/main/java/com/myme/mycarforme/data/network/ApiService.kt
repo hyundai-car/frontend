@@ -1,13 +1,9 @@
 package com.myme.mycarforme.data.network
 
-import android.content.Context
-import android.util.Log
-import android.widget.Toast
+import android.os.Parcelable
 import com.myme.mycarforme.data.model.Car
-import com.myme.mycarforme.data.utils.SharedPrefs
+import kotlinx.parcelize.Parcelize
 import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PUT
@@ -63,20 +59,50 @@ data class LikeResponse(
     val updatedAt : String,
 )
 
+data class RecommendCars(
+    val car : List<recoCars>,
+    val recommendId: Int,
+    val recommendedAt: String,
+    val recommendPriority: Int,
+    val recommendCondition: String,
+    val recommendReason : String,
+    val createdAt : String,
+    val updatedAt : String,
+)
+
+data class recoCars(
+    val carId: Int,
+    val carName: String,
+    val initialRegistration: String, // yyyy-MM 형태로 저장
+    val mileage: Int,
+    val sellingPrice: Int,
+    val mainImage: String,
+    var isLike: Boolean,
+    val likeCount: Int,
+    val createdAt: String, // yyyy-MM-dd 형태로 저장
+    val updatedAt: String, // yyyy-MM-dd 형태로 저장
+    val carNumber: String,
+)
+
+data class RecommendCarsResponse(
+    val contents : List<RecommendCars>,
+)
+
 data class OrderedCarResponse(
     val contractingId: Int?,
     val orderedCars : List<OrderCars>
 )
-
+@Parcelize
 data class OrderCars(
     val carId: Int,
     val carName: String,
-    val initalRegistration: String,
+    val initialRegistration: String,
     val mileage: Int,
     val sellingPrice: Int,
     val mainImage: String,
     val likecount: Int,
-)
+    val carNumber: String,
+): Parcelable
 
 data class History(
     val contractedAt: String,
@@ -93,6 +119,14 @@ data class nowOrderingResponse(
     val updatedAt: String,
 )
 
+data class trackingCodeResponse(
+    val trackingCode : String,
+)
+
+data class Fcmtoken(
+    val token : String,
+)
+
 interface ApiService {
     @POST
     fun loginUser(
@@ -106,6 +140,12 @@ interface ApiService {
         @Url url: String,
         @Header("Authorization") accessToken: String
     ): Call<CarListResponse>
+
+    @GET
+    fun getRecommendCarsList(
+        @Url url: String,
+        @Header("Authorization") accessToken: String
+    ): Call<RecommendCarsResponse>
 
     @POST
     fun likeCar(
@@ -144,4 +184,35 @@ interface ApiService {
         @Header("Authorization") accessToken: String,
     ): Call<Any>
 
+    @GET
+    fun getTrackCode(
+        @Url url: String,
+        @Header("Authorization") accessToken: String,
+    ): Call<trackingCodeResponse>
+
+    @POST
+    fun sendCode(
+        @Url url: String,
+        @Header("Authorization") accessToken: String,
+        @Body token : Fcmtoken,
+    ): Call<Any>
+
+}
+
+fun convertRecoCarsToCars(recoCarsList: List<recoCars>): ArrayList<Car> {
+    return recoCarsList.map { recoCar ->
+        Car(
+            carId = recoCar.carId,
+            carName = recoCar.carName,
+            initialRegistration = recoCar.initialRegistration,
+            mileage = recoCar.mileage,
+            sellingPrice = recoCar.sellingPrice,
+            mainImage = recoCar.mainImage,
+            mmScore = 0.0,
+            isLike = recoCar.isLike,
+            likeCount = recoCar.likeCount,
+            createdAt = recoCar.createdAt,
+            updatedAt = recoCar.updatedAt
+        )
+    }.toCollection(ArrayList())
 }

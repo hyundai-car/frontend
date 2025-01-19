@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         val nextCar = intent.getParcelableArrayListExtra<Car>("next")
         val status = intent.getStringExtra("user")
         val orderingID = intent.getIntExtra("carid",0)
+        Log.d("chk2","$orderingID")
         mainViewModel.pushCarsDataMain(popularCar!!,mmCar!!,nextCar!!)
         mainViewModel.loadCarDataMy(this)
         mainViewModel.saveStatus(status)
@@ -71,9 +72,8 @@ class MainActivity : AppCompatActivity() {
             true
         }
         binding.mainToolbar.toolbarActionButton.setOnClickListener {
-//            switchFragment(searchFragment)
-//            binding.navView.selectedItemId = R.id.navigation_search
-            DataManager.putCont(this,1)
+            switchFragment(searchFragment)
+            binding.navView.selectedItemId = R.id.navigation_search
         }
         ViewCompat.setOnApplyWindowInsetsListener(
             window.decorView

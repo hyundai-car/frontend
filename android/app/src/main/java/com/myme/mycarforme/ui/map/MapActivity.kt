@@ -1,6 +1,9 @@
 package com.myme.mycarforme.ui.map
 
 import android.Manifest
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -16,12 +19,17 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.firebase.messaging.FirebaseMessaging
 import com.myme.mycarforme.MainActivity
 import com.myme.mycarforme.R
+import com.myme.mycarforme.WebSocketManager
 import com.myme.mycarforme.data.model.Car
+import com.myme.mycarforme.data.network.DataManager
+import com.myme.mycarforme.data.network.OrderCars
 import com.myme.mycarforme.databinding.ActivityMapBinding
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.geometry.LatLngBounds
@@ -35,6 +43,7 @@ import com.naver.maps.map.util.MarkerIcons
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -55,7 +64,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var bottomSheet: LinearLayout
     private lateinit var movingCar : Car
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMapBinding.inflate(layoutInflater)
@@ -66,36 +74,64 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             ?: MapFragment.newInstance().also {
                 supportFragmentManager.beginTransaction().add(R.id.map_mapfragment, it).commit()
             }
+        var trackingCode = ""
         mapFragment.getMapAsync(this)
         val progressBarView = binding.mapBottomProgressbar
         val stepLabels = listOf("준 비 중", "탁송 시작", "탁송 완료")
         progressBarView.setupSteps(stepCount = 3, labels = stepLabels)
         // 초기 상태 설정
         progressBarView.updateSteps(2)
-        val intent : Intent = getIntent()
+        val intent : Intent = intent
         val movingCar = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
-            intent.getParcelableExtra("car_data", Car::class.java)
+            intent.getParcelableExtra("cardata", Car::class.java)
         } else {
-            intent.getParcelableExtra("car_data") as? Car
+            intent.getParcelableExtra("cardata") as? Car
         }
+
+        val webSocketManager = WebSocketManager()
+        createNotificationChannel()
+        lifecycleScope.launch {
+            try {
+                // FCM 토큰 가져오기
+                val token = FirebaseMessaging.getInstance().token.await()
+                Log.d("FCM_TOKEN", "토큰: $token")
+                // 서버로 FCM 토큰 전송
+//                DataManager.sendCode(context = this@MapActivity, token = token) {
+//                    // Tracking Code 가져오기
+//
+//                }
+                DataManager.getCode(context = this@MapActivity) { trackingCode ->
+                    trackingCode?.let {
+                        Log.d("chk", "Tracking Code: $trackingCode")
+                    } ?: Log.w("chk", "Tracking Code is null")
+                }
+            } catch (e: Exception) {
+                Log.w("FCM_TOKEN", "FCM 토큰 가져오기 실패: ${e.message}")
+            }
+        }
+
+        webSocketManager.connectWebSocket("https://mycarf0r.me/ws/tracking/$trackingCode/location", this){ message->
+            Log.d("chk0","$message")
+        }
+
 
         bottomSheet = binding.bottomSheet
         Glide.with(binding.mapBottomCarImage.context)
             .load(movingCar?.mainImage)
             .into(binding.mapBottomCarImage)
         binding.mapBottomCarNameText.text = movingCar?.carName
+        binding.mapBottomCarModelText.text = movingCar?.initialRegistration
+        binding.mapBottomCarPriceText.text = movingCar?.sellingPrice.toString()
         binding.mapBottomCarInfoCard.setOnClickListener {
             //TODO: 클릭시 차량 디테일로 넘어가기
         }
         binding.mapCloseButton.setOnClickListener {
-            // MainActivity로 돌아가기
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("navigate_to_fragment", "MyFragment") // 데이터를 전달
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP // 기존 MainActivity 재사용
-            startActivity(intent)
-            finish() // 현재 MapActivity 종료
+            intent.putExtra("navigate_to_fragment", "MyFragment")
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            finish()
         }
     }
+
 
     override fun onMapReady(naverMap: NaverMap) {
         this.navermap = naverMap
@@ -269,4 +305,17 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             "잘못된 시간 포맷"
         }
     }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                "CHANNEL_ID",
+                "알림 채널명",
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
 }
