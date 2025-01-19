@@ -1,5 +1,4 @@
 import { Icon } from "@/shared/ui/Icon/Icon";
-// import { useWishlistStore } from '../model/store'
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toggleCarWishlist } from "../api/wishlist.api";
 
@@ -9,14 +8,6 @@ type Props = {
 };
 
 export const WishlistButton = ({ carId, isLike }: Props) => {
-  // const { likedCarIds, toggleWishlist } = useWishlistStore()
-  // const isLiked = likedCarIds.includes(carId)
-
-  // const handleToggle = (e: React.MouseEvent) => {
-  //   e.stopPropagation()
-  //   e.preventDefault()
-  //   toggleWishlist(carId)
-  // }
   const queryClient = useQueryClient();
 
   const { mutate: toggleWishlist, isPending } = useMutation({
