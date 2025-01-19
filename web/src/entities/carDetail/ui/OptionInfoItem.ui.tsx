@@ -34,7 +34,7 @@ const Container = styled.div`
     word-wrap: break-word; /* 긴 단어의 경우 줄바꿈 */
   }
 `;
-const Screen = styled.div<{ $hasOption: ValueOf<OptionList> }>`
+const Screen = styled.div<{ $hasOption: ValueOf<Option> }>`
   position: relative;
   z-index: 1;
   opacity: ${({ $hasOption }) => (!$hasOption ? "0.3" : "1")};
