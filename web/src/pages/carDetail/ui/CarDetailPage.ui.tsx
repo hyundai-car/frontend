@@ -6,7 +6,7 @@ import { BasicInfoCard } from "@/entities/carDetail";
 import { OptionInfo } from "@/entities/carDetail/ui/OptionInfo.ui";
 import { CarImages } from "@/widgets/carDetail/ui/CarImages.ui";
 import { useSearchParams } from "react-router-dom";
-import { SaveCarDetailStore } from "@/pages/carDetail/model/actions";
+import { useSaveCarDetailStore } from "@/pages/carDetail/model/actions";
 import { LoadingFallback } from "@/shared/ui/fallback/LoadingFallback";
 
 export function CarDetailPage() {
@@ -14,7 +14,8 @@ export function CarDetailPage() {
   const carId = Number(searchParams.get("carNo"));
 
   const { data } = useCarDetailQuery(carId);
-  SaveCarDetailStore(data, carId);
+
+  useSaveCarDetailStore(data, carId);
 
   if (!data) return <LoadingFallback />;
 
