@@ -28,7 +28,7 @@ export function StackedCard({ data, actionSlot }: Props) {
   const price = convertToManWon(sellingPrice).toLocaleString();
 
   return (
-    <Card onClick={() => navigate(`/carDetail/carsDetail?carNo=${data.carId}`)}>
+    <Card onClick={() => navigate(`/cars/carsDetail?carNo=${data.carId}`)}>
       <ImageContainer>
         {"isLike" in data && actionSlot && (
           <HeartButton>{actionSlot}</HeartButton>
@@ -58,7 +58,7 @@ export function StackedCard({ data, actionSlot }: Props) {
             </InfoItem>
           </InfoGroup>
           <PriceWrap>
-            <Price>{price}</Price>만원
+            <Price>{sellingPrice.toLocaleString()}</Price>만원
           </PriceWrap>
         </Footer>
       </ContentContainer>

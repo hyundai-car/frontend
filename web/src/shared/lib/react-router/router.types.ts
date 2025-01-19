@@ -7,13 +7,10 @@
 import {
   CarsDetailParamsSchema,
   PaymentParamsSchema,
-  SearchQueryParamsSchema,
 } from "@/shared/lib/react-router/router.contracts";
 import { z } from "zod";
 
 export type CarsDetailParams = z.infer<typeof CarsDetailParamsSchema>;
-
-export type SearchQueryParams = z.infer<typeof SearchQueryParamsSchema>;
 
 export type SimpleSearchStep = "1" | "2" | "3" | "4" | "5";
 export interface SimpleSearchParams {
