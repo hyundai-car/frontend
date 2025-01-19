@@ -1,7 +1,7 @@
 import { Icon } from "@/shared/ui/Icon/Icon";
 import styled from "styled-components";
 // import { mockCarListData } from "../api/mockCarListData";
-import { convertToManWon } from "../../../shared/lib/priceUtils";
+// import { convertToManWon } from "../../../shared/lib/priceUtils";
 import { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 // import { ISimpleResultCarInfo } from "@/entities/simpleSearch/model/types";
@@ -25,7 +25,7 @@ export function StackedCard({ data, actionSlot }: Props) {
     likeCount,
   } = data;
 
-  const price = convertToManWon(sellingPrice).toLocaleString();
+  // const price = convertToManWon(sellingPrice).toLocaleString();
 
   return (
     <Card onClick={() => navigate(`/cars/carsDetail?carNo=${data.carId}`)}>
