@@ -1,24 +1,25 @@
 import styled, { keyframes } from "styled-components";
 import { PaymentButton } from "@/features/payments/ui/PaymentButton/PaymentButton";
-// import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 export function CompleteWidget() {
-  // const navigate = useNavigate();
-  // const { carId, type } = useParams();
+  const navigate = useNavigate();
+  const { carId, type } = useParams();
   const [showContent, setShowContent] = useState(false);
+  const text = type === "deposit" ? "계약금 결제 완료" : "결제 완료";
+  const subText =
+    type === "deposit"
+      ? "해당 차량 담당자로부터 연락이 올 예정입니다."
+      : "탁송 서비스가 시작될 예정입니다.";
 
   useEffect(() => {
-    // Delay showing content for animation
     setTimeout(() => setShowContent(true), 100);
   }, []);
 
   const handlePayment = () => {
-    // if (type === "deposit") {
-    //   navigate(`/payments/${carId}/deposit/process/complete`);
-    // } else {
-    //   navigate(`/payments/${carId}/balance/process/complete`);
-    // }
+    // 확인 버튼 클릭 시 마이페이지로 이동, jsj
+    navigate(`/payments/${carId}/test`);
   };
   return (
     <>
@@ -30,8 +31,8 @@ export function CompleteWidget() {
             </CheckmarkCircle>
           </CheckmarkWrapper>
           <TextContent>
-            <Title>계약금 결제 완료</Title>
-            <SubTitle>해당 차량 담당자로부터 연락이 올 예정입니다.</SubTitle>
+            <Title>{text}</Title>
+            <SubTitle>{subText}</SubTitle>
           </TextContent>
         </ContentWrapper>
       </Container>

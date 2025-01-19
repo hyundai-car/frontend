@@ -17,7 +17,7 @@ import com.myme.mycarforme.data.model.Car
 import com.myme.mycarforme.data.network.DataManager
 import com.myme.mycarforme.databinding.ActivityMainBinding
 import com.myme.mycarforme.ui.home.HomeFragment
-import com.myme.mycarforme.ui.my.Myfragment
+import com.myme.mycarforme.ui.my.MyFragment
 import com.myme.mycarforme.ui.recommend.RecommendFragment
 import com.myme.mycarforme.ui.search.SearchFragment
 
@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private var activeFragment: Fragment? = null
-//    private val homeViewModel: HomeViewModel by viewModels()
+    val mainViewModel: MainViewModel by viewModels()
 
 
 
@@ -33,30 +33,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        var popularCars = ArrayList<Car>()
-//        var mmCars = ArrayList<Car>()
-//        var nextCars = ArrayList<Car>()
-//        this.let {
-//            // 각 데이터를 비동기적으로 로드하고 콜백을 통해 RecyclerView에 세팅
-//            DataManager.getCarsListwithUrl(it, "popular") { cars ->
-//                popularCars = cars
-//                Log.d("chk","pop")
-//            }
-//            DataManager.getCarsListwithUrl(it, "mmscores") { cars ->
-//                mmCars = cars
-//                Log.d("chk","mm")
-//            }
-//            DataManager.getCarsListwithUrl(it, "sales") { cars ->
-//                nextCars = cars
-//                Log.d("chk","sales")
-//            }
-//        }
+        val popularCar = intent.getParcelableArrayListExtra<Car>("popular")
+        val mmCar = intent.getParcelableArrayListExtra<Car>("mm")
+        val nextCar = intent.getParcelableArrayListExtra<Car>("next")
+        Log.d("chk","$popularCar")
+        mainViewModel.pushCarsDataMain(popularCar!!,mmCar!!,nextCar!!)
+//        mainViewModel.loadCarsDataMain(this)
+        mainViewModel.loadCarDataMy(this)
 
         val navView: BottomNavigationView = binding.navView
         val homeFragment = HomeFragment()
         val searchFragment = SearchFragment()
         val recommendFragment = RecommendFragment()
-        val myFragment = Myfragment()
+        val myFragment = MyFragment()
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
@@ -95,7 +84,8 @@ class MainActivity : AppCompatActivity() {
     }
     private fun switchFragment(fragment: Fragment) {
         if (activeFragment != fragment) {
-            supportFragmentManager.beginTransaction().hide(activeFragment!!).show(fragment).commit()
+            supportFragmentManager.beginTransaction().hide(activeFragment!!).commit()
+            supportFragmentManager.beginTransaction().show(fragment).commit()
             activeFragment = fragment
         }
     }

@@ -1,16 +1,11 @@
-// import { create } from "zustand";
-// import { ContractInfo, PaymentInfo } from "./types";
+import { create } from "zustand";
 
-// interface ContractState {
-//   contractInfo: ContractInfo | null;
-//   paymentInfo: PaymentInfo | null;
-//   setContractInfo: (info: ContractInfo) => void;
-//   setPaymentInfo: (info: PaymentInfo) => void;
-// }
+interface PaymentStore {
+  price: number;
+  setPrice: (price: number) => void;
+}
 
-// export const useContractStore = create<ContractState>((set) => ({
-//   contractInfo: null,
-//   paymentInfo: null,
-//   setContractInfo: (info) => set({ contractInfo: info }),
-//   setPaymentInfo: (info) => set({ paymentInfo: info }),
-// }));
+export const usePaymentStore = create<PaymentStore>((set) => ({
+  price: 0, // 초기값
+  setPrice: (price) => set({ price }),
+}));

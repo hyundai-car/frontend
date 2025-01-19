@@ -7,6 +7,7 @@ import { OptionInfo } from "@/entities/carDetail/ui/OptionInfo.ui";
 import { CarImages } from "@/widgets/carDetail/ui/CarImages.ui";
 import { useSearchParams } from "react-router-dom";
 import { SaveCarDetailStore } from "@/pages/carDetail/model/actions";
+import { LoadingFallback } from "@/shared/ui/fallback/LoadingFallback";
 
 export function CarDetailPage() {
   const [searchParams] = useSearchParams();
@@ -15,7 +16,7 @@ export function CarDetailPage() {
   const { data } = useCarDetailQuery(carId);
   SaveCarDetailStore(data, carId);
 
-  if (!data) return <div>데이터를 찾을 수 없습니다</div>;
+  if (!data) return <LoadingFallback />;
 
   const { carName, initialRegistration, mileage, sellingPrice } = data.car;
 

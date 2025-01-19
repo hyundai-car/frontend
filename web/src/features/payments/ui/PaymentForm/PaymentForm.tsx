@@ -5,9 +5,11 @@ import styled from "styled-components";
 import { CARD_COMPANIES } from "../../model/constants";
 import { usePaymentFormStore } from "../../model/store";
 import { formatCardNumber, formatExpiryDate } from "../../lib/lib";
+import { getLocalStorageValue } from "@/shared/util/localStorage";
 
 export function PaymentForm() {
-  const name = "타마마";
+  const userInfo = JSON.parse(getLocalStorageValue("userInfo") || "{}");
+  const name = userInfo.name || "타마마";
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState<{
     id: number;
@@ -18,7 +20,6 @@ export function PaymentForm() {
     cardCompany,
     cardNumber,
     expiryDate,
-    setCardCompany,
     setCardNumber,
     setExpiryDate,
     setIsValid,

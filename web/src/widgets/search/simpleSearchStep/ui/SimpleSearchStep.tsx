@@ -1,14 +1,14 @@
+import { useSimpleSearchStore } from "@/entities/simpleSearch/model/store";
 import { DIAGNOSTIC_QUESTIONS } from "@/entities/simpleSearch/questionBlock/model/constants";
 import { AnswerSelect } from "@/entities/simpleSearch/questionBlock/ui/AnswerSelect";
 import { QuestionBlock } from "@/entities/simpleSearch/questionBlock/ui/QuestionBlock";
-import { useSimpleSearchStore } from "@/pages/search/simpleSearch/model/store";
 
 export function SimpleSearchStep() {
   const { currentStep, answers, setAnswer } = useSimpleSearchStore();
-  const currentQuestion = DIAGNOSTIC_QUESTIONS.find(
-    (q) => q.id === currentStep
-  );
-  const currentAnswer = answers.find((a) => a.questionId === currentStep);
+  // const currentQuestion = DIAGNOSTIC_QUESTIONS.find((q) => q.id === currentStep);
+  // const currentAnswer = answers.find((a) => a.questionId === currentStep);
+  const currentQuestionIndex = currentStep - 1;
+  const currentQuestion = DIAGNOSTIC_QUESTIONS[currentQuestionIndex];
 
   if (!currentQuestion) return null;
   return (
@@ -24,9 +24,12 @@ export function SimpleSearchStep() {
             }}
           />
           <AnswerSelect
-            question={currentQuestion}
-            answer={currentAnswer}
-            onAnswerChange={(optionId) => setAnswer(currentStep, optionId)}
+            question={DIAGNOSTIC_QUESTIONS[currentQuestionIndex]}
+            selectedAnswerIndex={answers[currentQuestionIndex]}
+            // onAnswerChange={(optionId) => setAnswer(currentStep, optionId)}
+            onAnswerChange={(index) =>
+              setAnswer(currentQuestionIndex, index - 1)
+            }
           />
         </>
       )}

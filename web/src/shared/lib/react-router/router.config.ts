@@ -12,7 +12,6 @@ import {
   CarsDetailParams,
   SearchQueryParams,
   SimpleSearchParams,
-  SimpleSearchResultParams,
 } from "@/shared/lib/react-router/router.types";
 
 export const pathKeys = {
@@ -55,7 +54,6 @@ export const pathKeys = {
     root: () => pathKeys.search().concat("/simple-search"),
     step: ({ step }: SimpleSearchParams) =>
       pathKeys.simpleSearch.root().concat(`/step/${step || "1"}`),
-    result: ({ resultId }: SimpleSearchResultParams) =>
-      pathKeys.simpleSearch.root().concat(`/result/${resultId}`),
+    result: () => pathKeys.simpleSearch.root().concat("/result"),
   },
 };

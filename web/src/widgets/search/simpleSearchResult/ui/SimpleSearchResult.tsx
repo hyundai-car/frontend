@@ -1,18 +1,26 @@
 import styled from "styled-components";
 import { RecommendCarList } from "./RecommendCarList";
-const name = "타마마";
-const nickname = "가성비의 열렬한 팬";
+import { useState } from "react";
+import { getLocalStorageValue } from "@/shared/util/localStorage";
+
 export const SimpleSearchResult = () => {
+  const [recommendCondition, setRecommendCondition] =
+    useState("가성비의 열렬한 팬");
+  const userInfo = JSON.parse(getLocalStorageValue("userInfo") || "{}");
   return (
     <>
       <TitleWrap>
         <Title>
-          {name}님은
-          <br /> "<NickName>{nickname}</NickName>"이시군요!
+          {userInfo.name || "누구냐너"}님!
+          <br /> "<NickName>{recommendCondition}</NickName>"<br />
+          추천해드릴게요.
         </Title>
-        <SubTitle>{name}님에게 가장 적절한 차량을 추천해드렸어요.</SubTitle>
+        <SubTitle>
+          {userInfo.name || "누구냐너"}님에게 가장 적절한 차량을 추천해드렸어요.
+        </SubTitle>
       </TitleWrap>
-      <RecommendCarList />
+      <RecommendCarList setRecommendCondition={setRecommendCondition} />
+      <div style={{ height: "20px" }}></div>
     </>
   );
 };

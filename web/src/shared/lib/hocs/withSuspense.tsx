@@ -8,6 +8,7 @@
  * const MyComponentWithSuspense = withSuspense(MyComponent);
  */
 
+import { LoadingFallback } from "@/shared/ui/fallback/LoadingFallback";
 import React, {
   ComponentType,
   // ForwardedRef,
@@ -15,7 +16,7 @@ import React, {
   Suspense,
 } from "react";
 
-const DefaultFallback: React.FC = () => <div>Loading...</div>;
+const DefaultFallback: React.FC = () => <LoadingFallback />;
 
 export function withSuspense<P extends object>(
   WrappedComponent: ComponentType<P>,

@@ -1,25 +1,48 @@
-import { Icon } from '@/shared/ui/Icon/Icon'
-import { useWishlistStore } from '../model/store'
+import { Icon } from "@/shared/ui/Icon/Icon";
+// import { useWishlistStore } from '../model/store'
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toggleCarWishlist } from "../api/wishlist.api";
 
 type Props = {
-  carId: number
-}
+  carId: number;
+  isLike: boolean; // 추가
+};
 
-export const WishlistButton = ({ carId }: Props) => {
-  const { likedCarIds, toggleWishlist } = useWishlistStore()
-  const isLiked = likedCarIds.includes(carId)
+export const WishlistButton = ({ carId, isLike }: Props) => {
+  // const { likedCarIds, toggleWishlist } = useWishlistStore()
+  // const isLiked = likedCarIds.includes(carId)
+
+  // const handleToggle = (e: React.MouseEvent) => {
+  //   e.stopPropagation()
+  //   e.preventDefault()
+  //   toggleWishlist(carId)
+  // }
+  const queryClient = useQueryClient();
+
+  const { mutate: toggleWishlist, isPending } = useMutation({
+    mutationFn: () => toggleCarWishlist(carId),
+    onSuccess: () => {
+      // 검색 결과 쿼리 무효화하여 데이터 갱신
+      queryClient.invalidateQueries({ queryKey: ["cars"] });
+    },
+    onError: (error) => {
+      console.error("찜하기 처리 중 에러 발생:", error);
+    },
+  });
 
   const handleToggle = (e: React.MouseEvent) => {
-    e.stopPropagation()
-    e.preventDefault()
-    toggleWishlist(carId)
-  }
+    e.stopPropagation();
+    e.preventDefault();
+    if (!isPending) {
+      toggleWishlist();
+    }
+  };
 
   return (
     <Icon
       type="heart"
-      color={isLiked ? 'blue' : 'grayBlue'}
+      color={isLike ? "blue" : "grayBlue"}
       onClick={handleToggle}
     />
-  )
-}
+  );
+};
