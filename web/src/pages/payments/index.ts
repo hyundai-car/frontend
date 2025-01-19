@@ -1,6 +1,7 @@
 import { withSuspense } from "@/shared/lib/hocs";
 import { createElement, lazy } from "react";
 import { Navigate, RouteObject } from "react-router-dom";
+import { TestPage } from "./TestPage";
 
 export const PaymentsContractInfoPage = withSuspense(
   lazy(() =>
@@ -30,6 +31,10 @@ export const PaymentsRoute: RouteObject = {
     {
       index: true,
       element: createElement(Navigate, { to: "contract-info", replace: true }),
+    },
+    {
+      path: "test",
+      element: createElement(TestPage),
     },
     {
       path: "contract-info",

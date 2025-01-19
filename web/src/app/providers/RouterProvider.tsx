@@ -27,6 +27,13 @@ const BackHeaderLayout = withSuspense(
     }))
   )
 );
+const BackHeaderHeartLayout = withSuspense(
+  lazy(() =>
+    import("@/shared/ui/layout").then((module) => ({
+      default: module.BackHeaderHeartLayout,
+    }))
+  )
+);
 const NotFound = withSuspense(
   lazy(() =>
     import("@pages/404/NotFound").then((module) => ({
@@ -48,12 +55,12 @@ const root = createBrowserRouter([
         children: [CandidatesRoute],
       },
       {
-        element: createElement(BaseLayout),
-        children: [CandidatesRoute],
+        element: createElement(BackHeaderLayout),
+        children: [RecommendationRoute],
       },
       {
-        element: createElement(BackHeaderLayout),
-        children: [RecommendationRoute, CarDetailRoute],
+        element: createElement(BackHeaderHeartLayout),
+        children: [CarDetailRoute],
       },
       {
         element: <Outlet />,
@@ -61,11 +68,7 @@ const root = createBrowserRouter([
       },
       {
         element: createElement(BaseLayout),
-        children: [SearchRoute],
-      },
-      {
-        element: createElement(BaseLayout),
-        children: [PaymentsRoute],
+        children: [PaymentsRoute, SearchRoute],
       },
       {
         path: "*",

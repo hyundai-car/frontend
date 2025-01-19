@@ -42,7 +42,7 @@ export const SearchRoute: RouteObject = {
           ],
         },
         {
-          path: "result/:resultId",
+          path: "result",
           element: createElement(SimpleSearchResultPage),
         },
       ],

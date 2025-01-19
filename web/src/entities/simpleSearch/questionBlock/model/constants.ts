@@ -31,7 +31,7 @@ export const DIAGNOSTIC_QUESTIONS: DiagnosticQuestion[] = [
       { id: 4, label: "가족/친구들과의 외출" },
       { id: 5, label: "업무 용도" },
     ],
-    isMultipleChoice: true,
+    isMultipleChoice: false,
   },
   {
     id: 3,
@@ -67,6 +67,6 @@ export const DIAGNOSTIC_QUESTIONS: DiagnosticQuestion[] = [
       { id: 4, label: "SUV" },
       { id: 5, label: "밴" },
     ],
-    isMultipleChoice: true,
+    isMultipleChoice: false,
   },
 ];

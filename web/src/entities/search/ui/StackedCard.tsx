@@ -2,19 +2,20 @@ import { Icon } from "@/shared/ui/Icon/Icon";
 import styled from "styled-components";
 import { mockCarListData } from "../api/mockCarListData";
 import { convertToManWon } from "../../../shared/lib/priceUtils";
-import { TSearch } from "../model/search.types";
 import { ReactNode } from "react";
+import { useNavigate } from "react-router-dom";
+// import { ISimpleResultCarInfo } from "@/entities/simpleSearch/model/types";
+import { IBaseCar, ISearchCar } from "../model/types";
 
 type Props = {
-  data?: TSearch;
+  data?: IBaseCar | ISearchCar;
   actionSlot?: ReactNode;
-  onClick: () => void;
 };
 export function StackedCard({
   data = mockCarListData.contents[0],
   actionSlot,
-  onClick,
 }: Props) {
+  const navigate = useNavigate();
   if (!data) {
     throw new Error("Data is undefined");
   }
@@ -24,26 +25,19 @@ export function StackedCard({
     mileage,
     sellingPrice,
     mainImage,
-    isLike,
     likeCount,
   } = data;
 
   const price = convertToManWon(sellingPrice).toLocaleString();
+
   return (
-    <Card onClick={onClick}>
+    <Card onClick={() => navigate(`/carDetail/carsDetail?carNo=${data.carId}`)}>
       <ImageContainer>
-        <HeartButton>
-          {actionSlot || (
-            <Icon
-              type="heart"
-              color={isLike ? "red" : "gray"}
-              onClick={() => console.log("heart clicked")}
-            />
-          )}
-        </HeartButton>
+        {"isLike" in data && actionSlot && (
+          <HeartButton>{actionSlot}</HeartButton>
+        )}
         <CardImage src={mainImage} alt="Card image" />
       </ImageContainer>
-
       <ContentContainer>
         <TitleRow>
           <Title>{carName}</Title>

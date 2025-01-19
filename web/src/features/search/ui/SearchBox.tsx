@@ -10,8 +10,8 @@ export const SearchBox = ({ onFilterClick }: Props) => {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      console.log("검색어:", e.currentTarget.value);
       setKeyword(e.currentTarget.value);
+      e.currentTarget.value = ""; // 입력 내용을 초기화
     }
   };
   return (

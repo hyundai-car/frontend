@@ -1,5 +1,5 @@
 import { DiagnosticButton, SearchFilter } from "@/features/search";
-import { DebugWrapper } from "@/widgets/DebugToggle";
+// import { DebugWrapper } from "@/widgets/DebugToggle";
 import { SearchCarList } from "@/widgets/search/searchCarList";
 
 export function SearchPage() {

@@ -25,7 +25,7 @@ const StyledButton = styled.button<{
   $color: keyof DefaultTheme["colors"];
 }>`
   width: 100%;
-  height: 50px;
+  height: 60px;
   color: var(--white);
   border-radius: 8px;
   background-color: ${(props) => props.theme.colors[props.$color]};
