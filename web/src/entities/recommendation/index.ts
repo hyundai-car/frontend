@@ -1,3 +1,4 @@
-import { Graph } from "@/entities/recommendation/ui/Graph.ui";
-import { RecommendationCard } from "@/entities/recommendation/ui/RecommendationCard.ui";
-import { GridItem } from "@/entities/recommendation/ui/GridItem";
+export { GridItem } from "@/entities/carDetail/ui/GridItem.ui";
+export { ComparisonCard } from "@/entities/recommendation/ui/ComparisonCard";
+export { Graph } from "@/entities/recommendation/ui/Graph.ui";
+export { RecommendationCard } from "@/entities/recommendation/ui/RecommendationCard.ui";
