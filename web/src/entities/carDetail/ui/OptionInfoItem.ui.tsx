@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { ItemName } from "@/entities/carDetail/model/types";
 import { ValueOf } from "@/shared/model/utils";
-import { OptionList } from "@/shared/model/car.types";
+import { Option } from "@/shared/model/car.types";
 
 type Props = {
   itemName: ItemName;
   iconImg: string;
-  hasOption: ValueOf<OptionList>;
+  hasOption: ValueOf<Option>;
 };
 export function OptionInfoItem({ itemName, iconImg, hasOption }: Props) {
   return (
