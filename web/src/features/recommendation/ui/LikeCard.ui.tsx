@@ -1,7 +1,7 @@
 import { Checkbox } from "@/shared/ui/checkbox/Checkbox.ui";
 import styled from "styled-components";
 import { LikeItem } from "@/features/recommendation/api/api.types";
-import { formatNumber } from "@/shared/utils/format.utils";
+import { formatNumber } from "@/shared/util/format.utils";
 
 type Props = {
   item: LikeItem;

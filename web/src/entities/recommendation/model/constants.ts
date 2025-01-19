@@ -61,7 +61,6 @@ export const graphData = (
   bestGraph: Normalization,
   avgGraph: Normalization
 ) => {
-  console.log(bestGraph);
   return {
     labels: ["가성비점수", "사고이력", "최초등록일", "연비", "주행거리"],
     datasets: [
