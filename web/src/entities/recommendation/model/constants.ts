@@ -1,4 +1,5 @@
-import { Normalization } from "@/entities/recommendation/api/types";
+// import { Normalization } from "@/entities/recommendation/api/types"; 맞나
+import { Normalization } from "@/shared/api/api.types";
 import { keyframes } from "styled-components";
 
 export const rotate = keyframes`
