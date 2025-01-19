@@ -4,7 +4,7 @@ import styled, { css, DefaultTheme } from "styled-components";
 export type IconType =
   | "date"
   | "heart-circle"
-  | "heart"
+  | "heart-empty"
   | "routing"
   | "search"
   | "close"

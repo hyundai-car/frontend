@@ -10,7 +10,6 @@
 
 import {
   CarsDetailParams,
-  SearchQueryParams,
   SimpleSearchParams,
 } from "@/shared/lib/react-router/router.types";
 
@@ -38,18 +37,6 @@ export const pathKeys = {
 
   //cars/carsDetail/images?carNo=123123
   search: () => pathKeys.root.concat("search"),
-  searchResult: (params: SearchQueryParams) => {
-    const searchParams = new URLSearchParams();
-
-    if (params.query) searchParams.append("query", params.query);
-    if (params.page) searchParams.append("page", params.page.toString());
-    if (params.size) searchParams.append("size", params.size.toString());
-
-    const queryString = searchParams.toString();
-    return pathKeys
-      .search()
-      .concat("/result", queryString ? `?${queryString}` : "");
-  },
   simpleSearch: {
     root: () => pathKeys.search().concat("/simple-search"),
     step: ({ step }: SimpleSearchParams) =>
