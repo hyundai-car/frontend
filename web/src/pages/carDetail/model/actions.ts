@@ -17,7 +17,7 @@ export const useSaveCarDetailStore = (
       data.car.optionLists;
 
     setCarId(carId);
-    console.log("asd", data.car.graph);
+
     setCarGraphData({
       mmScoreNorm: data.car.mmScore,
       initialRegistrationNorm: data.car.graph.initialRegistrationNorm,
@@ -25,6 +25,7 @@ export const useSaveCarDetailStore = (
       mileageNorm: data.car.graph.mileageNorm,
       accidentCountNorm: data.car.graph.accidentCountNorm,
     });
+
     setCarBasicData({
       mmScore: data.car.mmScore,
       initialRegistration: data.car.initialRegistration,
