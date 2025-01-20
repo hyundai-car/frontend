@@ -28,7 +28,8 @@ export function ProcessWidget() {
 
   useEffect(() => {
     console.log(price);
-    setTotal(price * 10000 + 45000);
+    const storedPrice = Number(localStorage.getItem("price")) || 0;
+    setTotal(storedPrice * 10000 + 45000);
   }, [usePaymentStore]);
 
   const handlePayment = () => {
