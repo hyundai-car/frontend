@@ -1,6 +1,6 @@
 export const FUEL_TYPES = ["가솔린", "디젤", "하이브리드", "전기"] as const;
 
-export const BODY_TYPES = ["중형", "대형", "SUV", "VAN"] as const;
+export const CAR_TYPES = ["중형", "대형", "SUV", "VAN"] as const;
 
 export const RANGE_CONSTRAINTS = {
   priceRange: {
@@ -25,7 +25,7 @@ export const RANGE_CONSTRAINTS = {
 
 export const INITIAL_FILTERS = {
   fuel: [] as (typeof FUEL_TYPES)[number][],
-  bodyType: [] as (typeof BODY_TYPES)[number][],
+  carType: [] as (typeof CAR_TYPES)[number][],
   priceRange: [
     RANGE_CONSTRAINTS.priceRange.min,
     RANGE_CONSTRAINTS.priceRange.max,

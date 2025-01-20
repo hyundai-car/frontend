@@ -281,4 +281,32 @@ object DataManager {
             })
         }
     }
+
+    fun refreshToken(context: Context, callback: (String) -> Unit): String {
+        var reaccesToken : String = ""
+        SharedPrefs.getRefreshToken(context)?.let {
+            apiService.getRefreshToken("https://mycarf0r.me/api/auth/reissue", it).enqueue(object : Callback<RefreshTokenResponse> {
+                override fun onResponse(
+                    call: Call<RefreshTokenResponse>,
+                    response: Response<RefreshTokenResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        // 응답 데이터 파싱
+                        val loginResponse = response.body()
+                        loginResponse?.let {
+                            // SharedPreferences에 토큰과 유저 정보 저장
+                            SharedPrefs.saveToken(context, it.accessToken, it.refreshToken)
+                            reaccesToken = it.accessToken
+                            callback(reaccesToken)
+                        }
+                    } else {
+                    }
+                }
+                override fun onFailure(call: Call<RefreshTokenResponse>, t: Throwable) {
+                    Toast.makeText(context, "Request failed: ${t.message}", Toast.LENGTH_SHORT).show()
+                }
+            })
+        }
+        return reaccesToken
+    }
 }

@@ -9,7 +9,7 @@ import { getLocalStorageValue } from "@/shared/util/localStorage";
 
 export function PaymentForm() {
   const userInfo = JSON.parse(getLocalStorageValue("userInfo") || "{}");
-  const name = userInfo.name || "타마마";
+  const name = userInfo.name || "디폴트";
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState<{
     id: number;
@@ -24,6 +24,16 @@ export function PaymentForm() {
     setExpiryDate,
     setIsValid,
   } = usePaymentFormStore();
+
+  const scrollToInput = () => {
+    // console.log("Current scroll before:", window.pageYOffset);
+    window.scrollTo({ top: 300, behavior: "smooth" });
+    // console.log("Current scroll after:", window.pageYOffset);
+  };
+
+  const scrollToOriginal = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   // 폼 유효성 검사
   useEffect(() => {
@@ -46,7 +56,7 @@ export function PaymentForm() {
   };
 
   return (
-    <>
+    <FullContainer>
       <NameWrap>
         <Name>성명</Name>
         <NameDesc>{name}</NameDesc>
@@ -92,6 +102,8 @@ export function PaymentForm() {
               placeholder="0000 0000 0000 0000"
               inputProps={{ maxLength: 19 }}
               variant="outlined"
+              onFocus={scrollToInput}
+              onBlur={scrollToOriginal}
             />
           </InputContainer>
 
@@ -105,13 +117,22 @@ export function PaymentForm() {
               placeholder="MM/YY"
               inputProps={{ maxLength: 5 }}
               variant="outlined"
+              onFocus={scrollToInput}
+              onBlur={scrollToOriginal}
             />
           </InputContainer>
         </FormContainer>
+        <div style={{ height: "500px" }} />
       </Container>
-    </>
+    </FullContainer>
   );
 }
+const FullContainer = styled.div`
+  /* height: 100vh;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  padding: 0 20px; */
+`;
 const NameWrap = styled.div`
   display: flex;
   flex-direction: column;

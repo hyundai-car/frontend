@@ -29,8 +29,8 @@ export const useSearchStore = create<SearchStore>((set, get) => ({
     if (filters.fuel.length > 0) {
       console.log("연료:", filters.fuel.join(", "));
     }
-    if (filters.bodyType.length > 0) {
-      console.log("차종:", filters.bodyType.join(", "));
+    if (filters.carType.length > 0) {
+      console.log("차종:", filters.carType.join(", "));
     }
     console.log(
       "가격:",

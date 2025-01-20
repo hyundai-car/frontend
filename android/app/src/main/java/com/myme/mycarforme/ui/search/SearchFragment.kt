@@ -92,7 +92,7 @@ class SearchFragment : Fragment() {
                 return false
             }
         }
-        webView.loadUrl("https://mycarf0r.me$basePath")
+        webView.loadUrl("http://localhost:5173$basePath")
         webView.addJavascriptInterface(WebAppInterface(requireContext()), "AndroidBridge")
     }
 
