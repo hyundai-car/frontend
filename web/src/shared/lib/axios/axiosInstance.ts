@@ -14,6 +14,25 @@
 // const TOKEN_KEY: string = "ACCESS_TOKEN";
 
 // /**
+//  * @description 웹뷰에서 accesstoken 가져오는 함수
+//  * */
+// function fetchAccessToken() {
+//   try {
+//     // Android 인터페이스 메서드 호출
+//     const token: string = window.AndroidBridge.getAccessToken();
+//     if (token) {
+//       // 예: 토큰을 로컬 스토리지에 저장
+//       localStorage.setItem(TOKEN_KEY, token);
+//       return token;
+//     } else {
+//       console.error("토큰이 없습니다.");
+//     }
+//   } catch (error) {
+//     console.error("WebView와 통신 중 오류 발생:", error);
+//   }
+// }
+
+// /**
 //  * @description 웹뷰에서 refresh하여 새로운 accesstoken 발급
 //  * */
 // function fetchNewAccessToken() {
@@ -96,8 +115,7 @@
 //   }
 // );
 
-import { getCookie, setCookie } from "@/shared/util/cookie";
-// import { getCookie } from "@/shared/util/cookie";
+import { getCookie } from "@/shared/util/cookie";
 import axios from "axios";
 
 // 인증 필요 없는 경우
@@ -111,48 +129,15 @@ export const authenticated = axios.create({
 });
 
 /**
- * @description 웹뷰에서 accesstoken 가져오는 함수
- * */
-function fetchAccessToken() {
-  try {
-    // Android 인터페이스 메서드 호출
-    const token: string = window.AndroidBridge.getAccessToken();
-    if (token) {
-      // 예: 토큰을 로컬 스토리지에 저장
-      setCookie("ACCESS_TOKEN", token, 30);
-      return token;
-    } else {
-      console.error("토큰이 없습니다.");
-    }
-  } catch (error) {
-    console.error("WebView와 통신 중 오류 발생:", error);
-  }
-}
-
-/**
  * @description 요청 인터셉터 : 헤더에 access token 추가
  * */
-// authenticated.interceptors.request.use(async (config) => {
-//   let ACCESS_TOKEN: string = getCookie("ACCESS_TOKEN") ?? "";
-//   try {
-//     ACCESS_TOKEN = (await fetchAccessToken()) ?? "";
-//   } catch (error) {
-//     console.error("토큰 가져오기 실패:", error);
-//     throw error;
-//   }
-
-  // const ACCESS_TOKEN = getCookie("ACCESS_TOKEN");
-  // const ACCESS_TOKEN =
-  //   "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ2UmlCVjRXMUhCekFWX25uVFZ5QkNiWDdXQ0VLcndrWjI1SU5SRVljU2NRIn0.eyJleHAiOjE3MzcyOTQ2MDMsImlhdCI6MTczNzEyMTgwOCwiYXV0aF90aW1lIjoxNzM3MTIxODAzLCJqdGkiOiI3NTE5ZDg3Ni03Y2Q2LTQ4MzYtOGU1Ni0yNDYyODhjNDVhYzciLCJpc3MiOiJodHRwczovL2F1dGgubXljYXJmMHIubWUvcmVhbG1zL015Q2FyRm9yTWUiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiZGQxNTg5OTctMWFjNi00NjBkLTljNjctM2I5MTBmY2UzM2IwIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoibXljYXJmb3JtZS1jbGllbnQiLCJzaWQiOiIxZWZmZjYzOC0yMTg1LTQ0NTgtYWNhOC1jNDBhZDc3MTE5MzIiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJtZW1iZXIiLCJkZWZhdWx0LXJvbGVzLW15Y2FyZm9ybWUiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGhvbmVfbnVtYmVyIjoiMDEwLTU1MTktODYwMyIsInByZWZlcnJlZF91c2VybmFtZSI6InNlamluODYwM0BuYXZlci5jb20iLCJnaXZlbl9uYW1lIjoi7KCV7IS47KeEIiwiZW1haWwiOiJzZWppbjg2MDNAbmF2ZXIuY29tIn0.p0wvEYUgndFMeEIddbvjh9ZVOwkCXVNuRSLvl6PCyeqT4rnlNs29L-JLaxqYu4LQO7wwsdY8EGCmTM-plotAHi4tug2iAway_Mm3x5n04dAcVIs5rVc57o4t3AVwOkgWjbmPuGk-QkWPaiyoM-NbF3nwAeWc4NOMlNbEHXS5reot0n4Lg9YBP3M2fM0By1mrlx9ybtGaUvqDeaEAph9v4lRw8Y08h5iHVmPdOSg3YoOPkFDPsqATRYMV0GCDVIcJ-HJw64IiEBf17DV7VMUQGbphrVtb8Pe_vllxsiTLGtknUnZMvvjRmXCWNMaL0kZWu9PDbZ-lUJAf3ZjwALmpLg";
-
 authenticated.interceptors.request.use((config) => {
   // const ACCESS_TOKEN = getCookie("ACCESS_TOKEN");
   const ACCESS_TOKEN =
-    "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ2UmlCVjRXMUhCekFWX25uVFZ5QkNiWDdXQ0VLcndrWjI1SU5SRVljU2NRIn0.eyJleHAiOjE3MzczNzc5NDYsImlhdCI6MTczNzIwNTE0NywiYXV0aF90aW1lIjoxNzM3MjA1MTQ2LCJqdGkiOiI5ZTgyNDA4Mi0wN2Q1LTRjMTMtYWQ4Ny01ODNjNmFjZDViOTciLCJpc3MiOiJodHRwczovL2F1dGgubXljYXJmMHIubWUvcmVhbG1zL015Q2FyRm9yTWUiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiZGQxNTg5OTctMWFjNi00NjBkLTljNjctM2I5MTBmY2UzM2IwIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoibXljYXJmb3JtZS1jbGllbnQiLCJzaWQiOiI1YzhmZTc3ZC1lZjkyLTQ1MzMtYjE2Yy0wMmJmMjIwZTEzMGIiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJtZW1iZXIiLCJkZWZhdWx0LXJvbGVzLW15Y2FyZm9ybWUiLCJhZG1pbiIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJwaG9uZV9udW1iZXIiOiIwMTAtNTUxOS04NjAzIiwicHJlZmVycmVkX3VzZXJuYW1lIjoic2VqaW44NjAzQG5hdmVyLmNvbSIsImdpdmVuX25hbWUiOiLsoJXshLjsp4QiLCJlbWFpbCI6InNlamluODYwM0BuYXZlci5jb20ifQ.NJkU-Sv6zs526DWr8f6VUMoziXXAo8aHVcVt3zZpHl8-cRSvKiurAmu1UhHpvuRoqhOLKCqJRZ3J6_VemblWj2OXrTFkP3oi3BDND8uSmAhMem833M4fhNa5Tzh2dEBTJ6hl7F-LJYksAwNenil3OMyBPle87X4T3F_6ImTsDIlviQlX_Yz-zucHUTosS4M7ZvcfAImouQ2TxOyqDNvr_yAfXpaEssQslVMPP1Xo9mJAahHczqeOnRIT7tIlRi3fOozO7lsCfqlsBGlkA3uDxwIJEGISCI0CoBQSFBFZnslPWxYueuFKg8RbBGt5rSap7_vuEBPq2_vq8f-3QScUHg";
-
+    "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ2UmlCVjRXMUhCekFWX25uVFZ5QkNiWDdXQ0VLcndrWjI1SU5SRVljU2NRIn0.eyJleHAiOjE3Mzc0MzE1MDksImlhdCI6MTczNzI1ODczMywiYXV0aF90aW1lIjoxNzM3MjU4NzA5LCJqdGkiOiJiZWJkN2I1NC05ZmYxLTQ2MTItODU0MC0wNjBlODJhNTlmZmIiLCJpc3MiOiJodHRwczovL2F1dGgubXljYXJmMHIubWUvcmVhbG1zL015Q2FyRm9yTWUiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiZDQwNTdhMmQtY2U3ZS00ZmY5LTlhNDktNDUxMTg4MmU0ZjAwIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoibXljYXJmb3JtZS1jbGllbnQiLCJzaWQiOiJiYzY2YTA1MC1iZWNhLTQzNmQtYjRhZC03NzE4MDZmNDkwZDQiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJtZW1iZXIiLCJkZWZhdWx0LXJvbGVzLW15Y2FyZm9ybWUiLCJhZG1pbiIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJwaG9uZV9udW1iZXIiOiIwMTA1MjQxOTkxNSIsInByZWZlcnJlZF91c2VybmFtZSI6ImhhbmVvbGpAZ21haWwuY29tIiwiZ2l2ZW5fbmFtZSI6Iuygle2VnOyWvCIsImVtYWlsIjoiaGFuZW9sakBnbWFpbC5jb20ifQ.Gnd5FzuWPxdO3Ehj9fzWhEamTUWWjb0NQZFmZlzqjw7pvZ5afGKkzjWZHn-vuHNmL5-ESCL2NVWU55sCznW7KDbt2pVKaMZAKHY1Ef2xOfSU6AxP7RCfdJ8Nne2w8czF-QY7HlLb1Bkl4mtLaaLZiDU0BI3EO-I-FZ0pw-_QgM3RTMomIwEiOQTu1NBILgJmmlSERoiTPUF2uWaOzU7eC7U8LCQVb1tkZb8tdc1h6lftNTYJuJKeZY3LB8PGAz6M30550oNZJeh9xRppqt9SuStwcvoxxsOKaTE0ql2C9w2irW2Ei8xVsIVnZa0zn4gTxtg6VOlq1qvByrJDqL-3kw";
 
   if (ACCESS_TOKEN) {
-    config.headers["Authorization"] = `${ACCESS_TOKEN}`;
+    config.headers["Authorization"] = `Bearer ${ACCESS_TOKEN}`;
   } else {
     // 로그인 페이지로 이동
     // window.location.href = "";

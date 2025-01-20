@@ -1,4 +1,5 @@
 import { BasicButton } from "@/shared/ui/button";
+import { DebugWrapper } from "@/widgets/DebugToggle";
 import { useRecommendationResult } from "@/widgets/recommendation/model/actions";
 import { Comparision } from "@/widgets/recommendation/ui/Comparison.ui";
 import { Recommendation } from "@/widgets/recommendation/ui/Recommendation.ui";
@@ -12,7 +13,9 @@ export function RecommendationPage() {
   return (
     <Container>
       {/* 결과 */}
-      <Recommendation />
+      <DebugWrapper layerName="widgets/recommendation">
+        <Recommendation />
+      </DebugWrapper>
 
       {/* 비교 */}
       <Comparision />
