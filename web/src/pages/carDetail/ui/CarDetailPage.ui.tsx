@@ -10,6 +10,7 @@ import { useSaveCarDetailStore } from "@/pages/carDetail/model/actions";
 import { LoadingFallback } from "@/shared/ui/fallback/LoadingFallback";
 import { BasicButton } from "@/shared/ui/button";
 import { useEffect } from "react";
+import { DebugWrapper } from "@/widgets/DebugToggle";
 
 export function CarDetailPage() {
   const [searchParams] = useSearchParams();
@@ -30,46 +31,56 @@ export function CarDetailPage() {
   const { carName, initialRegistration, mileage, sellingPrice } = data.car;
 
   return (
-    <Container>
-      <ImageSection>
-        <CarImages />
-      </ImageSection>
+    <DebugWrapper layerName="pages/RecommendationPage">
+      <Container>
+        <ImageSection>
+          <DebugWrapper layerName="widgets/CarImages">
+            <CarImages />
+          </DebugWrapper>
+        </ImageSection>
 
-      <TitleSection>
-        <h2>{carName}</h2>
-        <OptionWrap>
-          <Option>
-            <StyledIcon as={CalendarIcon} />
-            <p>{initialRegistration}</p>
-          </Option>
-          <Option>
-            <StyledIcon as={MileageIcon} />
-            <p>{mileage}</p>
-          </Option>
-        </OptionWrap>
-        <h1>
-          <strong>{sellingPrice}</strong> 만원
-        </h1>
-      </TitleSection>
+        <TitleSection>
+          <h2>{carName}</h2>
+          <OptionWrap>
+            <Option>
+              <StyledIcon as={CalendarIcon} />
+              <p>{initialRegistration}</p>
+            </Option>
+            <Option>
+              <StyledIcon as={MileageIcon} />
+              <p>{mileage}</p>
+            </Option>
+          </OptionWrap>
+          <h1>
+            <strong>{sellingPrice}</strong> 만원
+          </h1>
+        </TitleSection>
 
-      <CardSection>
-        <BasicInfoCard />
-      </CardSection>
+        <CardSection>
+          <DebugWrapper layerName="entities/carDetail">
+            <BasicInfoCard />
+          </DebugWrapper>
+        </CardSection>
 
-      <CardSection>
-        <OptionInfo />
-      </CardSection>
+        <CardSection>
+          <DebugWrapper layerName="entities/OptionInfo">
+            <OptionInfo />
+          </DebugWrapper>
+        </CardSection>
 
-      <ButtonWrap>
-        <BasicButton
-          onClick={() => {
-            navigate(`/payments/${carId}/contract-info`);
-          }}
-        >
-          구매하기
-        </BasicButton>
-      </ButtonWrap>
-    </Container>
+        <ButtonWrap>
+          <DebugWrapper layerName="shared/BasicButton">
+            <BasicButton
+              onClick={() => {
+                navigate(`/payments/${carId}/contract-info`);
+              }}
+            >
+              구매하기
+            </BasicButton>
+          </DebugWrapper>
+        </ButtonWrap>
+      </Container>
+    </DebugWrapper>
   );
 }
 

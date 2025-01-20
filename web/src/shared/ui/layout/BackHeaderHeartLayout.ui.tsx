@@ -8,6 +8,7 @@ import { ReactComponent as HeartIcon } from "public/icons/heart.svg";
 import { Icon } from "@/shared/ui/Icon/Icon";
 import { useEffect, useState } from "react";
 import { getHeartApi, postHeartApi } from "@/shared/api/api";
+import { DebugWrapper } from "@/widgets/DebugToggle";
 
 export function BackHeaderHeartLayout() {
   const navigate = useNavigate();
@@ -30,14 +31,16 @@ export function BackHeaderHeartLayout() {
 
   return (
     <Container>
-      <Header>
-        <Icon type="back" color={"white"} onClick={() => navigate(-1)} />
-        <StyledIcon
-          $isFilled={isFilledHeart}
-          as={HeartIcon}
-          onClick={handleHeartBtn}
-        />
-      </Header>
+      <DebugWrapper layerName="layout/BackHeaderHeartLayout">
+        <Header>
+          <Icon type="back" color={"white"} onClick={() => navigate(-1)} />
+          <StyledIcon
+            $isFilled={isFilledHeart}
+            as={HeartIcon}
+            onClick={handleHeartBtn}
+          />
+        </Header>
+      </DebugWrapper>
 
       <Outlet />
     </Container>

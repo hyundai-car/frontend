@@ -2,6 +2,7 @@ import Car360Image from "@/entities/carDetail/ui/Car360Image.ui";
 import { ClickCarImgList } from "@/features/carDetail/ui/ClickCarImgList.ui";
 import { useCar360ImagesQuery } from "@/pages/carDetail/model/queries";
 import { LoadingFallback } from "@/shared/ui/fallback/LoadingFallback";
+import { DebugWrapper } from "@/widgets/DebugToggle";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 
@@ -33,9 +34,13 @@ export function CarImages() {
 
   return (
     <Container>
-      <Car360Image images={carImages} numImages={36} />
+      <DebugWrapper layerName="entities/Car360Image">
+        <Car360Image images={carImages} numImages={36} />
+      </DebugWrapper>
       <Wrap>
-        <ClickCarImgList />
+        <DebugWrapper layerName="features/ClickCarImgList">
+          <ClickCarImgList />
+        </DebugWrapper>
       </Wrap>
     </Container>
   );

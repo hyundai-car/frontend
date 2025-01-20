@@ -1,4 +1,5 @@
 import { OptionInfoList } from "@/widgets/carDetail/ui/OptionInfoList.ui";
+import { DebugWrapper } from "@/widgets/DebugToggle";
 import styled from "styled-components";
 
 export function OptionInfo() {
@@ -6,7 +7,9 @@ export function OptionInfo() {
     <Container>
       <HeaderSection>
         <h1>옵션정보</h1>
-        <OptionInfoList />
+        <DebugWrapper layerName="widgets/OptionInfoList">
+          <OptionInfoList />
+        </DebugWrapper>
       </HeaderSection>
     </Container>
   );

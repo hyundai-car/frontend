@@ -20,13 +20,15 @@ export const DebugWrapper = ({ children, layerName }: DebugWrapperProps) => {
 
 const StyledDebugWrapper = styled.div<{ $layerName: string }>`
   position: relative;
-  margin: 0px 1px; // 간격
+  margin: 10px 3px; // 간격
   box-shadow: 0 0 0 3px ${({ $layerName }) => getLayerColor($layerName)}aa;
 
   &::before {
     content: "${({ $layerName }) => $layerName}";
     position: absolute;
-    top: 0;
+    /* top: 0; */
+    top: ${({ $layerName }) =>
+      getLayerOffset($layerName)}px; // 레이어별로 다른 top 값
     right: 0;
     font-size: 8px;
     padding: 2px;
@@ -47,4 +49,17 @@ const getLayerColor = (layerName: string): string => {
   } as const;
 
   return colorMap[layer as keyof typeof colorMap] || "#999999";
+};
+
+// 레이어별 위치 오프셋 설정
+const getLayerOffset = (layerName: string): number => {
+  const [layer] = layerName.split("/");
+  const offsetMap = {
+    pages: 0, // 맨 위
+    widgets: 14, // 14px 아래
+    features: 28, // 28px 아래
+    entities: 42, // 42px 아래
+  } as const;
+
+  return offsetMap[layer as keyof typeof offsetMap] || 0;
 };
