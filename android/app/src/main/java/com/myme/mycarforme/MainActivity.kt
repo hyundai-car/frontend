@@ -25,9 +25,13 @@ import com.myme.mycarforme.ui.search.SearchFragment
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private var activeFragment: Fragment? = null
+    var activeFragment: Fragment? = null
     val mainViewModel: MainViewModel by viewModels()
-
+    val homeFragment = HomeFragment()
+    val searchFragment = SearchFragment()
+    val recommendFragment = RecommendFragment()
+    val myFragment = MyFragment()
+    val detailFragment = DetailFragment()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,13 +48,7 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.loadCarDataMy(this)
         mainViewModel.saveStatus(status)
         mainViewModel.saveCar(orderingID)
-
         val navView: BottomNavigationView = binding.navView
-        val homeFragment = HomeFragment()
-        val searchFragment = SearchFragment()
-        val recommendFragment = RecommendFragment()
-        val myFragment = MyFragment()
-        val detailFragment = DetailFragment()
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
@@ -88,12 +86,30 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-    private fun switchFragment(fragment: Fragment) {
-        if (activeFragment != fragment) {
-            supportFragmentManager.beginTransaction().hide(activeFragment!!).commit()
-            supportFragmentManager.beginTransaction().show(fragment).commit()
-            activeFragment = fragment
-        }
+//    fun switchFragment(fragment: Fragment) {
+//        if (activeFragment != fragment) {
+//            supportFragmentManager.beginTransaction().hide(activeFragment!!).commit()
+//            supportFragmentManager.beginTransaction().show(fragment).commit()
+//            activeFragment = fragment
+//        }
+//    }
+fun switchFragment(fragment: Fragment) {
+    if (activeFragment != fragment) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.hide(activeFragment!!)
+        transaction.show(fragment)
+        transaction.commitAllowingStateLoss()
+        activeFragment = fragment
     }
-
 }
+    fun navigateToFragment() {
+        binding.mainToolbar.root.visibility = View.VISIBLE
+        binding.navView.rootView.visibility = View.VISIBLE
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.nav_host_fragment_activity_main, MyFragment())
+                    .addToBackStack(null)
+                    .commit()
+        }
+}
+
+

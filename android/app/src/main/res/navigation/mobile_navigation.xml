@@ -13,12 +13,21 @@
     <fragment
         android:id="@+id/navigation_search"
         android:name="com.myme.mycarforme.ui.search.SearchFragment"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_myFragment"
+            app:destination="@id/navigation_my" />
+    </fragment>
+
 
     <fragment
         android:id="@+id/navigation_recommend"
         android:name="com.myme.mycarforme.ui.recommend.RecommendFragment"
-        tools:layout="@layout/fragment_recommend" />
+        tools:layout="@layout/fragment_recommend" >
+        <action
+            android:id="@+id/action_recommendFragment_to_myFragment"
+            app:destination="@id/navigation_my" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_my"

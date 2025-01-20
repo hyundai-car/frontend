@@ -10,6 +10,7 @@ import com.myme.mycarforme.MainActivity
 import com.myme.mycarforme.data.model.Car
 import com.myme.mycarforme.data.network.ApiService
 import com.myme.mycarforme.data.network.DataManager
+import com.myme.mycarforme.data.network.DataManager.refreshToken
 import com.myme.mycarforme.data.network.RefreshTokenResponse
 import com.myme.mycarforme.data.network.RetrofitClient
 import com.myme.mycarforme.data.utils.SharedPrefs
@@ -54,6 +55,9 @@ class SplashActivity : AppCompatActivity() {
             try {
                 // 저장된 토큰 가져오기 (SharedPreferences 또는 다른 저장소 사용)
                 val token = getTokenFromPreferences()
+                refreshToken(this@SplashActivity){
+
+                }
                 if (token.isNullOrEmpty()) {
                     navigateToSignUp()
                 } else {
