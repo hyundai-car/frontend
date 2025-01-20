@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { FilterDrawerProps, FilterState } from "../model/types";
-import { INITIAL_FILTERS, FUEL_TYPES, BODY_TYPES } from "../model/constants";
+import { INITIAL_FILTERS, FUEL_TYPES, CAR_TYPES } from "../model/constants";
 import * as S from "./styles";
 import { SelectSection } from "./FilterDrawer/SelectSection";
 import { Icon } from "@/shared/ui/Icon/Icon";
@@ -66,8 +66,8 @@ export const FilterDrawer = ({ isOpen, onClose }: FilterDrawerProps) => {
             <SelectSection
               control={control}
               title="차종"
-              name="bodyType"
-              options={BODY_TYPES}
+              name="carType"
+              options={CAR_TYPES}
             />
 
             <RangeSection control={control} title="예산" name="priceRange" />

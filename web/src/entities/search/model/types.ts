@@ -4,7 +4,7 @@ export interface SearchParams {
   keyword?: string;
   carType?: string;
   fuelType?: string;
-  bodyType?: string;
+  // bodyType?: string;
   minSellingPrice?: number;
   maxSellingPrice?: number;
   minMileage?: number;

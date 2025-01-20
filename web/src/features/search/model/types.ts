@@ -1,16 +1,16 @@
 // feature/search/model/types.ts
 import { Control } from "react-hook-form";
-import { FUEL_TYPES, BODY_TYPES } from "./constants";
+import { FUEL_TYPES, CAR_TYPES } from "./constants";
 
 // 기본 타입 정의
 export type FuelType = (typeof FUEL_TYPES)[number];
-export type BodyType = (typeof BODY_TYPES)[number];
+export type CarType = (typeof CAR_TYPES)[number];
 export type Range = [number, number];
 
 // 필터 상태 타입
 export interface FilterState {
   fuel: FuelType[];
-  bodyType: BodyType[];
+  carType: CarType[];
   priceRange: Range; // 단위: 만원
   mileageRange: Range; // 단위: km
   yearRange: Range; // 단위: 년도
@@ -23,7 +23,7 @@ export interface BaseFilterSectionProps {
 }
 
 export interface SelectSectionProps extends BaseFilterSectionProps {
-  name: keyof Pick<FilterState, "fuel" | "bodyType">;
+  name: keyof Pick<FilterState, "fuel" | "carType">;
   options: readonly string[];
 }
 

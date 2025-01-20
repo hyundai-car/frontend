@@ -1,16 +1,3 @@
-// import { useSearchStore } from "@/features/search";
-// import { useQuery } from "@tanstack/react-query";
-// import { fetchCarList } from "./searchCarList.api";
-
-// export const useSearchCarListQuery = () => {
-//   const { keyword, filters } = useSearchStore();
-
-//   return useQuery({
-//     queryKey: ["cars", keyword, filters],
-//     queryFn: () => fetchCarList(keyword, filters),
-//     staleTime: 1000 * 60,
-//   });
-// };
 import { useSearchStore } from "@/features/search";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { fetchCarList } from "./searchCarList.api";
