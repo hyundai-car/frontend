@@ -113,6 +113,7 @@ authenticated.interceptors.response.use(
       let newToken: string = "";
       try {
         newToken = fetchNewAccessToken() ?? "";
+        setCookie("ACCESS_TOKEN", newToken, 30);
       } catch (error) {
         console.error("토큰 가져오기 실패:", error);
         throw error;
