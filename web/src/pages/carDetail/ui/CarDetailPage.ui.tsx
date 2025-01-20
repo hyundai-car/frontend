@@ -66,7 +66,9 @@ export function CarDetailPage() {
   );
 }
 
-const Container = styled.div``;
+const Container = styled.div`
+  padding-bottom: 80px;
+`;
 const ImageSection = styled.div``;
 const TitleSection = styled.div`
   padding: 0 20px;
