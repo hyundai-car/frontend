@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { ItemName } from "@/entities/carDetail/model/types";
 import { ValueOf } from "@/shared/model/utils";
-import { OptionList } from "@/shared/model/car.types";
+import { Option } from "@/shared/model/car.types";
 
 type Props = {
   itemName: ItemName;
   iconImg: string;
-  hasOption: ValueOf<OptionList>;
+  hasOption: ValueOf<Option>;
 };
 export function OptionInfoItem({ itemName, iconImg, hasOption }: Props) {
   return (
@@ -34,7 +34,7 @@ const Container = styled.div`
     word-wrap: break-word; /* 긴 단어의 경우 줄바꿈 */
   }
 `;
-const Screen = styled.div<{ $hasOption: ValueOf<OptionList> }>`
+const Screen = styled.div<{ $hasOption: ValueOf<Option> }>`
   position: relative;
   z-index: 1;
   opacity: ${({ $hasOption }) => (!$hasOption ? "0.3" : "1")};

@@ -46,6 +46,9 @@ export function BackHeaderHeartLayout() {
 
 const Container = styled.div``;
 const Header = styled.div`
+  position: fixed;
+  width: 100%;
+  box-shadow: var(--box-shadow);
   height: 64px;
   background-color: var(--navy);
 
@@ -53,6 +56,8 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  z-index: 10;
 `;
 const StyledIcon = styled.svg<{ $isFilled: boolean }>`
   path {

@@ -5,16 +5,25 @@ import { ReactComponent as MileageIcon } from "public/icons/routing.svg";
 import { BasicInfoCard } from "@/entities/carDetail";
 import { OptionInfo } from "@/entities/carDetail/ui/OptionInfo.ui";
 import { CarImages } from "@/widgets/carDetail/ui/CarImages.ui";
-import { useSearchParams } from "react-router-dom";
-import { SaveCarDetailStore } from "@/pages/carDetail/model/actions";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSaveCarDetailStore } from "@/pages/carDetail/model/actions";
 import { LoadingFallback } from "@/shared/ui/fallback/LoadingFallback";
+import { BasicButton } from "@/shared/ui/button";
+import { useEffect } from "react";
 
 export function CarDetailPage() {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const carId = Number(searchParams.get("carNo"));
 
   const { data } = useCarDetailQuery(carId);
-  SaveCarDetailStore(data, carId);
+
+  useSaveCarDetailStore(data, carId);
+
+  // 컴포넌트 마운트 시 스크롤 최상단으로 이동
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   if (!data) return <LoadingFallback />;
 
@@ -25,6 +34,7 @@ export function CarDetailPage() {
       <ImageSection>
         <CarImages />
       </ImageSection>
+
       <TitleSection>
         <h2>{carName}</h2>
         <OptionWrap>
@@ -49,11 +59,24 @@ export function CarDetailPage() {
       <CardSection>
         <OptionInfo />
       </CardSection>
+
+      <ButtonWrap>
+        <BasicButton
+          onClick={() => {
+            navigate(`/payments/${carId}/contract-info`);
+          }}
+        >
+          구매하기
+        </BasicButton>
+      </ButtonWrap>
     </Container>
   );
 }
 
-const Container = styled.div``;
+const Container = styled.div`
+  padding-top: 64px;
+  padding-bottom: 80px;
+`;
 const ImageSection = styled.div``;
 const TitleSection = styled.div`
   padding: 0 20px;
@@ -100,4 +123,15 @@ const StyledIcon = styled.svg`
 
 const CardSection = styled.div`
   padding-top: 30px;
+`;
+
+const ButtonWrap = styled.div`
+  z-index: 1;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 20px;
+  background-color: var(--white);
+  border-radius: 8px;
 `;

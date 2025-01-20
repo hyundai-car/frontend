@@ -103,6 +103,7 @@ const Section = styled.section`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  width: 174px;
 `;
 const Header = styled.div`
   width: 100%;

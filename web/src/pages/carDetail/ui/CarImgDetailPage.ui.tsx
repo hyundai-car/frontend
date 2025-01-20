@@ -50,14 +50,14 @@ const ImgWrap = styled.div`
 const CloseBtn = styled.button`
   right: 20px;
   top: 20px;
-  position: absolute;
+  position: fixed;
   width: 30px;
   height: 30px;
   flex-shrink: 0;
   fill: #fff;
   border-radius: 50%;
-  box-shadow: var(--list-item);
   border: none;
+  box-shadow: var(--box-shadow);
 `;
 
 const StyledIcon = styled.svg`
