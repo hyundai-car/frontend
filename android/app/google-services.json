@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "428587151378",
+    "project_id": "mycarforme-37bce",
+    "storage_bucket": "mycarforme-37bce.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:428587151378:android:5ff492d950434d526868cb",
+        "android_client_info": {
+          "package_name": "com.myme.mycarforme"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCf772-4ZxWpKUob9MM2KAhfveoL2x3rt0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -10,6 +10,8 @@ import com.myme.mycarforme.MainViewModel
 import com.myme.mycarforme.R
 import com.myme.mycarforme.data.model.Car
 import com.myme.mycarforme.data.network.DataManager
+import com.myme.mycarforme.data.network.convertRecoCarsToCars
+import com.myme.mycarforme.data.network.recoCars
 import com.myme.mycarforme.databinding.ViewInfocardBinding
 
 enum class CardType {
@@ -79,6 +81,12 @@ class InfoCardAdapter(private var items: ArrayList<Car>, context : Context, type
 
     fun updateItems(newItems: List<Car>) {
         items = newItems as ArrayList<Car>
+        notifyDataSetChanged()
+    }
+
+    fun updateReItems(newItems: List<recoCars>){
+        items = convertRecoCarsToCars(newItems)
+//        items = newItems as ArrayList<recoCars>
         notifyDataSetChanged()
     }
 

@@ -1,23 +1,15 @@
 package com.myme.mycarforme
 
 import android.content.Context
-import android.provider.ContactsContract.Data
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.map
 import com.myme.mycarforme.data.model.Car
 import com.myme.mycarforme.data.network.DataManager
 import com.myme.mycarforme.data.network.OrderCars
-import com.myme.mycarforme.data.network.OrderedCarResponse
-
-enum class userStatus{
-    CONTRACTED, PAID, DELIVERING, DELIVERED, NONE
-}
+import com.myme.mycarforme.data.network.recoCars
 
 class MainViewModel : ViewModel() {
-    // 각 데이터 리스트를 MutableLiveData로 선언
     private val _popularCars = MutableLiveData<List<Car>>()
     val popularCars: LiveData<List<Car>> = _popularCars
 
@@ -30,11 +22,16 @@ class MainViewModel : ViewModel() {
     private val _likeCars = MutableLiveData<List<Car>>()
     val likeCars: LiveData<List<Car>> = _likeCars
 
-    private val _recommendedCars = MutableLiveData<List<Car>>()
-    val recommendedCars: LiveData<List<Car>> = _recommendedCars
+    private val _recommendedCars = MutableLiveData<List<recoCars>>()
+    val recommendedCars: LiveData<List<recoCars>> = _recommendedCars
 
     private val _orderCars = MutableLiveData<List<OrderCars>>()
     val orderCars: LiveData<List<OrderCars>> = _orderCars
+
+    private val _userStatus = MutableLiveData<String>()
+    val userStatus: LiveData<String> = _userStatus
+
+    var carId = 0
 
     fun pushCarsDataMain(popCars: ArrayList<Car>, mCars:ArrayList<Car>, nCars:ArrayList<Car>){
         _popularCars.postValue(popCars)
@@ -42,7 +39,6 @@ class MainViewModel : ViewModel() {
         _nextCars.postValue(nCars)
     }
 
-    // 서버에서 데이터 불러오는 메소드
     fun loadCarsDataMain(context: Context) {
         DataManager.getCarsListwithUrl(context, "popular") { cars ->
             _popularCars.postValue(cars)
@@ -117,5 +113,24 @@ class MainViewModel : ViewModel() {
     fun removeLikeCars(carId: Int){
         _likeCars.value = _likeCars.value?.filterNot { it.carId == carId }
     }
+
+    fun saveStatus(status: String?){
+        _userStatus.value = status ?: "NONE"
+    }
+
+    fun saveCar(id: Int){
+        carId = id
+    }
+
+    fun getOrderingCar(carId: Int): OrderCars? {
+        _orderCars.value?.map{
+            if(it.carId == carId){
+                return it
+            }
+        }
+        return null
+    }
+
+
 }
 

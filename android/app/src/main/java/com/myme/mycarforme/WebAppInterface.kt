@@ -19,4 +19,6 @@ class WebAppInterface(private val context: Context) {
     fun refreshToken() {
         Log.d("WebAppInterface", "Action performed from WebView!")
     }
+
+
 }
