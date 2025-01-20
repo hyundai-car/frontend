@@ -60,7 +60,7 @@ data class LikeResponse(
 )
 
 data class RecommendCars(
-    val car : List<recoCars>,
+    val car : recoCars,
     val recommendId: Int,
     val recommendedAt: String,
     val recommendPriority: Int,
@@ -77,11 +77,12 @@ data class recoCars(
     val mileage: Int,
     val sellingPrice: Int,
     val mainImage: String,
+    val carNumber: String,
     var isLike: Boolean,
     val likeCount: Int,
     val createdAt: String, // yyyy-MM-dd 형태로 저장
     val updatedAt: String, // yyyy-MM-dd 형태로 저장
-    val carNumber: String,
+
 )
 
 data class RecommendCarsResponse(

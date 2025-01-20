@@ -80,9 +80,8 @@ object DataManager {
                     if (response.isSuccessful) {
                         val carListResponse = response.body()
                         carListResponse?.contents?.forEach {
-                            it.car.forEach{
-                                carList.add(it)
-                            }
+                            carList.add(it.car)
+
                         }
                         // 데이터 로드 후 callback 호출
                         callback(carList)
