@@ -31,7 +31,8 @@ export function GridItem({ itemName, Icon, color, backColor, value }: Props) {
 
 const Container = styled.div<{ $backColor: keyof DefaultTheme["colors"] }>`
   background-color: ${({ $backColor }) => `var(--${String($backColor)})`};
-  width: 100%;
+  /* width: 100%; */
+  /* width: 70px; */
   height: 104px;
   border-radius: 8px;
   padding: 11px;

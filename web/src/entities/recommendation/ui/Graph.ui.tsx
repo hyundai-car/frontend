@@ -14,6 +14,7 @@ import {
   graphOptions,
 } from "@/entities/recommendation/model/constants";
 import { useRecommendationResult } from "@/widgets/recommendation/model/actions";
+import { DebugWrapper } from "@/widgets/DebugToggle";
 
 ChartJS.register(
   RadialLinearScale,
@@ -29,9 +30,11 @@ export function Graph() {
   const data = graphData(graph.best, graph.avg);
 
   return (
-    <Container>
-      <Radar data={data} options={graphOptions} />
-    </Container>
+    <DebugWrapper layerName="entities/Graph">
+      <Container>
+        <Radar data={data} options={graphOptions} />
+      </Container>
+    </DebugWrapper>
   );
 }
 

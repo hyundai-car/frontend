@@ -1,6 +1,7 @@
 import { ComparisonCard } from "@/entities/recommendation/ui/ComparisonCard";
 import { CarDetailResponse } from "@/shared/api/api.types";
 import { SelectBox } from "@/shared/ui/selectbox";
+import { DebugWrapper } from "@/widgets/DebugToggle";
 import { useRecommendationResult } from "@/widgets/recommendation/model/actions";
 // import { MOCK_ComparisonList } from "@/widgets/recommendation/model/mock";
 import {
@@ -64,22 +65,29 @@ export function Comparision() {
         <Section>
           <Header>추천차량</Header>
           {bestCarDetail && (
-            <ComparisonCard
-              data={bestCarDetail}
-              isBest={true}
-              comparedData={selectedItemCarInfo?.car}
-            />
+            <DebugWrapper layerName="entities/ComparisonCard">
+              <ComparisonCard
+                data={bestCarDetail}
+                isBest={true}
+                comparedData={selectedItemCarInfo?.car}
+              />
+            </DebugWrapper>
           )}
         </Section>
         <Section>
-          <SelectBox
-            options={options}
-            value={selectedCarId}
-            onChange={setSelectedCarId}
-            placeholder="전체평균"
-          />
+          <DebugWrapper layerName="shared/SelectBox">
+            <SelectBox
+              options={options}
+              value={selectedCarId}
+              onChange={setSelectedCarId}
+              placeholder="전체평균"
+            />
+          </DebugWrapper>
+
           {selectedItemCarInfo && (
-            <ComparisonCard data={selectedItemCarInfo} isBest={false} />
+            <DebugWrapper layerName="entities/ComparisonCard">
+              <ComparisonCard data={selectedItemCarInfo} isBest={false} />
+            </DebugWrapper>
           )}
         </Section>
       </SectionWrap>

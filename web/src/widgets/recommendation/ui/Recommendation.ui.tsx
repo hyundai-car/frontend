@@ -1,5 +1,6 @@
 import { Graph } from "@/entities/recommendation/ui/Graph.ui";
 import { RecommendationCard } from "@/entities/recommendation/ui/RecommendationCard.ui";
+import { DebugWrapper } from "@/widgets/DebugToggle";
 import { GridList } from "@/widgets/recommendation/ui/GridList.ui";
 import styled from "styled-components";
 
@@ -15,7 +16,9 @@ export function Recommendation() {
         </h1>
         <p>선택 차량 중 {userName}님께 딱 맞는 차를 추천해드릴게요!</p>
       </Title>
-      <RecommendationCard topSlot={<Graph />} bottomSlot={<GridList />} />
+      <DebugWrapper layerName="entities/RecommendationCard">
+        <RecommendationCard topSlot={<Graph />} bottomSlot={<GridList />} />
+      </DebugWrapper>
     </Container>
   );
 }

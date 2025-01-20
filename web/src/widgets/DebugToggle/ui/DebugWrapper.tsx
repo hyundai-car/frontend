@@ -20,7 +20,7 @@ export const DebugWrapper = ({ children, layerName }: DebugWrapperProps) => {
 
 const StyledDebugWrapper = styled.div<{ $layerName: string }>`
   position: relative;
-  margin: 12px 5px; // 간격
+  margin: 0px 1px; // 간격
   box-shadow: 0 0 0 3px ${({ $layerName }) => getLayerColor($layerName)}aa;
 
   &::before {
@@ -41,9 +41,9 @@ const getLayerColor = (layerName: string): string => {
   const [layer] = layerName.split("/");
   const colorMap = {
     widgets: "#fa0ee9",
-    feature: "#14a200",
-    entity: "#2573e5",
-    page: "#0ebb81",
+    features: "#14a200",
+    entities: "#98b21a",
+    pages: "#0eb8bb",
   } as const;
 
   return colorMap[layer as keyof typeof colorMap] || "#999999";

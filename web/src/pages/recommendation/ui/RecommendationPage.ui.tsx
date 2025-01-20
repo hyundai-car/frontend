@@ -11,27 +11,33 @@ export function RecommendationPage() {
   const { bestCarId } = useRecommendationResult();
   const navigate = useNavigate();
   return (
-    <Container>
-      {/* 결과 */}
-      <DebugWrapper layerName="widgets/recommendation">
-        <Recommendation />
-      </DebugWrapper>
+    <DebugWrapper layerName="pages/RecommendationPage">
+      <Container>
+        {/* 결과 */}
+        <DebugWrapper layerName="widgets/Recommendation">
+          <Recommendation />
+        </DebugWrapper>
 
-      {/* 비교 */}
-      <Comparision />
+        {/* 비교 */}
+        <DebugWrapper layerName="widgets/Comparison">
+          <Comparision />
+        </DebugWrapper>
 
-      <ButtonWrap>
-        <BasicButton
-          color="blue"
-          onClick={function (): void {
-            navigate(`/cars/carsDetail?carNo=${bestCarId}`);
-          }}
-          disabled={false}
-        >
-          보러 가기
-        </BasicButton>
-      </ButtonWrap>
-    </Container>
+        <ButtonWrap>
+          <DebugWrapper layerName="shared/BasicButton">
+            <BasicButton
+              color="blue"
+              onClick={function (): void {
+                navigate(`/cars/carsDetail?carNo=${bestCarId}`);
+              }}
+              disabled={false}
+            >
+              보러 가기
+            </BasicButton>
+          </DebugWrapper>
+        </ButtonWrap>
+      </Container>
+    </DebugWrapper>
   );
 }
 
@@ -53,7 +59,6 @@ const ButtonWrap = styled.div`
   left: 0;
   right: 0;
   margin: 20px;
-  background-color: var(--white);
+  /* background-color: var(--white); */
   border-radius: 8px;
-  border: 1px solid black;
 `;

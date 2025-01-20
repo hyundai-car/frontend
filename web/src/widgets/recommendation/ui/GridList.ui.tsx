@@ -15,79 +15,102 @@ import {
   useRecommendationResult,
 } from "@/widgets/recommendation/model/actions";
 import { FUEL_TYPE_MAPPING } from "@/shared/model/constant";
+import { DebugWrapper } from "@/widgets/DebugToggle";
 
 export function GridList() {
   const { bestCar, comparisons } = useRecommendationResult();
   const ComparedResult = compareWithAvg(bestCar, comparisons);
 
   return (
-    <Container>
-      <GridItem
-        itemName="가성비점수"
-        Icon={CashIcon}
-        color={ComparedResult.mmScore ? "white" : "black"}
-        backColor={ComparedResult.mmScore ? "blue" : "white"}
-        value={Math.round(bestCar.mmScore)}
-      />
-      <GridItem
-        itemName="사고이력"
-        Icon={DrivingIcon}
-        color={ComparedResult.accidentCount ? "white" : "black"}
-        backColor={ComparedResult.accidentCount ? "blue" : "white"}
-        value={bestCar.accidentCount}
-      />
-      <GridItem
-        itemName="최초등록일"
-        Icon={CalendarIcon}
-        color={ComparedResult.initialRegistration ? "white" : "black"}
-        backColor={ComparedResult.initialRegistration ? "blue" : "white"}
-        value={bestCar.initialRegistration}
-      />
-      <GridItem
-        itemName="연비"
-        Icon={groupIcon}
-        color={ComparedResult.fuelEfficiency ? "white" : "black"}
-        backColor={ComparedResult.fuelEfficiency ? "blue" : "white"}
-        value={Math.round(bestCar.fuelEfficiency)}
-      />
-      <GridItem
-        itemName="주행거리"
-        Icon={RoutingIcon}
-        color={ComparedResult.mileage ? "white" : "black"}
-        backColor={ComparedResult.mileage ? "blue" : "white"}
-        value={bestCar.mileage}
-      />
-      <GridItem
-        itemName="번호판"
-        Icon={CarIcon}
-        color="black"
-        backColor="white"
-        value={bestCar.carNumber}
-      />
-      <GridItem
-        itemName="차량색상"
-        Icon={BrushIcon}
-        color="black"
-        backColor="white"
-        value={bestCar.exteriorColor}
-      />
-      <GridItem
-        itemName="연료타입"
-        Icon={GasStationIcon}
-        color="black"
-        backColor="white"
-        value={
-          FUEL_TYPE_MAPPING[bestCar.fuelType as keyof typeof FUEL_TYPE_MAPPING]
-        }
-      />
-      <GridItem
-        itemName="승차인원"
-        Icon={ProfileIcon}
-        color="black"
-        backColor="white"
-        value={bestCar.seating}
-      />
-    </Container>
+    <DebugWrapper layerName="widgets/GridList">
+      <Container>
+        <DebugWrapper layerName="entities/GridItem">
+          <GridItem
+            itemName="가성비점수"
+            Icon={CashIcon}
+            color={ComparedResult.mmScore ? "white" : "black"}
+            backColor={ComparedResult.mmScore ? "blue" : "white"}
+            value={Math.round(bestCar.mmScore)}
+          />
+        </DebugWrapper>
+        <DebugWrapper layerName="entities/GridItem">
+          <GridItem
+            itemName="사고이력"
+            Icon={DrivingIcon}
+            color={ComparedResult.accidentCount ? "white" : "black"}
+            backColor={ComparedResult.accidentCount ? "blue" : "white"}
+            value={bestCar.accidentCount}
+          />
+        </DebugWrapper>
+        <DebugWrapper layerName="entities/GridItem">
+          <GridItem
+            itemName="최초등록일"
+            Icon={CalendarIcon}
+            color={ComparedResult.initialRegistration ? "white" : "black"}
+            backColor={ComparedResult.initialRegistration ? "blue" : "white"}
+            value={bestCar.initialRegistration}
+          />
+        </DebugWrapper>
+        <DebugWrapper layerName="entities/GridItem">
+          <GridItem
+            itemName="연비"
+            Icon={groupIcon}
+            color={ComparedResult.fuelEfficiency ? "white" : "black"}
+            backColor={ComparedResult.fuelEfficiency ? "blue" : "white"}
+            value={Math.round(bestCar.fuelEfficiency)}
+          />
+        </DebugWrapper>
+        <DebugWrapper layerName="entities/GridItem">
+          <GridItem
+            itemName="주행거리"
+            Icon={RoutingIcon}
+            color={ComparedResult.mileage ? "white" : "black"}
+            backColor={ComparedResult.mileage ? "blue" : "white"}
+            value={bestCar.mileage}
+          />
+        </DebugWrapper>
+        <DebugWrapper layerName="entities/GridItem">
+          <GridItem
+            itemName="번호판"
+            Icon={CarIcon}
+            color="black"
+            backColor="white"
+            value={bestCar.carNumber}
+          />
+        </DebugWrapper>
+        <DebugWrapper layerName="entities/GridItem">
+          <GridItem
+            itemName="차량색상"
+            Icon={BrushIcon}
+            color="black"
+            backColor="white"
+            value={bestCar.exteriorColor}
+          />
+        </DebugWrapper>
+        <DebugWrapper layerName="entities/GridItem">
+          <GridItem
+            itemName="연료타입"
+            Icon={GasStationIcon}
+            color="black"
+            backColor="white"
+            value={
+              FUEL_TYPE_MAPPING[
+                bestCar.fuelType as keyof typeof FUEL_TYPE_MAPPING
+              ]
+            }
+          />
+        </DebugWrapper>
+        <DebugWrapper layerName="entities/GridItem">
+          <GridItem
+            itemName="승차인원"
+            Icon={ProfileIcon}
+            color="black"
+            backColor="white"
+            value={bestCar.seating}
+          />
+        </DebugWrapper>
+      </Container>
+    </DebugWrapper>
   );
 }
 
