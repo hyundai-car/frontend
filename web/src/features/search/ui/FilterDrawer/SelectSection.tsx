@@ -1,8 +1,6 @@
-import { Control, Controller, useController } from "react-hook-form";
+import { Control, Controller } from "react-hook-form";
 import { Section, SectionTitle, ButtonGroup, FilterButton } from "../styles";
 import { FilterState } from "../../model/types";
-import { useEffect } from "react";
-
 type SelectSectionProps = {
   control: Control<FilterState>;
   title: string;
@@ -16,17 +14,6 @@ export const SelectSection = ({
   name,
   options,
 }: SelectSectionProps) => {
-  const {
-    field: { value },
-  } = useController({
-    name,
-    control,
-  });
-
-  useEffect(() => {
-    console.log(`${name} selected values:`, value);
-  }, [value, name]);
-
   return (
     <Section>
       <SectionTitle>{title}</SectionTitle>

@@ -26,9 +26,9 @@ export function PaymentForm() {
   } = usePaymentFormStore();
 
   const scrollToInput = () => {
-    console.log("Current scroll before:", window.pageYOffset);
+    // console.log("Current scroll before:", window.pageYOffset);
     window.scrollTo({ top: 300, behavior: "smooth" });
-    console.log("Current scroll after:", window.pageYOffset);
+    // console.log("Current scroll after:", window.pageYOffset);
   };
 
   const scrollToOriginal = () => {
