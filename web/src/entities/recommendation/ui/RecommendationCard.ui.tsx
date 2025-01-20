@@ -74,7 +74,7 @@ const CardSide = styled.div`
       rgba(255, 255, 255, 0) 100%
     );
     transform: translateX(-100%) translateY(-100%) rotate(45deg);
-    animation: ${shine} 5s infinite;
+    animation: ${shine} 4s infinite;
     z-index: 1;
   }
 `;
