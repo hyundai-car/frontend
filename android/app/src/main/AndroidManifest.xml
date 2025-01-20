@@ -48,7 +48,8 @@
             android:theme="@style/Theme.MyCarForMe" />
         <activity
             android:name=".MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
 
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
