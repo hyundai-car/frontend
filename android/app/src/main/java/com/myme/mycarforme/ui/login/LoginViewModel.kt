@@ -86,7 +86,6 @@ class LoginViewModel : ViewModel() {
                         "S256"
                     )
                 }.build()
-
                 val authIntent = authService.getAuthorizationRequestIntent(authRequest)
                 (context as Activity).startActivityForResult(authIntent, 1000)
             } catch (e: Exception) {

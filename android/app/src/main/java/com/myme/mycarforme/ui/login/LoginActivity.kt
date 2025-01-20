@@ -42,7 +42,6 @@ class LoginActivity : AppCompatActivity() {
                     mainIntent.putExtra("popular",popularCar)
                     mainIntent.putExtra("mm",mmCar)
                     mainIntent.putExtra("next",nextCar)
-                    Log.d("chk","3333333333")
                     startActivity(mainIntent)
                     finish()
                 }

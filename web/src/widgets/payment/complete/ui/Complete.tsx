@@ -22,7 +22,9 @@ export function CompleteWidget() {
     // 확인 버튼 클릭 시 마이페이지로 이동, jsj
     if (type !== "deposit") {
       setPrice(0);
+
     }
+    window.AndroidBridge.moveToMy();
   };
   return (
     <>
