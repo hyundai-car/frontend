@@ -100,7 +100,7 @@ const SelectContainer = styled.div`
 // 선택 버튼
 const SelectButton = styled.button<{ $isOpen: boolean }>`
   width: 100%;
-  padding: 8px 16px;
+  padding: 8px 10px;
   height: 31px;
 
   background: white;
@@ -122,7 +122,7 @@ const SelectButton = styled.button<{ $isOpen: boolean }>`
 // 선택된 텍스트 (placeholder 여부에 따라 색상 변경)
 const SelectText = styled.span<{ $isPlaceholder: boolean }>`
   flex: 1;
-  padding-left: 10px;
+  font-size: 10px;
   color: ${({ $isPlaceholder }) => ($isPlaceholder ? "#9ca3af" : "#111827")};
 
   display: -webkit-box; /* Flexbox와 비슷한 박스 모델 */

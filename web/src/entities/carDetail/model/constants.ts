@@ -1,3 +1,5 @@
+import { Normalization } from "@/shared/api/api.types";
+
 export const itemName = [
   "내비게이션",
   "하이패스",
@@ -50,15 +52,24 @@ export const graphOptions = {
   },
 };
 
-export const graphData = {
-  labels: ["가성비점수", "사고이력", "최초등록일", "연비", "주행거리"],
-  datasets: [
-    {
-      label: "추천 차량",
-      data: [65, 59, 90, 81, 56],
-      fill: true,
-      backgroundColor: "#9787ffa6",
-      //   borderColor: "rgb(217, 217, 217)",
-    },
-  ],
+export const graphData = (graphData: Normalization) => {
+  console.log("d", graphData);
+  return {
+    labels: ["가성비점수", "무사고", "최초등록일", "연비", "주행거리"],
+    datasets: [
+      {
+        label: "추천 차량",
+        data: [
+          Math.ceil(graphData.mmScoreNorm),
+          Math.ceil(graphData.accidentCountNorm),
+          Math.ceil(graphData.initialRegistrationNorm),
+          Math.ceil(graphData.fuelEfficiencyNorm),
+          Math.ceil(graphData.mileageNorm),
+        ],
+        fill: true,
+        backgroundColor: "#9787ffa6",
+        //   borderColor: "rgb(217, 217, 217)",
+      },
+    ],
+  };
 };

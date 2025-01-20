@@ -1,4 +1,5 @@
-import { MOCK_CarImgList } from "@/features/carDetail/model/mock";
+import { ImgList } from "@/features/carDetail/api/types";
+import { useGetImgListQuery } from "@/features/carDetail/model/queries";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 
@@ -6,9 +7,11 @@ export function ClickCarImgList() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const carId = Number(searchParams.get("carNo"));
-  const imgUrls: string[] = MOCK_CarImgList.contents.map(
-    ({ imageUrl }) => imageUrl
-  );
+
+  const { data } = useGetImgListQuery(carId);
+
+  const imgUrls: string[] =
+    data?.contents.map((content: ImgList) => content.imageUrl) ?? [];
 
   const handleButton = () => {
     navigate(`/cars/carsDetail/images?carNo=${carId}`);
@@ -21,10 +24,10 @@ export function ClickCarImgList() {
           <img src={imgUrls[0]} />
         </ImgWrap>
         <ImgWrap>
-          <img src={imgUrls[2]} />
+          <img src={imgUrls[1]} />
         </ImgWrap>
         <ImgWrap>
-          <img src={imgUrls[4]} />
+          <img src={imgUrls[2]} />
         </ImgWrap>
         <Screen>
           <OverlayText>34+</OverlayText>
@@ -49,6 +52,7 @@ const Container = styled.div`
   justify-content: space-between;
 `;
 const ImgWrap = styled.div`
+  object-fit: cover;
   img {
     width: 70px;
     height: 60px;

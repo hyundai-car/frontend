@@ -3,6 +3,7 @@ import { ReactComponent as CrownIcon } from "public/icons/crown.svg";
 import { CarDetailResponse } from "@/shared/api/api.types";
 import { Comparison } from "@/shared/model/car.types";
 import { useEffect, useState } from "react";
+import { FUEL_TYPE_MAPPING } from "@/shared/model/constant";
 
 type Props = {
   data: CarDetailResponse;
@@ -82,7 +83,13 @@ export function ComparisonCard({ data, isBest, comparedData }: Props) {
         <StyledIcon $isBest={isBest} />
         <Description $isBest={isBest}>
           <h6>연료타입</h6>
-          <p>{data.car.fuelType}</p>
+          <p>
+            {
+              FUEL_TYPE_MAPPING[
+                data.car.fuelType as keyof typeof FUEL_TYPE_MAPPING
+              ]
+            }
+          </p>
         </Description>
       </Row>
       <Row>

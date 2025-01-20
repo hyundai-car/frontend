@@ -14,6 +14,7 @@ import {
   compareWithAvg,
   useRecommendationResult,
 } from "@/widgets/recommendation/model/actions";
+import { FUEL_TYPE_MAPPING } from "@/shared/model/constant";
 
 export function GridList() {
   const { bestCar, comparisons } = useRecommendationResult();
@@ -75,7 +76,9 @@ export function GridList() {
         Icon={GasStationIcon}
         color="black"
         backColor="white"
-        value={bestCar.fuelType}
+        value={
+          FUEL_TYPE_MAPPING[bestCar.fuelType as keyof typeof FUEL_TYPE_MAPPING]
+        }
       />
       <GridItem
         itemName="승차인원"

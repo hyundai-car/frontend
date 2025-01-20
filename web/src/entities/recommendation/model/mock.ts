@@ -1,4 +1,4 @@
-import { BestCarResponse } from "@/entities/recommendation/api/types";
+// import { BestCarResponse } from "@/entities/recommendation/api/types";
 
 export const MOCK_LikeList = [
   {
@@ -85,31 +85,31 @@ export const MOCK_LikeList = [
   },
 ];
 
-export const MOCK_BestCarData: BestCarResponse = {
-  bestCar: {
-    carId: 12345,
-    modelName: "Tesla Model S",
-    mainImage:
-      "https://www.motoya.co.kr/news/photo/202403/39979_237158_1919.jpg",
-    sellingPrice: 85000,
-    createdAt: "2025-01-01",
-    updatedAt: "2025-01-10",
-    mmScore: 95,
-    accidentCount: 0,
-    initialRegistrationDate: "2024-01-01",
-    fuelEfficiency: 130.5,
-    mileage: 12000,
-    carNumber: "123",
-    exterorColor: "asdf",
-    fuelType: "sadf",
-    seating: 1,
-  },
-  comparisonAvg: {
-    mmScoreAvg: 89.5,
-    accidentCountAvg: 1.2,
-    initialRegistrationDateAvg: "2023-06-15",
-    mileageAvg: 15000,
-    fuelEfficiencyAvg: 125.7,
-  },
-  otherCarIds: [54321, 67890, 11223],
-};
+// export const MOCK_BestCarData: BestCarResponse = {
+//   bestCar: {
+//     carId: 12345,
+//     carName: "Tesla Model S",
+//     mainImage:
+//       "https://www.motoya.co.kr/news/photo/202403/39979_237158_1919.jpg",
+//     sellingPrice: 85000,
+//     createdAt: "2025-01-01",
+//     updatedAt: "2025-01-10",
+//     mmScore: 95,
+//     accidentCount: 0,
+//     initialRegistration: "2024-01-01",
+//     fuelEfficiency: 130.5,
+//     mileage: 12000,
+//     carNumber: "123",
+//     exteriorColor: "asdf",
+//     fuelType: "sadf",
+//     seating: 1,
+//   },
+//   comparisons: {
+//     mmScoreAvg: 89.5,
+//     accidentCountAvg: 1.2,
+//     initialRegistrationAvg: "2023-06-15",
+//     mileageAvg: 15000,
+//     fuelEfficiencyAvg: 125.7,
+//   },
+//   otherCarIds: [54321, 67890, 11223],
+// };

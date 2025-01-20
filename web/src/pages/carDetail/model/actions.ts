@@ -2,7 +2,7 @@ import { useCarDetailStore } from "@/pages/carDetail/model/store";
 import { CarDetailResponse } from "@/shared/api/api.types";
 import { useEffect } from "react";
 
-export const SaveCarDetailStore = (
+export const useSaveCarDetailStore = (
   data: CarDetailResponse | undefined,
   carId: number
 ) => {
@@ -17,13 +17,15 @@ export const SaveCarDetailStore = (
       data.car.optionLists;
 
     setCarId(carId);
+
     setCarGraphData({
-      mmScore: data.car.mmScore,
-      initialRegistration: data.car.initialRegistration,
-      fuelEfficiency: data.car.fuelEfficiency,
-      mileage: data.car.mileage,
-      accidentCount: data.car.accidentCount,
+      mmScoreNorm: data.car.mmScore,
+      initialRegistrationNorm: data.car.graph.initialRegistrationNorm,
+      fuelEfficiencyNorm: data.car.graph.fuelEfficiencyNorm,
+      mileageNorm: data.car.graph.mileageNorm,
+      accidentCountNorm: data.car.graph.accidentCountNorm,
     });
+
     setCarBasicData({
       mmScore: data.car.mmScore,
       initialRegistration: data.car.initialRegistration,

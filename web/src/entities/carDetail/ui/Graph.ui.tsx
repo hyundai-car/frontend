@@ -23,11 +23,16 @@ ChartJS.register(
 
 export function Graph() {
   const { carGraphData } = useCarDetailStore();
-  // console.log(carGraphData);
-  // TODO 그래프 정보 : 가성비점수, 사고이력, 최초등록일, 연비, 주행거리
+  if (!carGraphData) {
+    return null;
+  }
+
+  const data = graphData(carGraphData);
+
+  // 그래프 정보 : 가성비점수, 사고이력, 최초등록일, 연비, 주행거리
   return (
     <Container>
-      <Radar data={graphData} options={graphOptions} />
+      <Radar data={data} options={graphOptions} />
     </Container>
   );
 }

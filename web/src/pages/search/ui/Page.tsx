@@ -17,15 +17,3 @@ export function SearchPage() {
 //     <DiagnosticButton />
 //     <SearchCarList />
 // );
-
-// <DebugWrapper layerName="page/search">
-//   <DebugWrapper layerName="features/SearchFilter">
-//     <SearchFilter />
-//   </DebugWrapper>
-//   <DebugWrapper layerName="features/DiagnosticButton">
-//     <DiagnosticButton />
-//   </DebugWrapper>
-//   <DebugWrapper layerName="widgets/SearchCarList">
-//     <SearchCarList />
-//   </DebugWrapper>
-// </DebugWrapper>;
