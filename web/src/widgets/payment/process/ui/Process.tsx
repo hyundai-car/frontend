@@ -81,7 +81,7 @@ export function ProcessWidget() {
                 console.error("계약금 결제 실패:", error);
               },
             });
-            navigate(`/payments/${carId}/deposit/process/complete`);
+            navigate(`/payments/${carId}/balance/process/complete`);
           }, setIsLoading),
       });
     }

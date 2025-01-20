@@ -25,10 +25,6 @@ export const SearchCarList = () => {
     }
   }, [inView]);
 
-  useEffect(() => {
-    console.log("data: ", data);
-  }, [data]);
-
   const getActionSlot = (carId: number, isLike: boolean) => (
     <WishlistButton carId={carId} isLike={isLike} />
   );
