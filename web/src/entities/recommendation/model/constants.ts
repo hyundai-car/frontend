@@ -1,4 +1,5 @@
-import { Normalization } from "@/entities/recommendation/api/types";
+// import { Normalization } from "@/entities/recommendation/api/types"; 맞나
+import { Normalization } from "@/shared/api/api.types";
 import { keyframes } from "styled-components";
 
 export const rotate = keyframes`
@@ -62,7 +63,7 @@ export const graphData = (
   avgGraph: Normalization
 ) => {
   return {
-    labels: ["가성비점수", "사고이력", "최초등록일", "연비", "주행거리"],
+    labels: ["가성비점수", "무사고", "최초등록일", "연비", "주행거리"],
     datasets: [
       {
         label: "추천 차량",

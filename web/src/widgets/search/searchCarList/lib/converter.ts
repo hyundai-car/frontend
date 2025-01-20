@@ -1,4 +1,4 @@
-import { SearchParams } from "@/entities/search/model/search.types";
+import { SearchParams } from "@/entities/search/model/types";
 import { FilterState } from "@/features/search/model/types";
 
 const FUEL_TYPE_MAPPING = {

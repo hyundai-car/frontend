@@ -23,8 +23,8 @@ export function LikeCard({ item, checked, onChange }: Props) {
           <RightSection>
             <h1>{item.carName}</h1>
             <div>
-              <span>{item.initialRegistration}</span>{" "}
-              <span>{formatNumber(item.mileage)}km</span>
+              <span>{item.initialRegistration}</span>
+              <span>{formatNumber(item.mileage)} km</span>
             </div>
             <h1>{formatNumber(item.mileage)} 만원</h1>
           </RightSection>
@@ -78,5 +78,6 @@ const CarImg = styled.img`
   width: 77px;
   height: 77px;
   border-radius: 8px;
+  object-fit: cover;
 `;
 const LeftSection = styled.div``;

@@ -1,4 +1,4 @@
-import { BestCarResponse } from "@/entities/recommendation/api/types";
+// import { BestCarResponse } from "@/entities/recommendation/api/types";
 
 export const MOCK_LikeList = [
   {
