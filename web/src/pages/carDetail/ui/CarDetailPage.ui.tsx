@@ -34,6 +34,7 @@ export function CarDetailPage() {
       <ImageSection>
         <CarImages />
       </ImageSection>
+
       <TitleSection>
         <h2>{carName}</h2>
         <OptionWrap>
@@ -73,6 +74,7 @@ export function CarDetailPage() {
 }
 
 const Container = styled.div`
+  padding-top: 64px;
   padding-bottom: 80px;
 `;
 const ImageSection = styled.div``;

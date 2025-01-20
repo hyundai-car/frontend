@@ -6,6 +6,7 @@ export function ClickCarImgList() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const carId = Number(searchParams.get("carNo"));
+
   const imgUrls: string[] = MOCK_CarImgList.contents.map(
     ({ imageUrl }) => imageUrl
   );
@@ -49,6 +50,7 @@ const Container = styled.div`
   justify-content: space-between;
 `;
 const ImgWrap = styled.div`
+  object-fit: cover;
   img {
     width: 70px;
     height: 60px;
