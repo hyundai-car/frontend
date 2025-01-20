@@ -1,7 +1,8 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { RecommendCarList } from "./RecommendCarList";
 import { useEffect, useState } from "react";
 import { getLocalStorageValue } from "@/shared/util/localStorage";
+import { LoadingScreen } from "./LoadingScreen";
 
 export const SimpleSearchResult = () => {
   const [recommendCondition, setRecommendCondition] = useState("");
@@ -19,9 +20,7 @@ export const SimpleSearchResult = () => {
           <br />
           {isLoading ? (
             <>
-              <LoadingText>"추천 차량을 찾고 있어요..."</LoadingText>
-              <br />
-              <LoadingDots>...</LoadingDots>
+              <LoadingScreen />
             </>
           ) : (
             <>
@@ -32,10 +31,7 @@ export const SimpleSearchResult = () => {
         </Title>
         <SubTitle>
           {isLoading ? (
-            <>
-              가장 적합한 차량을 선별하고 있습니다
-              <LoadingDots>...</LoadingDots>
-            </>
+            <>가장 적합한 차량을 선별하고 있습니다</>
           ) : (
             `${
               userInfo.name || "홍길동"
@@ -66,28 +62,4 @@ const NickName = styled.span`
 `;
 const SubTitle = styled.div`
   font-size: 13px;
-`;
-const fadeInOut = keyframes`
- 0% { opacity: 0.3; }
- 50% { opacity: 1; }
- 100% { opacity: 0.3; }
-`;
-
-const dotsAnimation = keyframes`
- 0% { content: '.'; }
- 33% { content: '..'; }
- 66% { content: '...'; }
- 100% { content: '.'; }
-`;
-
-const LoadingText = styled.span`
-  animation: ${fadeInOut} 2s infinite ease-in-out;
-  display: inline-block;
-`;
-
-const LoadingDots = styled.span`
-  &::after {
-    content: "";
-    animation: ${dotsAnimation} 1.5s infinite;
-  }
 `;
