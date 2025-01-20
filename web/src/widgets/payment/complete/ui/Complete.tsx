@@ -1,12 +1,11 @@
 import styled, { keyframes } from "styled-components";
 import { PaymentButton } from "@/features/payments/ui/PaymentButton/PaymentButton";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { usePaymentStore } from "@/entities/payments/contractInfo/model/store";
 
 export function CompleteWidget() {
-  const navigate = useNavigate();
-  const { carId, type } = useParams();
+  const { type } = useParams();
   const [showContent, setShowContent] = useState(false);
   const { setPrice } = usePaymentStore();
   const text = type === "deposit" ? "계약금 결제 완료" : "결제 완료";
@@ -24,7 +23,6 @@ export function CompleteWidget() {
     if (type !== "deposit") {
       setPrice(0);
     }
-    navigate(`/payments/${carId}/test`);
   };
   return (
     <>
