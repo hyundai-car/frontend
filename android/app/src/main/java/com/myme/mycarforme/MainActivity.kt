@@ -16,6 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.myme.mycarforme.data.model.Car
 import com.myme.mycarforme.data.network.DataManager
 import com.myme.mycarforme.databinding.ActivityMainBinding
+import com.myme.mycarforme.ui.DetailFragment
 import com.myme.mycarforme.ui.home.HomeFragment
 import com.myme.mycarforme.ui.my.MyFragment
 import com.myme.mycarforme.ui.recommend.RecommendFragment
@@ -49,6 +50,7 @@ class MainActivity : AppCompatActivity() {
         val searchFragment = SearchFragment()
         val recommendFragment = RecommendFragment()
         val myFragment = MyFragment()
+        val detailFragment = DetailFragment()
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
@@ -58,6 +60,7 @@ class MainActivity : AppCompatActivity() {
             .add(R.id.nav_host_fragment_activity_main, searchFragment, "SECOND").hide(searchFragment)
             .add(R.id.nav_host_fragment_activity_main, recommendFragment, "THIRD").hide(recommendFragment)
             .add(R.id.nav_host_fragment_activity_main, myFragment, "FOURTH").hide(myFragment)
+            .add(R.id.nav_host_fragment_activity_main, detailFragment, "FIFTH").hide(detailFragment)
             .commit()
         activeFragment = homeFragment
         supportFragmentManager.executePendingTransactions()

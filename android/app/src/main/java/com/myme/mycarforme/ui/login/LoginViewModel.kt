@@ -89,7 +89,6 @@ class LoginViewModel : ViewModel() {
 
                 val authIntent = authService.getAuthorizationRequestIntent(authRequest)
                 (context as Activity).startActivityForResult(authIntent, 1000)
-
             } catch (e: Exception) {
                 _authState.value = AuthState.Error(R.string.text_error_unknown)
             }
@@ -143,7 +142,6 @@ class LoginViewModel : ViewModel() {
                         // SharedPreferences에 토큰과 유저 정보 저장
                         SharedPrefs.saveToken(context, it.token.accessToken, it.token.refreshToken)
                         SharedPrefs.saveUserInfo(context, it.userInfo)
-                        Log.d("chk","${it.token}")
                     }
                 } else {
                     Toast.makeText(context, "$response", Toast.LENGTH_SHORT).show()
