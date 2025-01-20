@@ -7,14 +7,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.myme.mycarforme.MainActivity
 import com.myme.mycarforme.MainViewModel
+import com.myme.mycarforme.R
 import com.myme.mycarforme.data.model.Car
 import com.myme.mycarforme.data.network.DataManager
 import com.myme.mycarforme.data.utils.SharedPrefs
 import com.myme.mycarforme.databinding.FragmentMyBinding
+import com.myme.mycarforme.ui.DetailFragment
+import com.myme.mycarforme.ui.PayFragment
 import com.myme.mycarforme.ui.home.CardType
 import com.myme.mycarforme.ui.home.InfoCardAdapter
 import com.myme.mycarforme.ui.map.MapActivity
@@ -25,7 +29,8 @@ class MyFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var viewModel: MainViewModel
-
+    private lateinit var toolbar: View
+    private lateinit var bottomNavigation: View
     private lateinit var likeCarsAdapter: InfoCardAdapter
     private lateinit var recommendedCarsAdapter: InfoCardAdapter
     private lateinit var orderedCarsAdapter: InfoCardAdapter
@@ -39,6 +44,10 @@ class MyFragment : Fragment() {
         val root: View = binding.root
 
         viewModel = (activity as MainActivity).mainViewModel
+        toolbar = requireActivity().findViewById(R.id.main_toolbar)
+        bottomNavigation = requireActivity().findViewById(R.id.nav_view)
+        toolbar.visibility = View.VISIBLE
+        bottomNavigation.visibility = View.VISIBLE
         setupUI()
         observeViewModel()
 
@@ -67,7 +76,6 @@ class MyFragment : Fragment() {
             adapter = orderedCarsAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
-
         // 사용자 이름 설정
         binding.myUserNameText.text = userInfo!!.name // 실제 데이터 사용 시 업데이트 필요
     }
@@ -88,61 +96,79 @@ class MyFragment : Fragment() {
         }
 
         // 주문한 차량 데이터 관찰
-        viewModel.orderCars.observe(viewLifecycleOwner) { cars ->
-            orderedCarsAdapter.updateItems(cars.map { Car(it.carId,it.carName,it.initialRegistration,it.mileage,it.sellingPrice,it.mainImage,0.0,true,it.likecount,"none","none") }) // OrderedCarResponse를 Car로 변환
-            binding.myUserOrderCountText.text = cars.size.toString()
-            binding.myUserOrderSectionText.text = cars.size.toString()
+        activity?.runOnUiThread {
+            viewModel.orderCars.observe(viewLifecycleOwner) { cars ->
+                orderedCarsAdapter.updateItems(cars.map { Car(it.carId,it.carName,it.initialRegistration,it.mileage,it.sellingPrice,it.mainImage,0.0,true,it.likecount,"none","none") }) // OrderedCarResponse를 Car로 변환
+                binding.myUserOrderCountText.text = cars.size.toString()
+                binding.myUserOrderSectionText.text = cars.size.toString()
+            }
         }
 
-        viewModel.userStatus.observe(viewLifecycleOwner) {status->
+
+        viewModel._userStatus.observe(viewLifecycleOwner) {status->
             setupProgress(status)
+            Log.d("chk","$status")
         }
     }
 
-    private fun setupProgress(status:String){
+    private fun setupProgress(status: String) {
         val progressBarView = binding.myProgressbar
         val progressButton = binding.myProgressbutton
         val stepLabels = listOf("계약금 입금", "잔금 결제", "탁송 시작", "탁송 완료")
-        when(status){
-            "CONTRACTED"->{
-                progressBarView.setupSteps(stepCount = 4, labels = stepLabels)
-                progressBarView.updateSteps(2)
 
-                binding.myProgressbutton.setup("잔금 결제하기") {
-                    goToPaid()
+        // UI 업데이트가 메인 스레드에서 실행되도록 보장
+        activity?.runOnUiThread {
+            Log.d("setupProgress", "Status: $status")  // status 값을 확인하기 위한 로그
+            when (status) {
+                "CONTRACTED" -> {
+                    progressBarView.setupSteps(stepCount = 4, labels = stepLabels)
+                    progressBarView.updateSteps(1)
+                    binding.myProgressbutton.setup("잔금 결제하기") {
+                        goToPaid()
+                    }
                 }
-            }
-            "PAID"->{
-                progressBarView.setupSteps(stepCount = 4, labels = stepLabels)
-                progressBarView.updateSteps(3)
-                binding.myProgressbutton.setup("배송 현황 보기") {
-                    goToMap()
+                "PAID" -> {
+                    progressBarView.setupSteps(stepCount = 4, labels = stepLabels)
+                    progressBarView.updateSteps(2)
+                    binding.myProgressbutton.setup("배송 현황 보기") {
+                        goToMap()
+                    }
                 }
-            }
-            "DELIVERING"->{
-                progressBarView.setupSteps(stepCount = 4, labels = stepLabels)
-                progressBarView.updateSteps(3)
+                "DELIVERING" -> {
+                    progressBarView.setupSteps(stepCount = 4, labels = stepLabels)
+                    progressBarView.updateSteps(3)
 
-                binding.myProgressbutton.setup("배송 현황 보기2") {
-                    goToMap()
+                    binding.myProgressbutton.setup("배송 현황 보기") {
+                        goToMap()
+                    }
                 }
-            }
-            "DELIVERED"->{
-                //TODO: 완료되었을때 실행시킬 요소 추가
-                progressButton.visibility = View.GONE
-                progressBarView.visibility = View.GONE
-            }
-            else -> {
-                progressButton.visibility = View.GONE
-                progressBarView.visibility = View.GONE
+                "DELIVERED" -> {
+                    progressButton.visibility = View.GONE
+                    progressBarView.visibility = View.GONE
+                }
+                else -> {
+                    progressButton.visibility = View.GONE
+                    progressBarView.visibility = View.GONE
+                }
             }
         }
-
     }
 
+
     private fun goToPaid(){
-        //TODO: 결제 페이지로 보내기
-        DataManager.putPaid(requireContext(),viewModel.carId ?: 0)
+        val bundle = Bundle()
+        bundle.putInt("carId", viewModel.carId)  // carId를 번들로 전달
+        val transaction = (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+        val payFragment = PayFragment()
+        payFragment.arguments = bundle
+        transaction.add(R.id.nav_host_fragment_activity_main, payFragment) // 디테일 프래그먼트로 교체
+        transaction.addToBackStack(null) // 뒤로가기 스택에 추가
+        transaction.commit()
+
+        // 툴바와 네비게이션 바 숨기기
+        (context as AppCompatActivity).findViewById<View>(R.id.main_toolbar).visibility = View.GONE
+        (context as AppCompatActivity).findViewById<View>(R.id.nav_view).visibility = View.GONE
+        viewModel
 
     }
 
@@ -160,4 +186,5 @@ class MyFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }

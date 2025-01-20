@@ -1,7 +1,6 @@
 package com.myme.mycarforme.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,15 +11,18 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.addCallback
 import com.myme.mycarforme.MainActivity
+import com.myme.mycarforme.MainViewModel
 import com.myme.mycarforme.R
 import com.myme.mycarforme.WebAppInterface
 import com.myme.mycarforme.data.utils.SharedPrefs
 
-class DetailFragment : Fragment() {
+
+class PayFragment : Fragment() {
 
     private lateinit var webView: WebView
     private lateinit var toolbar: View
     private lateinit var bottomNavigation: View
+    private lateinit var viewModel: MainViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,10 +48,10 @@ class DetailFragment : Fragment() {
     private fun setupWebView() {
         // 번들로 전달된 carId 가져오기
         val carId = arguments?.getInt("carId")
-
+        viewModel = (activity as MainActivity).mainViewModel
         webView.addJavascriptInterface(WebAppInterface(requireContext(), (activity as MainActivity)), "AndroidBridge")
 
-        val webSettings: WebSettings? = webView.settings
+        val webSettings: WebSettings = webView.settings
         if (webSettings != null) {
             webSettings.javaScriptEnabled = true
             webSettings.cacheMode = WebSettings.LOAD_NO_CACHE
@@ -57,7 +59,7 @@ class DetailFragment : Fragment() {
         }
         // carId가 null이 아니면 웹뷰 URL에 carId를 포함시킴
         if (carId != null) {
-            val url = "http://localhost:5173/cars/carsDetail?carNo=$carId"  // carId를 URL에 포함
+            val url = "http://localhost:5173/payments/$carId/balance/process"  // carId를 URL에 포함
             val token = SharedPrefs.getAccessToken(requireContext())
             webView.loadUrl(url, mapOf("Authorization" to "$token"))
         }
@@ -86,5 +88,13 @@ class DetailFragment : Fragment() {
     private fun hideUI() {
         toolbar.visibility = View.GONE
         bottomNavigation.visibility = View.GONE
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 }
