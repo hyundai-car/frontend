@@ -104,10 +104,11 @@ class MyFragment : Fragment() {
             }
         }
 
-
-        viewModel._userStatus.observe(viewLifecycleOwner) {status->
-            setupProgress(status)
-            Log.d("chk","$status")
+        activity?.runOnUiThread {
+            viewModel._userStatus.observe(viewLifecycleOwner) { status ->
+                setupProgress(status)
+                Log.d("chk", "$status")
+            }
         }
     }
 
@@ -137,7 +138,6 @@ class MyFragment : Fragment() {
                 "DELIVERING" -> {
                     progressBarView.setupSteps(stepCount = 4, labels = stepLabels)
                     progressBarView.updateSteps(3)
-
                     binding.myProgressbutton.setup("배송 현황 보기") {
                         goToMap()
                     }
@@ -168,13 +168,14 @@ class MyFragment : Fragment() {
         // 툴바와 네비게이션 바 숨기기
         (context as AppCompatActivity).findViewById<View>(R.id.main_toolbar).visibility = View.GONE
         (context as AppCompatActivity).findViewById<View>(R.id.nav_view).visibility = View.GONE
-        viewModel
 
     }
 
     private fun goToMap() {
         val intent = Intent(requireContext(), MapActivity::class.java)
-        val it = viewModel.getOrderingCar(viewModel.carId)
+//        val it = viewModel.getOrderingCar(viewModel.carId)
+        val it = viewModel.orderCars.value?.get(0)
+        Log.d("!@#!@!@","$it")
         if (it != null){
             val tomapCar = Car(it.carId, it.carName, it.carNumber, it.mileage, it.sellingPrice, it.mainImage, 0.0, true, it.likecount, "","")
             intent.putExtra("cardata",tomapCar)
