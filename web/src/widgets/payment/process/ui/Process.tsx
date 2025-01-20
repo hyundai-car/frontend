@@ -17,7 +17,7 @@ export function ProcessWidget() {
   const { price } = usePaymentStore();
 
   const header = isDeposit ? "계약" : "잔금 결제";
-  const uiPrice = isDeposit ? 300000 : price * 10000 + 45000 - 300000;
+  const uiPrice = isDeposit ? 300000 : price - 300000;
   const { mutate: payDeposit } = usePaymentDepositMutation();
   const { mutate: payBalance } = usePaymentBalanceMutation();
 
