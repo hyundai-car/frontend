@@ -26,7 +26,7 @@ export function RecommendationCard({ topSlot, bottomSlot }: Props) {
 
         <CardBack>
           <StyledLogo>
-            <img src="/public/images/logo2.png" />
+            <img src="/images/logo2.png" />
           </StyledLogo>
         </CardBack>
       </Card>
