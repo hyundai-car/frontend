@@ -9,6 +9,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useSaveCarDetailStore } from "@/pages/carDetail/model/actions";
 import { LoadingFallback } from "@/shared/ui/fallback/LoadingFallback";
 import { BasicButton } from "@/shared/ui/button";
+import { useEffect } from "react";
 
 export function CarDetailPage() {
   const [searchParams] = useSearchParams();
@@ -18,6 +19,11 @@ export function CarDetailPage() {
   const { data } = useCarDetailQuery(carId);
 
   useSaveCarDetailStore(data, carId);
+
+  // 컴포넌트 마운트 시 스크롤 최상단으로 이동
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   if (!data) return <LoadingFallback />;
 
