@@ -5,7 +5,8 @@ import styled from "styled-components";
 
 // 여기서 entity인 Result에 그리드widget(bottomSlot), 그래프widget(topSlot) 컴포넌트 넘겨줘야 한다.
 export function Recommendation() {
-  const userName = "타마마"; //TODO
+  const userInfo = JSON.parse(localStorage.getItem("userInfo")!)
+  const userName = userInfo.name; //TODO
 
   return (
     <Container>

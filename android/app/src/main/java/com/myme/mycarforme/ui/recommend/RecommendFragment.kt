@@ -15,6 +15,7 @@ import android.webkit.WebViewClient
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.myme.mycarforme.MainActivity
 import com.myme.mycarforme.R
 import com.myme.mycarforme.WebAppInterface
 import com.myme.mycarforme.data.utils.SharedPrefs
@@ -59,9 +60,10 @@ class RecommendFragment : Fragment() {
             webSettings.cacheMode = WebSettings.LOAD_NO_CACHE
             webSettings.domStorageEnabled = true // DOM 저장소 활성화
         }
-        webView?.loadUrl("http://mycarf0r.me/recommendation/candidates")
-        webView.addJavascriptInterface(WebAppInterface(requireContext()), "AndroidBridge")
+        webView.loadUrl("http://localhost:5173$basePath")
+        webView.addJavascriptInterface(WebAppInterface(requireContext(), (activity as MainActivity)), "AndroidBridge")
     }
+
 
     private fun setupWebViewTouchListener() {
         webView.setOnTouchListener { _, event ->
