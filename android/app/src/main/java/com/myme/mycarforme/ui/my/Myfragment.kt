@@ -13,6 +13,7 @@ import com.myme.mycarforme.MainActivity
 import com.myme.mycarforme.MainViewModel
 import com.myme.mycarforme.data.model.Car
 import com.myme.mycarforme.data.network.DataManager
+import com.myme.mycarforme.data.utils.SharedPrefs
 import com.myme.mycarforme.databinding.FragmentMyBinding
 import com.myme.mycarforme.ui.home.CardType
 import com.myme.mycarforme.ui.home.InfoCardAdapter
@@ -46,7 +47,7 @@ class MyFragment : Fragment() {
 
     private fun setupUI() {
 
-
+        val userInfo = SharedPrefs.getUserInfo(requireContext())
         // RecyclerView 설정
         likeCarsAdapter = InfoCardAdapter(ArrayList(), requireContext(), CardType.My, viewModel)
         recommendedCarsAdapter = InfoCardAdapter(ArrayList(), requireContext(), CardType.Normal, viewModel)
@@ -68,7 +69,7 @@ class MyFragment : Fragment() {
         }
 
         // 사용자 이름 설정
-        binding.myUserNameText.text = "사용자 이름" // 실제 데이터 사용 시 업데이트 필요
+        binding.myUserNameText.text = userInfo!!.name // 실제 데이터 사용 시 업데이트 필요
     }
 
     private fun observeViewModel() {

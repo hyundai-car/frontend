@@ -1,9 +1,11 @@
 package com.myme.mycarforme.ui.home
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.myme.mycarforme.MainViewModel
@@ -13,6 +15,7 @@ import com.myme.mycarforme.data.network.DataManager
 import com.myme.mycarforme.data.network.convertRecoCarsToCars
 import com.myme.mycarforme.data.network.recoCars
 import com.myme.mycarforme.databinding.ViewInfocardBinding
+import com.myme.mycarforme.ui.DetailFragment
 
 enum class CardType {
     My, Normal, Order
@@ -64,7 +67,19 @@ class InfoCardAdapter(private var items: ArrayList<Car>, context : Context, type
             }
 
             binding.root.setOnClickListener {
-//TODO: 디테일로 이동
+                    //TODO: 디테일로 이동
+                val bundle = Bundle()
+                bundle.putInt("carId", item.carId)  // carId를 번들로 전달
+                val transaction = (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+                val detailFragment = DetailFragment()
+                detailFragment.arguments = bundle
+                transaction.add(R.id.nav_host_fragment_activity_main, detailFragment) // 디테일 프래그먼트로 교체
+                transaction.addToBackStack(null) // 뒤로가기 스택에 추가
+                transaction.commit()
+
+                // 툴바와 네비게이션 바 숨기기
+                (context as AppCompatActivity).findViewById<View>(R.id.main_toolbar).visibility = View.GONE
+                (context as AppCompatActivity).findViewById<View>(R.id.nav_view).visibility = View.GONE
 
             }
         }
