@@ -2,18 +2,8 @@
 // const { carPrice } = mockContractInfoData.paymentInfo;
 import styled from "styled-components";
 import { usePaymentStore } from "../model/store";
-import { useEffect } from "react";
-
 export function ContractPaymentInfo() {
-  const { price, setPrice } = usePaymentStore((state) => state);
-
-  const total = price * 10000 + 20000 + 25000;
-
-  useEffect(() => {
-    setPrice(total);
-    console.log(price);
-  }, []);
-
+  const { price } = usePaymentStore((state) => state);
   return (
     <Container>
       <Title>주문 금액</Title>
@@ -32,7 +22,7 @@ export function ContractPaymentInfo() {
         </InfoRow>
         <InfoRow>
           <TotalLabel>총 주문 금액</TotalLabel>
-          <Total>{total.toLocaleString()} 원</Total>
+          <Total>{(price * 10000 + 45000).toLocaleString()} 원</Total>
         </InfoRow>
       </Wrap>
     </Container>
