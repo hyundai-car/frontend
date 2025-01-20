@@ -10,6 +10,7 @@ import { ReactComponent as groupIcon } from "public/icons/group.svg";
 import { ReactComponent as RoutingIcon } from "public/icons/routing.svg";
 import { ReactComponent as ProfileIcon } from "public/icons/profile.svg";
 import { useCarDetailStore } from "@/pages/carDetail/model/store";
+import { FUEL_TYPE_MAPPING } from "@/shared/model/constant";
 
 export function GridList() {
   const { carBasicData } = useCarDetailStore();
@@ -28,6 +29,8 @@ export function GridList() {
     fuelType,
     seating,
   } = carBasicData;
+
+  console.log(fuelType);
 
   return (
     <Container>
@@ -50,7 +53,11 @@ export function GridList() {
       <GridItem itemName="주행거리" Icon={RoutingIcon} value={mileage} />
       <GridItem itemName="번호판" Icon={CarIcon} value={carNumber} />
       <GridItem itemName="차량색상" Icon={BrushIcon} value={exteriorColor} />
-      <GridItem itemName="연료타입" Icon={GasStationIcon} value={fuelType} />
+      <GridItem
+        itemName="연료타입"
+        Icon={GasStationIcon}
+        value={FUEL_TYPE_MAPPING[fuelType as keyof typeof FUEL_TYPE_MAPPING]}
+      />
       <GridItem itemName="승차인원" Icon={ProfileIcon} value={seating} />
     </Container>
   );
