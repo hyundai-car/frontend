@@ -14,6 +14,8 @@ import com.myme.mycarforme.data.network.DataManager.refreshToken
 import com.myme.mycarforme.data.network.RefreshTokenResponse
 import com.myme.mycarforme.data.network.RetrofitClient
 import com.myme.mycarforme.data.utils.SharedPrefs
+import com.myme.mycarforme.databinding.ActivityMainBinding
+import com.myme.mycarforme.databinding.ActivitySplashBinding
 import com.myme.mycarforme.ui.login.LoginActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -45,6 +47,8 @@ class SplashActivity : AppCompatActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val binding = ActivitySplashBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         mainIntent = Intent(this, MainActivity::class.java)
         checkLoginStatus()
     }

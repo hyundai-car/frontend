@@ -241,9 +241,9 @@ object DataManager {
     fun getCode(context : Context, callback: (String?)-> Unit){
         val accessToken = SharedPrefs.getAccessToken(context)
         if (accessToken != null) {
-            val url = "https://mycarf0r.me/api/sorders/trackingCode"
-            apiService.getTrackCode(url, accessToken).enqueue(object : Callback<trackingCodeResponse> {
-                override fun onResponse(call: Call<trackingCodeResponse>, response: Response<trackingCodeResponse>) {
+            val url = "https://mycarf0r.me/api/orders/trackingCode"
+            apiService.getTrackCode(url, accessToken).enqueue(object : Callback<TrackingCodeResponse> {
+                override fun onResponse(call: Call<TrackingCodeResponse>, response: Response<TrackingCodeResponse>) {
                     if (response.isSuccessful) {
                         // 데이터 로드 후 callback 호출
                         Log.d("chk1234","${response.body()}")
@@ -253,7 +253,7 @@ object DataManager {
                     }
                 }
 
-                override fun onFailure(call: Call<trackingCodeResponse>, t: Throwable) {
+                override fun onFailure(call: Call<TrackingCodeResponse>, t: Throwable) {
                     Log.d("chk","${call}")
                 }
             })
@@ -268,14 +268,15 @@ object DataManager {
                 override fun onResponse(call: Call<Any>, response: Response<Any>) {
                     if (response.isSuccessful) {
                         // 데이터 로드 후 callback 호출
-                        Log.d("chk","sendToken $token")
+                        Log.d("chk123","sendToken $token")
                         callback()
                     } else {
-                        Log.d("chk","$url, $response")
+                        Log.d("chk123","$url, $response")
                     }
                 }
                 override fun onFailure(call: Call<Any>, t: Throwable) {
                     Log.d("chk","${t}")
+
                 }
             })
         }

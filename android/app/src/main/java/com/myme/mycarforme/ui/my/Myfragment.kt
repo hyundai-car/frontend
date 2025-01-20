@@ -42,7 +42,6 @@ class MyFragment : Fragment() {
     ): View {
         _binding = FragmentMyBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
         viewModel = (activity as MainActivity).mainViewModel
         toolbar = requireActivity().findViewById(R.id.main_toolbar)
         bottomNavigation = requireActivity().findViewById(R.id.nav_view)
