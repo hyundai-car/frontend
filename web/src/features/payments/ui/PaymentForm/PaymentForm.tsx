@@ -1,6 +1,6 @@
 import { Icon } from "@/shared/ui/Icon/Icon";
 import { IconButton, TextField } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { CARD_COMPANIES } from "../../model/constants";
 import { usePaymentFormStore } from "../../model/store";
