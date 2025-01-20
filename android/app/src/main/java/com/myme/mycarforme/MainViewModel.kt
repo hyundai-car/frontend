@@ -1,6 +1,7 @@
 package com.myme.mycarforme
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -28,7 +29,7 @@ class MainViewModel : ViewModel() {
     private val _orderCars = MutableLiveData<List<OrderCars>>()
     val orderCars: LiveData<List<OrderCars>> = _orderCars
 
-    private val _userStatus = MutableLiveData<String>()
+    val _userStatus = MutableLiveData<String>()
     val userStatus: LiveData<String> = _userStatus
 
     var carId = 0
@@ -115,7 +116,8 @@ class MainViewModel : ViewModel() {
     }
 
     fun saveStatus(status: String?){
-        _userStatus.value = status ?: "NONE"
+        _userStatus.postValue(status!!)
+
     }
 
     fun saveCar(id: Int){
@@ -129,6 +131,10 @@ class MainViewModel : ViewModel() {
             }
         }
         return null
+    }
+
+    fun saveOrderedCArs(list: List<OrderCars>){
+        _orderCars.postValue(list)
     }
 
 

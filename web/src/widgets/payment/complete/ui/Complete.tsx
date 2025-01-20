@@ -19,12 +19,13 @@ export function CompleteWidget() {
     setTimeout(() => setShowContent(true), 100);
   }, []);
 
+
   const handlePayment = () => {
-    // 확인 버튼 클릭 시 마이페이지로 이동, jsj
     if (type !== "deposit") {
       setPrice(0);
     }
-    navigate(`/payments/${carId}/test`);
+    window.AndroidBridge.moveToMy()
+    // navigate(`/payments/${carId}/test`);
   };
   return (
     <>

@@ -1,4 +1,4 @@
-package com.myme.mycarforme.ui
+package com.myme.mycarforme
 
 import android.os.Bundle
 import android.view.View
@@ -10,20 +10,19 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.myme.mycarforme.R
 import com.myme.mycarforme.databinding.ActivityDetailBinding
-import com.myme.mycarforme.databinding.ActivityMainBinding
+import com.myme.mycarforme.databinding.ActivityPayBinding
 
-class DetailActivity : AppCompatActivity() {
+class PayActivity : AppCompatActivity() {
 
-    private var _binding : ActivityDetailBinding? = null
+    private var _binding : ActivityPayBinding? = null
     private val binding get() = _binding!!
     private lateinit var webView: WebView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
-        _binding = ActivityDetailBinding.inflate(layoutInflater)
+        _binding = ActivityPayBinding.inflate(layoutInflater)
         val root: View = binding.root
         webView = binding.detailWebview
 

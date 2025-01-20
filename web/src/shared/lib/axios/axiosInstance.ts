@@ -21,6 +21,7 @@ declare global {
       getAccessToken: () => string;  // 토큰을 반환하는 함수
       getRefreshToken: () => string; // 토큰을 갱신하는 함수
       getUserInfo: () => string;
+      moveToMy: () => void;
     };
   }
 }
@@ -64,8 +65,8 @@ function fetchAccessToken() {
 
 authenticated.interceptors.request.use((config) => {
   let ACCESS_TOKEN: string = getCookie("ACCESS_TOKEN") ?? "";
-  // let userInformation = localStorage.getItem("userInfo");
-  let userInformation = "{\"email\":\"sejin8603@naver.com\",\"name\":\"정세진\",\"phoneNumber\":\"01055198603\"}"
+  let userInformation = localStorage.getItem("userInfo");
+  // let userInformation = "{\"email\":\"sejin8603@naver.com\",\"name\":\"정세진\",\"phoneNumber\":\"01055198603\"}"
   console.error("사용자 가져옴!", userInformation);
   if (userInformation == null) {
     userInformation = window.AndroidBridge.getUserInfo();
@@ -112,6 +113,7 @@ authenticated.interceptors.response.use(
       let newToken: string = "";
       try {
         newToken = fetchNewAccessToken() ?? "";
+        setCookie("ACCESS_TOKEN", newToken, 30);
       } catch (error) {
         console.error("토큰 가져오기 실패:", error);
         throw error;
