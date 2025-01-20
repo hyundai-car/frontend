@@ -10,7 +10,7 @@
         android:id="@+id/map_mapfragment"
         android:name="com.naver.maps.map.MapFragment"
         android:layout_width="match_parent"
-        android:layout_height="520dp"/>
+        android:layout_height="700dp"/>
     <ImageButton
         android:id="@+id/map_close_button"
         android:layout_width="40dp"
@@ -89,7 +89,6 @@
                     app:cardBackgroundColor="@android:color/transparent">
                     <ImageView
                         android:scaleType="centerCrop"
-                        android:src="@drawable/eventimage1"
                         android:id="@+id/map_bottom_car_image"
                         android:layout_width="100dp"
                         android:layout_height="80dp"/>
@@ -105,16 +104,52 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
                         android:id="@+id/map_bottom_car_name_text"
-                        android:textSize="20sp"
+                        android:textSize="15sp"
                         android:textStyle="bold"
-                        android:text="123가 4567"/>
+                        />
                     <TextView
+                        android:textStyle="bold"
                         android:layout_marginTop="2dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/map_bottom_car_model_text"
-                        android:textSize="14sp"
-                        android:text="2024 GV80 Coupe 가솔린 3.5 터보 AWD 쿠페 디자인 셀렉션Ⅱ 카본"/>
+                        android:textSize="15sp"
+                        />
+                    <LinearLayout
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <Space
+                            android:layout_height="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            />
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_marginTop="2dp"
+                                android:textStyle="bold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/map_bottom_car_price_text"
+                                android:textColor="@color/blue"
+                                android:textSize="20sp"
+                                />
+                            <TextView
+                                android:layout_marginTop="2dp"
+                                android:textStyle="bold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/black"
+                                android:text=" 만원"
+                                android:textSize="20sp"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
                 </LinearLayout>
             </LinearLayout>
 

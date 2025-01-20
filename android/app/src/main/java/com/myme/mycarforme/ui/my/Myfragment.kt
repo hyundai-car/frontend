@@ -2,15 +2,17 @@ package com.myme.mycarforme.ui.my
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.ContactsContract.Data
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.myme.mycarforme.MainActivity
 import com.myme.mycarforme.MainViewModel
 import com.myme.mycarforme.data.model.Car
+import com.myme.mycarforme.data.network.DataManager
 import com.myme.mycarforme.databinding.FragmentMyBinding
 import com.myme.mycarforme.ui.home.CardType
 import com.myme.mycarforme.ui.home.InfoCardAdapter
@@ -22,6 +24,7 @@ class MyFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var viewModel: MainViewModel
+
     private lateinit var likeCarsAdapter: InfoCardAdapter
     private lateinit var recommendedCarsAdapter: InfoCardAdapter
     private lateinit var orderedCarsAdapter: InfoCardAdapter
@@ -42,15 +45,7 @@ class MyFragment : Fragment() {
     }
 
     private fun setupUI() {
-        // ProgressBar 설정
-        val progressBarView = binding.myProgressbar
-        val stepLabels = listOf("계약금 입금", "잔금 결제", "탁송 시작", "탁송 완료")
-        progressBarView.setupSteps(stepCount = 4, labels = stepLabels)
-        progressBarView.updateSteps(3)
 
-        binding.myProgressbutton.setup("배송 현황 보기") {
-            buttonTap()
-        }
 
         // RecyclerView 설정
         likeCarsAdapter = InfoCardAdapter(ArrayList(), requireContext(), CardType.My, viewModel)
@@ -86,22 +81,78 @@ class MyFragment : Fragment() {
 
         // 추천 차량 데이터 관찰
         viewModel.recommendedCars.observe(viewLifecycleOwner) { cars ->
-            recommendedCarsAdapter.updateItems(cars)
+            recommendedCarsAdapter.updateReItems(cars)
             binding.myUserHistoryCountText.text = cars.size.toString()
             binding.myUserHistorySectionCountText.text = cars.size.toString()
         }
 
         // 주문한 차량 데이터 관찰
         viewModel.orderCars.observe(viewLifecycleOwner) { cars ->
-            orderedCarsAdapter.updateItems(cars.map { Car(it.carId,it.carName,it.initalRegistration,it.mileage,it.sellingPrice,it.mainImage,0.0,true,it.likecount,"none","none") }) // OrderedCarResponse를 Car로 변환
+            orderedCarsAdapter.updateItems(cars.map { Car(it.carId,it.carName,it.initialRegistration,it.mileage,it.sellingPrice,it.mainImage,0.0,true,it.likecount,"none","none") }) // OrderedCarResponse를 Car로 변환
             binding.myUserOrderCountText.text = cars.size.toString()
             binding.myUserOrderSectionText.text = cars.size.toString()
         }
+
+        viewModel.userStatus.observe(viewLifecycleOwner) {status->
+            setupProgress(status)
+        }
     }
 
-    private fun buttonTap() {
+    private fun setupProgress(status:String){
+        val progressBarView = binding.myProgressbar
+        val progressButton = binding.myProgressbutton
+        val stepLabels = listOf("계약금 입금", "잔금 결제", "탁송 시작", "탁송 완료")
+        when(status){
+            "CONTRACTED"->{
+                progressBarView.setupSteps(stepCount = 4, labels = stepLabels)
+                progressBarView.updateSteps(2)
+
+                binding.myProgressbutton.setup("잔금 결제하기") {
+                    goToPaid()
+                }
+            }
+            "PAID"->{
+                progressBarView.setupSteps(stepCount = 4, labels = stepLabels)
+                progressBarView.updateSteps(3)
+                binding.myProgressbutton.setup("배송 현황 보기") {
+                    goToMap()
+                }
+            }
+            "DELIVERING"->{
+                progressBarView.setupSteps(stepCount = 4, labels = stepLabels)
+                progressBarView.updateSteps(3)
+
+                binding.myProgressbutton.setup("배송 현황 보기2") {
+                    goToMap()
+                }
+            }
+            "DELIVERED"->{
+                //TODO: 완료되었을때 실행시킬 요소 추가
+                progressButton.visibility = View.GONE
+                progressBarView.visibility = View.GONE
+            }
+            else -> {
+                progressButton.visibility = View.GONE
+                progressBarView.visibility = View.GONE
+            }
+        }
+
+    }
+
+    private fun goToPaid(){
+        //TODO: 결제 페이지로 보내기
+        DataManager.putPaid(requireContext(),viewModel.carId ?: 0)
+
+    }
+
+    private fun goToMap() {
         val intent = Intent(requireContext(), MapActivity::class.java)
-        startActivity(intent)
+        val it = viewModel.getOrderingCar(viewModel.carId)
+        if (it != null){
+            val tomapCar = Car(it.carId, it.carName, it.carNumber, it.mileage, it.sellingPrice, it.mainImage, 0.0, true, it.likecount, "","")
+            intent.putExtra("cardata",tomapCar)
+            startActivity(intent)
+        }
     }
 
     override fun onDestroyView() {

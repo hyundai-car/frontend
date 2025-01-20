@@ -36,10 +36,13 @@ class MainActivity : AppCompatActivity() {
         val popularCar = intent.getParcelableArrayListExtra<Car>("popular")
         val mmCar = intent.getParcelableArrayListExtra<Car>("mm")
         val nextCar = intent.getParcelableArrayListExtra<Car>("next")
-        Log.d("chk","$popularCar")
+        val status = intent.getStringExtra("user")
+        val orderingID = intent.getIntExtra("carid",0)
+        Log.d("chk2","$orderingID")
         mainViewModel.pushCarsDataMain(popularCar!!,mmCar!!,nextCar!!)
-//        mainViewModel.loadCarsDataMain(this)
         mainViewModel.loadCarDataMy(this)
+        mainViewModel.saveStatus(status)
+        mainViewModel.saveCar(orderingID)
 
         val navView: BottomNavigationView = binding.navView
         val homeFragment = HomeFragment()
