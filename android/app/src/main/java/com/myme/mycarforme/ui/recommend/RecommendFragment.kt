@@ -60,7 +60,7 @@ class RecommendFragment : Fragment() {
             webSettings.cacheMode = WebSettings.LOAD_NO_CACHE
             webSettings.domStorageEnabled = true // DOM 저장소 활성화
         }
-        webView.loadUrl("http://localhost:5173$basePath")
+        webView.loadUrl("http://mycarf0r.me$basePath")
         webView.addJavascriptInterface(WebAppInterface(requireContext(), (activity as MainActivity)), "AndroidBridge")
     }
 

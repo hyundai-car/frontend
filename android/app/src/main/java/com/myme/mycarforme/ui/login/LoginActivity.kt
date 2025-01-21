@@ -42,7 +42,6 @@ class LoginActivity : AppCompatActivity() {
                     mainIntent.putExtra("popular",popularCar)
                     mainIntent.putExtra("mm",mmCar)
                     mainIntent.putExtra("next",nextCar)
-                    Log.d("chk","3333333333")
                     startActivity(mainIntent)
                     finish()
                 }
@@ -50,6 +49,7 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(this, "로그인 에러가 발생했습니다. 다시 시도해주세요", Toast.LENGTH_SHORT).show()
                 }
                 else -> {
+                    Log.d("qwe","${state}")
                 }
             }
         }

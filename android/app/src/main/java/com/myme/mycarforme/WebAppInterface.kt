@@ -49,6 +49,21 @@ class WebAppInterface(private val context: Context,  private val mainActivity: M
         }
     }
 
+    @JavascriptInterface
+    fun getUserName(): String{
+        return SharedPrefs.getUserInfo(context)!!.name
+    }
+
+    @JavascriptInterface
+    fun getUserEmail(): String{
+        return SharedPrefs.getUserInfo(context)!!.email
+    }
+
+    @JavascriptInterface
+    fun getUserPhoneNumber(): String{
+        return formatPhoneNumber(SharedPrefs.getUserInfo(context)!!.phoneNumber)
+    }
+
     fun convertUserInfoToJson(userInfo: UserInfo): String {
         // UserInfo 객체를 JSONObject로 변환
         val jsonObject = JSONObject()
@@ -57,6 +72,15 @@ class WebAppInterface(private val context: Context,  private val mainActivity: M
         jsonObject.put("phoneNumber", userInfo.phoneNumber)
         return jsonObject.toString()
     }
+
+    fun formatPhoneNumber(phoneNumber: String): String {
+        if (phoneNumber.length == 11 && phoneNumber.startsWith("010")) {
+            return "${phoneNumber.substring(0, 3)}-${phoneNumber.substring(3, 7)}-${phoneNumber.substring(7)}"
+        } else {
+            throw IllegalArgumentException("올바른 전화번호 형식이 아닙니다. (11자리 숫자, '010'으로 시작)")
+        }
+    }
+
 
 
 }

@@ -22,6 +22,9 @@ declare global {
       getRefreshToken: () => string; // 토큰을 갱신하는 함수
       getUserInfo: () => string;
       moveToMy: () => void;
+      getUserName: () => string,
+      getUserEmail: () => string,
+      getUserPhoneNumber: () => string,
     };
   }
 }
@@ -65,14 +68,19 @@ function fetchAccessToken() {
 
 authenticated.interceptors.request.use((config) => {
   let ACCESS_TOKEN: string = getCookie("ACCESS_TOKEN") ?? "";
-  let userInformation = localStorage.getItem("userInfo");
-  // let userInformation = "{\"email\":\"sejin8603@naver.com\",\"name\":\"정세진\",\"phoneNumber\":\"01055198603\"}"
-  console.error("사용자 가져옴!", userInformation);
-  if (userInformation == null) {
-    userInformation = window.AndroidBridge.getUserInfo();
-    localStorage.removeItem("userInfo");
-    localStorage.setItem("userInfo", JSON.stringify(userInformation))
-    console.error("사용자 가져옴!!!", userInformation);
+  let userName = localStorage.getItem("userName");
+  console.error("사용자 존재!", userName);
+  if (userName == null) {
+    userName = window.AndroidBridge.getUserName();
+    let userEmail = window.AndroidBridge.getUserEmail();
+    let userNumber = window.AndroidBridge.getUserPhoneNumber();
+    localStorage.removeItem("userName");
+    localStorage.removeItem("userEmail");
+    localStorage.removeItem("userNumber");
+    localStorage.setItem("userName", userName);
+    localStorage.setItem("userEmail", userEmail);
+    localStorage.setItem("userNumber", userNumber);
+    console.error("사용자 가져옴!!!", userName, userNumber);
   }
 
   try {

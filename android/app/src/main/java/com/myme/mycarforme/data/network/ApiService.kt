@@ -10,6 +10,9 @@ import retrofit2.http.PUT
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Url
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 // 로그인 요청 바디
 data class LoginRequestBody(
@@ -120,12 +123,20 @@ data class nowOrderingResponse(
     val updatedAt: String,
 )
 
-data class trackingCodeResponse(
-    val trackingCode : String,
-)
-
 data class Fcmtoken(
     val token : String,
+)
+
+data class TrackingCodeResponse(
+    val trackingCode: String
+)
+
+data class LocationUpdate(
+    val userId: String,
+    val latitude: Double,
+    val longitude: Double,
+    val timestamp: String = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+        .format(Date())
 )
 
 interface ApiService {
@@ -189,7 +200,7 @@ interface ApiService {
     fun getTrackCode(
         @Url url: String,
         @Header("Authorization") accessToken: String,
-    ): Call<trackingCodeResponse>
+    ): Call<TrackingCodeResponse>
 
     @POST
     fun sendCode(
@@ -197,6 +208,11 @@ interface ApiService {
         @Header("Authorization") accessToken: String,
         @Body token : Fcmtoken,
     ): Call<Any>
+
+    @GET("/api/orders/trackingCode")
+    suspend fun getTrackingCode(
+        @Header("Authorization") authorization: String
+    ): TrackingCodeResponse
 
 }
 

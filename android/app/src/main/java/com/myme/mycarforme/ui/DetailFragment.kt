@@ -57,7 +57,7 @@ class DetailFragment : Fragment() {
         }
         // carId가 null이 아니면 웹뷰 URL에 carId를 포함시킴
         if (carId != null) {
-            val url = "http://localhost:5173/cars/carsDetail?carNo=$carId"  // carId를 URL에 포함
+            val url = "http://mycarf0r.me/cars/carsDetail?carNo=$carId"  // carId를 URL에 포함
             val token = SharedPrefs.getAccessToken(requireContext())
             webView.loadUrl(url, mapOf("Authorization" to "$token"))
         }
