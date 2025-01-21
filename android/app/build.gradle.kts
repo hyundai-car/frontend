@@ -85,5 +85,7 @@ dependencies {
     implementation("com.google.firebase:firebase-messaging")
     implementation("com.google.firebase:firebase-analytics")
 
+    implementation("com.github.NaikSoftware:StompProtocolAndroid:1.6.6")
+
 
 }

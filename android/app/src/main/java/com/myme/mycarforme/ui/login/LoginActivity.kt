@@ -49,6 +49,7 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(this, "로그인 에러가 발생했습니다. 다시 시도해주세요", Toast.LENGTH_SHORT).show()
                 }
                 else -> {
+                    Log.d("qwe","${state}")
                 }
             }
         }

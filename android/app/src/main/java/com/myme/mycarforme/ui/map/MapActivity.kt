@@ -6,16 +6,13 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
+import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.GestureDetector
-import android.view.MotionEvent
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -24,12 +21,13 @@ import com.bumptech.glide.Glide
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.messaging.FirebaseMessaging
-import com.myme.mycarforme.MainActivity
+import com.google.gson.Gson
 import com.myme.mycarforme.R
-import com.myme.mycarforme.WebSocketManager
+import com.myme.mycarforme.StompClient
 import com.myme.mycarforme.data.model.Car
 import com.myme.mycarforme.data.network.DataManager
-import com.myme.mycarforme.data.network.OrderCars
+import com.myme.mycarforme.data.network.DataManager.getCode
+import com.myme.mycarforme.data.utils.SharedPrefs
 import com.myme.mycarforme.databinding.ActivityMapBinding
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.geometry.LatLngBounds
@@ -42,7 +40,9 @@ import com.naver.maps.map.overlay.PolylineOverlay
 import com.naver.maps.map.util.MarkerIcons
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
@@ -50,8 +50,6 @@ import okhttp3.Request
 import org.json.JSONException
 import org.json.JSONObject
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.YearMonth
 import java.util.Locale
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -62,7 +60,11 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private var longitude: Double = 0.0
     private lateinit var pathTime : String
     private lateinit var bottomSheet: LinearLayout
+    private var stompClient: StompClient? = null
+    private val scope = CoroutineScope(Dispatchers.Main + Job())
+    private var trackingCode: String? = null
     private lateinit var movingCar : Car
+    var currentMarker: Marker? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,7 +76,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             ?: MapFragment.newInstance().also {
                 supportFragmentManager.beginTransaction().add(R.id.map_mapfragment, it).commit()
             }
-        var trackingCode = ""
         mapFragment.getMapAsync(this)
         val progressBarView = binding.mapBottomProgressbar
         val stepLabels = listOf("준 비 중", "탁송 시작", "탁송 완료")
@@ -82,13 +83,13 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         // 초기 상태 설정
         progressBarView.updateSteps(2)
         val intent : Intent = intent
+        val status = intent.getStringExtra("user")
         val movingCar = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
             intent.getParcelableExtra("cardata", Car::class.java)
         } else {
             intent.getParcelableExtra("cardata") as? Car
         }
 
-        val webSocketManager = WebSocketManager()
         createNotificationChannel()
         lifecycleScope.launch {
             try {
@@ -100,9 +101,11 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 //                    // Tracking Code 가져오기
 //
 //                }
-                DataManager.getCode(context = this@MapActivity) { trackingCode ->
-                    trackingCode?.let {
-                        Log.d("chk", "Tracking Code: $trackingCode")
+                DataManager.getCode(context = this@MapActivity) { it ->
+                    it?.let {
+                        Log.d("chk", "Tracking Code: $it")
+                        trackingCode = it
+                        connectWebSocket()
                     } ?: Log.w("chk", "Tracking Code is null")
                 }
             } catch (e: Exception) {
@@ -110,9 +113,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
 
-        webSocketManager.connectWebSocket("https://mycarf0r.me/ws/tracking/$trackingCode/location", this){ message->
-            Log.d("chk0","$message")
-        }
 
 
         bottomSheet = binding.bottomSheet
@@ -127,6 +127,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         binding.mapCloseButton.setOnClickListener {
             intent.putExtra("navigate_to_fragment", "MyFragment")
+            intent.putExtra("user",status)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             finish()
         }
@@ -245,7 +246,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                     this.latitude = lat
                     this.longitude = lng
                     val cameraUpdate = CameraUpdate.scrollTo(LatLng(lat, lng))
-//                    navermap.moveCamera(cameraUpdate)
                     createRoute()
                 }
             }
@@ -316,6 +316,53 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
+    }
+
+    private fun connectWebSocket() {
+        val url = "https://mycarf0r.me/ws/tracking"
+        val accessToken = SharedPrefs.getAccessToken(this)
+
+        val stompClient = StompClient.create(url, scope)
+
+        stompClient.connect(
+            headers = mapOf(
+                "Authorization" to "$accessToken",
+                "clientType" to "sub"
+            )
+        ) { success ->
+            if (success) {
+                Log.d("qwe123123123","$trackingCode")
+                // 연결 성공 시 구독 시작
+                trackingCode?.let { code ->
+                    val destination = "/sub/tracking/$code/location"
+                    Log.d("LocationReceiver", "Subscribing to: $destination")
+
+                    stompClient.subscribe(destination) { message ->
+                        try {
+                            Log.d("LocationReceiver", "Received raw message: $message")
+                            val location = Gson().fromJson(message, StompClient.LocationUpdate::class.java)
+                            Log.d("LocationReceiver", "Parsed location: lat=${location.latitude}, lng=${location.longitude}")
+                            currentMarker?.map = null
+                            // 새로운 마커 추가
+                            currentMarker = Marker().apply {
+                                icon = MarkerIcons.BLACK
+                                iconTintColor = ContextCompat.getColor(this@MapActivity, R.color.gray_blue)
+                                position = LatLng(location.latitude, location.longitude)
+                                map = navermap
+                            }
+                        } catch (e: Exception) {
+                            Log.e("LocationReceiver", "Error parsing message: $message", e)
+                        }
+                    }
+
+                }
+            }
+            else{
+                Log.w("qwe","qweqweqweq")
+            }
+        }
+
+        this.stompClient = stompClient
     }
 
 }
