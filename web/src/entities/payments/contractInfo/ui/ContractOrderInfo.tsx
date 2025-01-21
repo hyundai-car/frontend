@@ -3,8 +3,11 @@ import { getLocalStorageValue } from "@/shared/util/localStorage";
 // const { name, email, phoneNumber } = mockContractInfoData.customer;
 
 export function ContractOrderInfo() {
-  const userInfo = JSON.parse(getLocalStorageValue("userInfo") || "{}");
-  const { name, email, phoneNumber } = userInfo;
+  // const userInfo = JSON.parse(getLocalStorageValue("userInfo") || "{}");
+  // const { name, email, phoneNumber } = userInfo;
+  const name = getLocalStorageValue("userName");
+  const email = getLocalStorageValue("userEmail");
+  const phoneNumber = getLocalStorageValue("userNumber");
   return (
     <Container>
       <Title>주문자 정보</Title>

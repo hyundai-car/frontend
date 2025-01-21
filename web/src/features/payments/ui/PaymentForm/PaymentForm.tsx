@@ -8,8 +8,7 @@ import { formatCardNumber, formatExpiryDate } from "../../lib/lib";
 import { getLocalStorageValue } from "@/shared/util/localStorage";
 
 export function PaymentForm() {
-  const userInfo = JSON.parse(getLocalStorageValue("userInfo") || "{}");
-  const name = userInfo.name || "디폴트";
+  const name = getLocalStorageValue("userName") || "디폴트";
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState<{
     id: number;
