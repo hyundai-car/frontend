@@ -90,7 +90,7 @@
                     android:textColor="@color/white"
                     android:paddingEnd="0dp"
                     android:paddingStart="16dp"
-                    android:text="미래점수 TOP5"/>
+                    android:text="가성비점수 TOP5"/>
                 <androidx.recyclerview.widget.RecyclerView
                     android:padding="10dp"
                     android:id="@+id/home_future_recyclerview"

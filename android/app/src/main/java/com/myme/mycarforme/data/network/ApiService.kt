@@ -139,6 +139,11 @@ data class LocationUpdate(
         .format(Date())
 )
 
+data class refreshRequest(
+    val refreshToken : String,
+)
+
+
 interface ApiService {
     @POST
     fun loginUser(
@@ -175,7 +180,7 @@ interface ApiService {
     @POST
     fun getRefreshToken(
         @Url url:String,
-        @Body refreshToken: String
+        @Body refreshToken: refreshRequest
     ): Call<RefreshTokenResponse>
 
     @GET

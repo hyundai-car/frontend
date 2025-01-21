@@ -6,6 +6,8 @@ import android.provider.ContactsContract.Data
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import com.google.firebase.messaging.FirebaseMessaging
 import com.myme.mycarforme.MainActivity
 import com.myme.mycarforme.data.model.Car
 import com.myme.mycarforme.data.network.ApiService
@@ -21,6 +23,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
@@ -49,6 +52,21 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        lifecycleScope.launch {
+            try {
+                // FCM 토큰 가져오기
+                val token = FirebaseMessaging.getInstance().token.await()
+                Log.d("FCM_TOKEN", "토큰: $token")
+                // 서버로 FCM 토큰 전송
+                DataManager.sendCode(context = this@SplashActivity, token = token) {
+                    // Tracking Code 가져오기
+
+                }
+            } catch (e: Exception) {
+                Log.w("FCM_TOKEN", "FCM 토큰 가져오기 실패: ${e.message}")
+            }
+        }
         mainIntent = Intent(this, MainActivity::class.java)
         checkLoginStatus()
     }
@@ -63,7 +81,10 @@ class SplashActivity : AppCompatActivity() {
 
                 }
                 if (token.isNullOrEmpty()) {
-                    navigateToSignUp()
+                    CoroutineScope(Dispatchers.Main).launch {
+                        delay(2000) // 2초 지연
+                        navigateToSignUp()
+                    }
                 } else {
                     withContext(Dispatchers.Main) {
                         if (token != "") {

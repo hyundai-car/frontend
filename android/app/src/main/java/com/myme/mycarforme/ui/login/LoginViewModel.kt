@@ -17,7 +17,9 @@ import com.myme.mycarforme.data.network.LoginRequestBody
 import com.myme.mycarforme.data.network.LoginResponse
 import com.myme.mycarforme.data.network.RetrofitClient
 import com.myme.mycarforme.data.utils.SharedPrefs
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import net.openid.appauth.AuthorizationException
 import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationResponse
@@ -31,7 +33,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class LoginViewModel : ViewModel() {
-    private val _authState = MutableLiveData<AuthState>(AuthState.Idle)
+    val _authState = MutableLiveData<AuthState>(AuthState.Idle)
     val authState: LiveData<AuthState> = _authState
 
     private val authConfig = AuthorizationServiceConfiguration(
@@ -109,12 +111,20 @@ class LoginViewModel : ViewModel() {
                         loginUser(authCode!!, codeVerifier!!, context)
 
                         if (true) {
-                            _authState.value = AuthState.Success
+                            withContext(Dispatchers.Main) {
+                                _authState.value = AuthState.Success
+                            }
+
                         } else {
-                            _authState.value = AuthState.Error(R.string.text_error_unknown)
+                            withContext(Dispatchers.Main) {
+                                _authState.value = AuthState.Error(R.string.text_error_unknown)
+                            }
+
                         }
                     } catch (e: Exception) {
-                        _authState.value = AuthState.Error(R.string.text_error_unknown)
+                        withContext(Dispatchers.Main) {
+                            _authState.value = AuthState.Error(R.string.text_error_unknown)
+                        }
                     }
                 }
             }
@@ -125,30 +135,37 @@ class LoginViewModel : ViewModel() {
         super.onCleared()
         codeVerifier = null
     }
+    val url = "https://mycarf0r.me/api/auth/login"
 
     private fun loginUser(authCode: String, verifier: String, context : Context) {
         val loginRequestBody = LoginRequestBody(authCode, verifier)
 
-        // 동적 URL을 설정
-        val url = "https://mycarf0r.me/api/auth/login"
+        Log.d("LoginViewModel", "Attempting login with authCode: $authCode")
 
         apiService.loginUser(url, loginRequestBody).enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                Log.d("LoginViewModel", "Login response: ${response.isSuccessful}, code: ${response.code()}")
+
                 if (response.isSuccessful) {
-                    // 응답 데이터 파싱
                     val loginResponse = response.body()
+                    Log.d("LoginViewModel", "Login successful, response: $loginResponse")
                     loginResponse?.let {
-                        // SharedPreferences에 토큰과 유저 정보 저장
-                        SharedPrefs.saveToken(context, it.token.accessToken, it.token.refreshToken)
-                        SharedPrefs.saveUserInfo(context, it.userInfo)
+                        viewModelScope.launch(Dispatchers.Main) {
+                            SharedPrefs.saveToken(context, it.token.accessToken, it.token.refreshToken)
+                            SharedPrefs.saveUserInfo(context, it.userInfo)
+                            _authState.value = AuthState.Success  // postValue 대신 value 사용
+                            Log.d("LoginViewModel", "Auth state updated to Success")
+                        }
                     }
                 } else {
-                    Toast.makeText(context, "$response", Toast.LENGTH_SHORT).show()
+                    Log.d("LoginViewModel", "Login failed: ${response.errorBody()?.string()}")
+                    _authState.postValue(AuthState.Error(R.string.text_error_unknown))
                 }
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                Toast.makeText(context, "Request failed: ${t.message}", Toast.LENGTH_SHORT).show()
+                Log.e("LoginViewModel", "Login network error", t)
+                _authState.postValue(AuthState.Error(R.string.text_error_unknown))
             }
         })
     }

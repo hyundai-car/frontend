@@ -40,6 +40,7 @@ class WebAppInterface(private val context: Context,  private val mainActivity: M
                 context.runOnUiThread {
                     context.navigateToFragment()
                 }
+                context.binding.navView.selectedItemId = R.id.navigation_search
                 if(viewModel.userStatus.value == "CONTRACTED" ){
                     viewModel.saveStatus("PAID")
                 } else{

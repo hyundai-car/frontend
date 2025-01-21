@@ -271,12 +271,11 @@ object DataManager {
                         Log.d("chk123","sendToken $token")
                         callback()
                     } else {
-                        Log.d("chk123","$url, $response")
+                        Log.d("chk1234","$url, $response")
                     }
                 }
                 override fun onFailure(call: Call<Any>, t: Throwable) {
-                    Log.d("chk","${t}")
-
+                    Log.d("chk1235","${t}")
                 }
             })
         }
@@ -285,7 +284,7 @@ object DataManager {
     fun refreshToken(context: Context, callback: (String) -> Unit): String {
         var reaccesToken : String = ""
         SharedPrefs.getRefreshToken(context)?.let {
-            apiService.getRefreshToken("https://mycarf0r.me/api/auth/reissue", it).enqueue(object : Callback<RefreshTokenResponse> {
+            apiService.getRefreshToken("https://mycarf0r.me/api/auth/reissue", refreshRequest(it) ).enqueue(object : Callback<RefreshTokenResponse> {
                 override fun onResponse(
                     call: Call<RefreshTokenResponse>,
                     response: Response<RefreshTokenResponse>

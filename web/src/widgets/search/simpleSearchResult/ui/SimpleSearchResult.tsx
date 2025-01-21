@@ -7,7 +7,7 @@ import { LoadingScreen } from "./LoadingScreen";
 export const SimpleSearchResult = () => {
   const [recommendCondition, setRecommendCondition] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const userInfo = JSON.parse(getLocalStorageValue("userInfo") || "{}");
+  const userName = getLocalStorageValue("userName")
   useEffect(() => {
     console.log(recommendCondition);
   }, [recommendCondition]);
@@ -16,7 +16,7 @@ export const SimpleSearchResult = () => {
     <>
       <TitleWrap>
         <Title>
-          {userInfo.name || "홍길동"}님!
+          {userName || "사용자"}님!
           <br />
           {isLoading ? (
             <>
@@ -33,8 +33,7 @@ export const SimpleSearchResult = () => {
           {isLoading ? (
             <>가장 적합한 차량을 선별하고 있습니다</>
           ) : (
-            `${
-              userInfo.name || "홍길동"
+            `${userName || "사용자"
             }님에게 가장 적절한 차량을 추천해드렸어요.`
           )}
         </SubTitle>

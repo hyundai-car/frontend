@@ -24,7 +24,7 @@ import com.myme.mycarforme.ui.search.SearchFragment
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
     var activeFragment: Fragment? = null
     val mainViewModel: MainViewModel by viewModels()
     val homeFragment = HomeFragment()

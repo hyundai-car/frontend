@@ -14,7 +14,7 @@ import com.myme.mycarforme.data.network.DataManager
 import com.myme.mycarforme.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
-    private var _binding : ActivityLoginBinding? = null
+    private var _binding: ActivityLoginBinding? = null
     private val binding get() = _binding!!
     private lateinit var popularCar: ArrayList<Car>
     private lateinit var mmCar: ArrayList<Car>
@@ -24,32 +24,46 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        Log.d("LoginActivity", "onCreate called")
         _binding = ActivityLoginBinding.inflate(layoutInflater)
-        val loginButton = findViewById<TextView>(R.id.login_button)
-        loginButton.setOnClickListener{
+        setContentView(binding.root)
+
+        findViewById<TextView>(R.id.login_button).setOnClickListener {
             viewModel.login(this)
         }
-        observeAuthState()
-    }
 
-    private fun observeAuthState() {
+        // Observer 설정 시점 로그 추가
+        Log.d("LoginActivity", "Setting up observer")
         viewModel.authState.observe(this) { state ->
+            Log.d("LoginActivity", "Observer triggered with state: $state")
             when (state) {
                 is AuthState.Success -> {
-                    val mainIntent = Intent(this, MainActivity::class.java)
-                    loadCarData()
-                    mainIntent.putExtra("popular",popularCar)
-                    mainIntent.putExtra("mm",mmCar)
-                    mainIntent.putExtra("next",nextCar)
-                    startActivity(mainIntent)
-                    finish()
+                    Log.d("LoginActivity", "Success state received, preparing to navigate")
+                    try {
+                        loadCarData()
+                        val mainIntent = Intent(this, MainActivity::class.java)
+                        mainIntent.putExtra("popular", popularCar)
+                        mainIntent.putExtra("mm", mmCar)
+                        mainIntent.putExtra("next", nextCar)
+                        startActivity(mainIntent)
+                        finish()
+                    } catch (e: Exception) {
+                        Log.e("LoginActivity", "Error during navigation", e)
+                    }
                 }
                 is AuthState.Error -> {
-                    Toast.makeText(this, "로그인 에러가 발생했습니다. 다시 시도해주세요", Toast.LENGTH_SHORT).show()
+                    Log.d("LoginActivity", "Error state received")
+                    Toast.makeText(
+                        this,
+                        "로그인 에러가 발생했습니다. 다시 시도해주세요",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
-                else -> {
-                    Log.d("qwe","${state}")
+                is AuthState.Loading -> {
+                    Log.d("LoginActivity", "Loading state received")
+                }
+                is AuthState.Idle -> {
+                    Log.d("LoginActivity", "Idle state received")
                 }
             }
         }
@@ -57,25 +71,25 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        Log.d("LoginActivity", "onActivityResult called: requestCode=$requestCode, resultCode=$resultCode")
         if (requestCode == 1000) {
             viewModel.handleAuthResponse(this, data)
         }
     }
 
     private fun loadCarData() {
-        this.let {
-            // 각 데이터를 비동기적으로 로드하고 콜백을 통해 RecyclerView에 세팅
-            DataManager.getCarsListwithUrl(it, "popular") { cars ->
-                popularCar = cars
-            }
-            DataManager.getCarsListwithUrl(it, "mmscores") { cars ->
-                mmCar = cars
-            }
-            DataManager.getCarsListwithUrl(it, "sales") { cars ->
-                nextCar = cars
-            }
+        Log.d("LoginActivity", "Starting to load car data")
+        DataManager.getCarsListwithUrl(this, "popular") { cars ->
+            popularCar = cars
+            Log.d("LoginActivity", "Popular car data loaded")
+        }
+        DataManager.getCarsListwithUrl(this, "mmscores") { cars ->
+            mmCar = cars
+            Log.d("LoginActivity", "MM car data loaded")
+        }
+        DataManager.getCarsListwithUrl(this, "upcoming") { cars ->
+            nextCar = cars
+            Log.d("LoginActivity", "Next car data loaded")
         }
     }
-
-
 }

@@ -97,10 +97,10 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                 val token = FirebaseMessaging.getInstance().token.await()
                 Log.d("FCM_TOKEN", "토큰: $token")
                 // 서버로 FCM 토큰 전송
-//                DataManager.sendCode(context = this@MapActivity, token = token) {
-//                    // Tracking Code 가져오기
-//
-//                }
+                DataManager.sendCode(context = this@MapActivity, token = token) {
+                    // Tracking Code 가져오기
+
+                }
                 DataManager.getCode(context = this@MapActivity) { it ->
                     it?.let {
                         Log.d("chk", "Tracking Code: $it")
