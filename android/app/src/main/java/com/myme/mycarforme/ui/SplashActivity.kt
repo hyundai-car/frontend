@@ -52,21 +52,12 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        CoroutineScope(Dispatchers.Main).launch {
 
-        lifecycleScope.launch {
-            try {
-                // FCM 토큰 가져오기
-                val token = FirebaseMessaging.getInstance().token.await()
-                Log.d("FCM_TOKEN", "토큰: $token")
-                // 서버로 FCM 토큰 전송
-                DataManager.sendCode(context = this@SplashActivity, token = token) {
-                    // Tracking Code 가져오기
 
-                }
-            } catch (e: Exception) {
-                Log.w("FCM_TOKEN", "FCM 토큰 가져오기 실패: ${e.message}")
-            }
+            delay(2000) // 2초 지연
         }
+
         mainIntent = Intent(this, MainActivity::class.java)
         checkLoginStatus()
     }
@@ -74,7 +65,28 @@ class SplashActivity : AppCompatActivity() {
     private fun checkLoginStatus() {
         // Coroutine 사용 (비동기 작업 처리)
         CoroutineScope(Dispatchers.IO).launch {
+//            lifecycleScope.launch {
+//                try {
+//                    // FCM 토큰 가져오기
+//                    val token = FirebaseMessaging.getInstance().token.await()
+//                    Log.d("FCM_TOKEN", "토큰: $token")
+//                    // 서버로 FCM 토큰 전송
+//                    DataManager.sendCode(context = this@SplashActivity, token = token) {
+//                        // Tracking Code 가져오기
+//
+//                    }
+//                } catch (e: Exception) {
+//                    Log.w("FCM_TOKEN", "FCM 토큰 가져오기 실패: ${e.message}")
+//                }
+//            }
             try {
+                val fcmtoken = FirebaseMessaging.getInstance().token.await()
+                Log.d("FCM_TOKEN", "토큰: $fcmtoken")
+                // 서버로 FCM 토큰 전송
+                DataManager.sendCode(context = this@SplashActivity, token = fcmtoken) {
+                    // Tracking Code 가져오기
+
+                }
                 // 저장된 토큰 가져오기 (SharedPreferences 또는 다른 저장소 사용)
                 val token = getTokenFromPreferences()
                 refreshToken(this@SplashActivity){

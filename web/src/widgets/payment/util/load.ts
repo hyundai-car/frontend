@@ -3,7 +3,7 @@ export const handleLoading = async (
   setIsLoading: (loading: boolean) => void
 ) => {
   setIsLoading(true);
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+  await new Promise((resolve) => setTimeout(resolve, 3500));
   await callback();
   setIsLoading(false);
 };

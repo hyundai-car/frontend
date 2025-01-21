@@ -268,7 +268,7 @@ object DataManager {
                 override fun onResponse(call: Call<Any>, response: Response<Any>) {
                     if (response.isSuccessful) {
                         // 데이터 로드 후 callback 호출
-                        Log.d("chk123","sendToken $token")
+                        Log.d("chk123","sendToken $token ${response.body()}")
                         callback()
                     } else {
                         Log.d("chk1234","$url, $response")
